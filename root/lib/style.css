@@ -1,0 +1,21 @@
+
+body * {
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 18px;
+}
+
+input,
+textarea,
+select {
+	border: 1px solid grey;
+}
+
+.single-value-item {
+	line-height: 26px;
+    margin: 5px 0;
+	display: flex;
+}
+
+.single-value-item > label:after {
+	content: ": ";
+}
