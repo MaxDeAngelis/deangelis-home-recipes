@@ -1,29 +1,26 @@
 import React from 'react';
 
-var Steps = React.createClass({
+const Steps = React.createClass({
     renderDisplay: function(steps) {
+        var key = 0;
         return steps.map(function(step) {
-            return <li > {
-                step
-            } < /li>;
+            return <li key={key++}> {step} </li>;
         });
     },
     renderForm: function(steps) {
+        var key = 0;
         return steps.map(function(step) {
-            return <li><textarea value = {step}/></li>;
+            return <li key={key++}><textarea value = {step}/></li> ;
         });
     },
     render: function() {
         var list;
+        var key = 0;
         var steps = this.props.data.steps.split("|");
         if (this.props.data.editable) {
-            list = steps.map(function(step) {
-                return <li><textarea value = {step}/></li> ;
-            });
+            list = this.renderForm(steps);
         } else {
-            list = steps.map(function(step) {
-                return <li> {step} </li>;
-            });
+            list = this.renderDisplay(steps);
         }
 
         return ( <section>

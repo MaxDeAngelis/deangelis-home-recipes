@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Recipe from './recipe.jsx';
 
-var RecipeList = React.createClass({
+const RecipeList = React.createClass({
     getInitialState: function() {
         return {
-            list: []
+            list: [],
+            selectedRecipe: null
         };
     },
     componentWillMount: function() {
@@ -25,17 +26,18 @@ var RecipeList = React.createClass({
                 id: e.target.id
             },
             function(response) {
-                ReactDOM.render( <Recipe data = {response}/>,
-                    document.querySelector(".open-content")
-                );
+                var openContent = document.querySelector(".open-content");
+                ReactDOM.unmountComponentAtNode(openContent);
+                ReactDOM.render( <Recipe data = {response}/>, openContent);
             },
             "json"
         );
     },
     render: function() {
         var me = this;
+        var key = 0;
         var list = this.state.list.map(function(recipe) {
-            return <div key={recipe.id} id={recipe.id} onClick={me.select} >{recipe.title}</div>;
+            return <div key={key++} id={recipe.id} onClick={me.select} >{recipe.title}</div>;
         });
 
         return (<div>

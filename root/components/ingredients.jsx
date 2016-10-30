@@ -2,13 +2,15 @@ import React from 'react';
 
 var Ingredients = React.createClass({
     renderDisplay: function() {
+        var key = 0;
         return this.props.data.ingredients.map(function(ing) {
-            return <li key = {ing.ingredientId} >{ing.quantity + " " + ing.units + " " + ing.ingredientName} </li>;
+            return <li key = {key++} >{ing.quantity + " " + ing.units + " " + ing.ingredientName} </li>;
         });
     },
     renderForm: function() {
+        var key = 0;
         return this.props.data.ingredients.map(function(ing) {
-            return ( <li key = {ing.ingredientId} >
+            return ( <li key = {key++} >
                 <input value = {ing.quantity}/>
                 <input value = {ing.units}/>
                 <input value = {ing.ingredientName}/>

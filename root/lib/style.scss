@@ -46,5 +46,12 @@ body {
 		> .search {
 			height: 20px;
 		}
+
+		nav {
+			> a {
+				padding-right: 10px;
+				text-decoration: underline;
+			}
+		}
 	}
 }

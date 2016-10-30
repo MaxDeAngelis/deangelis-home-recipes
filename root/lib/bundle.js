@@ -19841,7 +19841,8 @@
 
 	    getInitialState: function getInitialState() {
 	        return {
-	            list: []
+	            list: [],
+	            selectedRecipe: null
 	        };
 	    },
 	    componentWillMount: function componentWillMount() {
@@ -19855,15 +19856,18 @@
 	            action: 'GET_RECIPE',
 	            id: e.target.id
 	        }, function (response) {
-	            _reactDom2.default.render(_react2.default.createElement(_recipe2.default, { data: response }), document.querySelector(".open-content"));
+	            var openContent = document.querySelector(".open-content");
+	            _reactDom2.default.unmountComponentAtNode(openContent);
+	            _reactDom2.default.render(_react2.default.createElement(_recipe2.default, { data: response }), openContent);
 	        }, "json");
 	    },
 	    render: function render() {
 	        var me = this;
+	        var key = 0;
 	        var list = this.state.list.map(function (recipe) {
 	            return _react2.default.createElement(
 	                'div',
-	                { key: recipe.id, id: recipe.id, onClick: me.select },
+	                { key: key++, id: recipe.id, onClick: me.select },
 	                recipe.title
 	            );
 	        });
@@ -19945,6 +19949,9 @@
 	    render: function render() {
 	        var editable = this.state.editable;
 	        var recipeData = this.state.recipe;
+	        if (recipeData == null) {
+	            return false;
+	        }
 	        var editButton = _react2.default.createElement(
 	            'button',
 	            { onClick: this.edit },
@@ -20069,10 +20076,11 @@
 	    displayName: "Steps",
 
 	    renderDisplay: function renderDisplay(steps) {
+	        var key = 0;
 	        return steps.map(function (step) {
 	            return _react2.default.createElement(
 	                "li",
-	                null,
+	                { key: key++ },
 	                " ",
 	                step,
 	                " "
@@ -20080,35 +20088,23 @@
 	        });
 	    },
 	    renderForm: function renderForm(steps) {
+	        var key = 0;
 	        return steps.map(function (step) {
 	            return _react2.default.createElement(
 	                "li",
-	                null,
+	                { key: key++ },
 	                _react2.default.createElement("textarea", { value: step })
 	            );
 	        });
 	    },
 	    render: function render() {
 	        var list;
+	        var key = 0;
 	        var steps = this.props.data.steps.split("|");
 	        if (this.props.data.editable) {
-	            list = steps.map(function (step) {
-	                return _react2.default.createElement(
-	                    "li",
-	                    null,
-	                    _react2.default.createElement("textarea", { value: step })
-	                );
-	            });
+	            list = this.renderForm(steps);
 	        } else {
-	            list = steps.map(function (step) {
-	                return _react2.default.createElement(
-	                    "li",
-	                    null,
-	                    " ",
-	                    step,
-	                    " "
-	                );
-	            });
+	            list = this.renderDisplay(steps);
 	        }
 
 	        return _react2.default.createElement(
@@ -20152,20 +20148,22 @@
 	    displayName: "Ingredients",
 
 	    renderDisplay: function renderDisplay() {
+	        var key = 0;
 	        return this.props.data.ingredients.map(function (ing) {
 	            return _react2.default.createElement(
 	                "li",
-	                { key: ing.ingredientId },
+	                { key: key++ },
 	                ing.quantity + " " + ing.units + " " + ing.ingredientName,
 	                " "
 	            );
 	        });
 	    },
 	    renderForm: function renderForm() {
+	        var key = 0;
 	        return this.props.data.ingredients.map(function (ing) {
 	            return _react2.default.createElement(
 	                "li",
-	                { key: ing.ingredientId },
+	                { key: key++ },
 	                _react2.default.createElement("input", { value: ing.quantity }),
 	                _react2.default.createElement("input", { value: ing.units }),
 	                _react2.default.createElement("input", { value: ing.ingredientName })
@@ -20234,7 +20232,7 @@
 
 
 	// module
-	exports.push([module.id, "body * {\n  font-family: Verdana, Arial, sans-serif;\n  font-size: 18px; }\n\nbody input,\nbody textarea,\nbody select {\n  border: 1px solid grey; }\n\nbody .single-value-item {\n  line-height: 26px;\n  margin: 5px 0;\n  display: flex; }\n  body .single-value-item label:after {\n    content: \": \"; }\n\nbody .header-content {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: center;\n  border-bottom: 2px solid #778899;\n  padding-bottom: 5px;\n  margin-bottom: 5px; }\n  body .header-content > * {\n    width: 30%; }\n  body .header-content > h1 {\n    color: #778899;\n    margin: 0;\n    font-size: 50px;\n    font-family: Impact, Charcoal, sans-serif; }\n  body .header-content > .search {\n    height: 20px; }\n", ""]);
+	exports.push([module.id, "body * {\n  font-family: Verdana, Arial, sans-serif;\n  font-size: 18px; }\n\nbody input,\nbody textarea,\nbody select {\n  border: 1px solid grey; }\n\nbody .single-value-item {\n  line-height: 26px;\n  margin: 5px 0;\n  display: flex; }\n  body .single-value-item label:after {\n    content: \": \"; }\n\nbody .header-content {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: center;\n  border-bottom: 2px solid #778899;\n  padding-bottom: 5px;\n  margin-bottom: 5px; }\n  body .header-content > * {\n    width: 30%; }\n  body .header-content > h1 {\n    color: #778899;\n    margin: 0;\n    font-size: 50px;\n    font-family: Impact, Charcoal, sans-serif; }\n  body .header-content > .search {\n    height: 20px; }\n  body .header-content nav > a {\n    padding-right: 10px;\n    text-decoration: underline; }\n", ""]);
 
 	// exports
 

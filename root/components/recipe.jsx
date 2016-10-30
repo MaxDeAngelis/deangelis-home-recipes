@@ -39,6 +39,9 @@ var Recipe = React.createClass({
     render: function() {
         var editable = this.state.editable;
         var recipeData = this.state.recipe;
+        if (recipeData == null) {
+            return false;
+        }
         var editButton = <button onClick = {this.edit}>Edit</button>;
         if (editable) {
             editButton = <button onClick = {this.save}>Save</button>;
