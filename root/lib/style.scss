@@ -1,0 +1,50 @@
+$color-theme-header: #778899;
+$header-font-family: Impact, Charcoal, sans-serif;
+
+body {
+	* {
+	   	font-family: Verdana, Arial, sans-serif;
+	   	font-size: 18px;
+   	}
+
+	input,
+	textarea,
+	select {
+		border: 1px solid grey;
+	}
+
+	.single-value-item {
+		line-height: 26px;
+	    margin: 5px 0;
+		display: flex;
+
+		label:after {
+			content: ": ";
+		}
+	}
+
+	.header-content {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: 2px solid $color-theme-header;
+		padding-bottom: 5px;
+		margin-bottom: 5px;
+
+		> * {
+			width: 30%;
+		}
+
+		> h1 {
+			color: $color-theme-header;
+			margin: 0;
+			font-size: 50px;
+		    font-family: $header-font-family;
+		}
+
+		> .search {
+			height: 20px;
+		}
+	}
+}

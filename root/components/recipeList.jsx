@@ -3,30 +3,44 @@ import ReactDOM from 'react-dom';
 import Recipe from './recipe.jsx';
 
 var RecipeList = React.createClass({
-
+    getInitialState: function() {
+        return {
+            list: []
+        };
+    },
+    componentWillMount: function() {
+        var me = this;
+        $.get('../processAction.php',
+            { action: 'GET_LIST' },
+            function(response) {
+                me.setState({ list: response });
+            },
+            "json"
+        );
+    },
     select: function(e) {
-        $.ajax({ url: '../processAction.php',
-            data: {
+        $.get('../processAction.php',
+            {
                 action: 'GET_RECIPE',
                 id: e.target.id
             },
-            dataType: "json",
-            type: 'POST',
-            success: function(response) {
+            function(response) {
                 ReactDOM.render( <Recipe data = {response}/>,
-                    document.querySelector(".container")
+                    document.querySelector(".open-content")
                 );
-            }
-        });
+            },
+            "json"
+        );
     },
     render: function() {
         var me = this;
-        var list = this.props.data.map(function(recipe) {
+        var list = this.state.list.map(function(recipe) {
             return <div key={recipe.id} id={recipe.id} onClick={me.select} >{recipe.title}</div>;
         });
 
         return (<div>
             {list}
+            <div className="open-content"></div>
         </div>
         );
     }

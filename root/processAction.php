@@ -4,12 +4,12 @@
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/classes/database.php';
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/actions/actions.php';
 
-	switch ($_POST['action']) {
+	switch ($_GET['action']) {
 	    case ACTIONS::GET_LIST:
 	        $action = new GetList();
 	        break;
 		case ACTIONS::GET_RECIPE:
-	        $action = new GetRecipe($_POST);
+	        $action = new GetRecipe($_GET);
 	        break;
 	    default:
 	        $action = new Action;
