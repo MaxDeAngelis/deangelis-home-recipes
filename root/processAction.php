@@ -4,6 +4,9 @@
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/classes/database.php';
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/actions/actions.php';
 
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/classes/ingredient.php';
+
+
 	switch ($_GET['action']) {
 	    case ACTIONS::GET_LIST:
 	        $action = new GetList();
@@ -11,6 +14,12 @@
 		case ACTIONS::GET_RECIPE:
 	        $action = new GetRecipe($_GET);
 	        break;
+		case ACTIONS::GET_DATA_INGREDIENTS:
+			$action = new GetDataIngredients();
+			break;
+		case ACTIONS::GET_DATA_UNITS:
+			$action = new GetDataUnits();
+			break;
 	    default:
 	        $action = new Action;
 	        break;

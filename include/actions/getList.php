@@ -6,10 +6,11 @@ class GetList extends Action {
 	}
 
 	public function process() {
-		$list = array();
 		$response = new DatabaseQuery("SELECT recipeId, name FROM recipes");
 
 		if ($response->sucess) {
+			$list = array();
+
 			foreach ($response->results as $value) {
 	            $list[] = new Recipe($value);
 	        }

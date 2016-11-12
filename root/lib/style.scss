@@ -1,4 +1,9 @@
-$color-theme-header: #778899;
+$color-theme-header: #519aba;
+$color-theme-content: transparent;
+$color-theme-column: #D0D0D0;
+
+$color-theme-label: #505050;
+
 $header-font-family: Impact, Charcoal, sans-serif;
 
 body {
@@ -13,16 +18,55 @@ body {
 		border: 1px solid grey;
 	}
 
+	.data-label {
+		color: $color-theme-label;
+	}
+
 	.single-value-item {
 		line-height: 26px;
 	    margin: 5px 0;
 		display: flex;
+		flex-direction: column;
+	}
 
-		label:after {
-			content: ": ";
+	.column {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: stretch;
+
+		> * {
+			padding: 5px;
+			margin: 5px;
+		}
+
+		&.column-3 {
+			> * {
+				width: 33%;
+			}
+		}
+		&.column-2 {
+			> * {
+				width: 50%;
+			}
 		}
 	}
 
+	.full-recipe {
+		background-color: $color-theme-content;
+		> header {
+			padding-left: 10px;
+			font-size: 24px;
+		    font-family: $header-font-family;
+			color: $color-theme-header;
+		}
+		
+		> .column {
+			> * {
+				background-color: $color-theme-column;
+			}
+		}
+	}
 	.header-content {
 		display: flex;
 		flex-direction: row;

@@ -12,7 +12,7 @@ var SingleValue = React.createClass({
         }
 
         return ( <div className = "single-value-item" >
-                	<label> {this.props.data.label} </label>
+                	<label className="data-label"> {this.props.data.label} </label>
 					{value}
 				</div>
         );

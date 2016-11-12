@@ -20,6 +20,17 @@ module.exports = {
     {
         test: /\.scss$/,
         loaders: ['style', 'css', 'sass']
+    },
+    {
+        test: /\.css$/,
+        loader: "style!css"
+    },
+    {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loaders: [
+            'file?hash=sha512&digest=hex&name=./root/images/[hash].[ext]',
+            'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+        ]
     }
     ]
   }

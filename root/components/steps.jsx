@@ -24,7 +24,7 @@ const Steps = React.createClass({
         }
 
         return ( <section>
-                <h3> Steps: </h3>
+                <label className="data-label">Steps</label>
                 <ol> {list} </ol>
             </section>
         );

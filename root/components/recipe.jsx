@@ -47,18 +47,26 @@ var Recipe = React.createClass({
             editButton = <button onClick = {this.save}>Save</button>;
         }
 
-        return ( <main>
-            <header><h3> { this.props.data.title } </h3></header>
+        return ( <main className="full-recipe">
             { editButton }
-            <article>
-                <SingleValue data = {this.getData("First name", "firstName")}/>
-                <SingleValue data = {this.getData("Last name", "lastName")}/>
-                <SingleValue data = {this.getData("Servings", "servings")}/>
-                <SingleValue data = {this.getData("Cook time", "cookTime")}/>
-                <SingleValue data = {this.getData("Prep time", "prepTime")}/>
-                <SingleValue data = {this.getData("Category", "category")}/>
-                <SingleValue data = {this.getData("Season", "season")}/>
-                <SingleValue data = {this.getData("Date modified", "modDate")}/>
+            <header>{ this.props.data.title }</header>
+            <section className="column column-3">
+                <section>
+                    <SingleValue data = {this.getData("Servings", "servings")}/>
+                    <SingleValue data = {this.getData("Cook time", "cookTime")}/>
+                    <SingleValue data = {this.getData("Prep time", "prepTime")}/>
+                </section>
+                <section>
+                    <SingleValue data = {this.getData("Category", "category")}/>
+                    <SingleValue data = {this.getData("Season", "season")}/>
+                </section>
+                <section>
+                    <SingleValue data = {this.getData("First name", "firstName")}/>
+                    <SingleValue data = {this.getData("Last name", "lastName")}/>
+                    <SingleValue data = {this.getData("Date modified", "dateCreated")}/>
+                </section>
+            </section>
+            <section className="column column-2">
                 <Steps data = {{
                     steps: this.state.recipe.steps,
                     editable: this.state.editable
@@ -67,7 +75,7 @@ var Recipe = React.createClass({
                     ingredients: this.state.recipe.ingredients,
                     editable: this.state.editable
                 }}/>
-            </article>
+            </section>
             </main>
         );
     }
