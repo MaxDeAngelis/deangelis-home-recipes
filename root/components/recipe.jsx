@@ -16,6 +16,7 @@ var Recipe = React.createClass({
         });
     },
     save: function() {
+        console.log(this.state.recipe)
         this.setState({
             editable: false
         });
@@ -23,6 +24,21 @@ var Recipe = React.createClass({
     update: function(key, newValue) {
         var tempRecipe = this.state.recipe;
         tempRecipe[key] = newValue;
+        console.log(key + " - " + newValue)
+        this.setState({
+            recipe: tempRecipe
+        });
+        console.log(newValue)
+    },
+    addIngredient: function() {
+        var tempRecipe = this.state.recipe;
+
+        tempRecipe.ingredients.push({
+            id: "",
+            unit: "",
+            ingredientName: ""
+        })
+
         this.setState({
             recipe: tempRecipe
         });
@@ -42,9 +58,11 @@ var Recipe = React.createClass({
         if (recipeData == null) {
             return false;
         }
+        var addLink = "";
         var editButton = <button onClick = {this.edit}>Edit</button>;
         if (editable) {
             editButton = <button onClick = {this.save}>Save</button>;
+            addLink = <a onClick = {this.addIngredient}>Add ingredient</a>
         }
 
         return ( <main className="full-recipe">
@@ -74,7 +92,9 @@ var Recipe = React.createClass({
                 <Ingredients data = {{
                     ingredients: this.state.recipe.ingredients,
                     editable: this.state.editable
-                }}/>
+                }}>
+                    {addLink}
+                </Ingredients>
             </section>
             </main>
         );

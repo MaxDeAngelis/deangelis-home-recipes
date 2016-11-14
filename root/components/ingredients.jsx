@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import AutoComplete from './autocomplete.jsx';
 import Dropdown from './dropdown.jsx';
-import $ from 'jquery';
 
 var Ingredients = React.createClass({
     getInitialState: function() {
         return {
             ingredients: [],
-            units: []
+            units: [],
+            currentIngredients: this.props.data.ingredients
         };
     },
     componentWillMount: function() {
@@ -24,7 +24,6 @@ var Ingredients = React.createClass({
         $.get('../processAction.php',
             { action: 'GET_DATA_UNITS' },
             function(response) {
-                debugger
                 me.setState({ units: response });
             },
             "json"
@@ -32,22 +31,22 @@ var Ingredients = React.createClass({
     },
     renderDisplay: function() {
         var key = 0;
-        return this.props.data.ingredients.map(function(ing) {
+        return this.state.currentIngredients.map(function(ing) {
             return <li key = {key++} >{ing.quantity + " " + ing.units + " " + ing.ingredientName} </li>;
         });
     },
     renderForm: function() {
         var key = 0;
         var me = this;
-        return this.props.data.ingredients.map(function(ing) {
-            var source = function( request, response ) {
-                response(me.state.ingredients.map(function(ingredient) {
-                    return ingredient.name;
-                }))
-            }
+        var source = function( request, response ) {
+            response(me.state.ingredients.map(function(ingredient) {
+                return ingredient.name;
+            }))
+        }
 
+        return this.state.currentIngredients.map(function(ing) {
             return ( <li key = {key++} className="column column-3">
-                    <input value = {ing.quantity}/>
+                    <input value = {ing.quantity} onChange = {function(){}}/>
                     <Dropdown options = {me.state.units}
                                    change = {function(){}}/>
                     <AutoComplete value = {ing.ingredientName}
@@ -68,6 +67,7 @@ var Ingredients = React.createClass({
         return ( <section>
                 <label className="data-label">Ingredients</label>
                 <ul>{list}</ul>
+                {this.props.children}
             </section>
         );
     }

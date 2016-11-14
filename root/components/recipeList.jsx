@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Recipe from './recipe.jsx';
-import $ from 'jquery';
 
 const RecipeList = React.createClass({
     getInitialState: function() {

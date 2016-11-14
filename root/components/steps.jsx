@@ -10,7 +10,7 @@ const Steps = React.createClass({
     renderForm: function(steps) {
         var key = 0;
         return steps.map(function(step) {
-            return <li key={key++}><textarea value = {step}/></li> ;
+            return <li key={key++}><textarea value = {step} onChange={function(){}}/></li> ;
         });
     },
     render: function() {
