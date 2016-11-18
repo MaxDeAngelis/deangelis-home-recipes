@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 
 var AutoComplete = React.createClass({
     render: function() {
-        return(<input value ={this.props.value}
-                   onChange ={this.props.change}></input>);
+        return(<input value={this.props.value}
+                   onChange={this.props.change}></input>);
     },
     componentDidMount: function() {
       this.updateAutocomplete();

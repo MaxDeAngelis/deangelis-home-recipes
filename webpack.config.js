@@ -7,6 +7,9 @@ module.exports = {
     path: __dirname,
     filename: './root/lib/bundle.js'
   },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({minimize: true})
+  ],
   module: {
     loaders: [
       {

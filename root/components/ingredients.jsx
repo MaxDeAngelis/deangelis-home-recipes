@@ -48,10 +48,10 @@ var Ingredients = React.createClass({
             return ( <li key = {key++} className="column column-3">
                     <input value = {ing.quantity} onChange = {function(){}}/>
                     <Dropdown options = {me.state.units}
-                                   change = {function(){}}/>
+                                   change = {function(){console.log("d")}}/>
                     <AutoComplete value = {ing.ingredientName}
                                  source = {source}
-                                 change = {function(){}}/>
+                                 change = {function(){ console.log("a")}}/>
                 </li>
             );
         });
