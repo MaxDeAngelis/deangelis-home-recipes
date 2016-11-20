@@ -8,6 +8,6 @@ import RecipeList from '../components/recipeList.jsx';
 ReactDOM.render(<Header/>,
     document.querySelector("header")
 );
-ReactDOM.render(<RecipeList/>,
+/*ReactDOM.render(<RecipeList/>,
     document.querySelector("main")
-);
+);*/
