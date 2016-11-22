@@ -58,18 +58,16 @@
 
 	var _header2 = _interopRequireDefault(_header);
 
-	var _recipeList = __webpack_require__(167);
+	var _navigation = __webpack_require__(167);
 
-	var _recipeList2 = _interopRequireDefault(_recipeList);
+	var _navigation2 = _interopRequireDefault(_navigation);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	__webpack_require__(168);
 
 	_reactDom2.default.render(_react2.default.createElement(_header2.default, null), document.querySelector("header"));
-	/*ReactDOM.render(<RecipeList/>,
-	    document.querySelector("main")
-	);*/
+	_reactDom2.default.render(_react2.default.createElement(_navigation2.default, null), document.querySelector(".navigation"));
 
 /***/ },
 /* 1 */
@@ -20470,58 +20468,29 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _recipe = __webpack_require__(161);
-
-	var _recipe2 = _interopRequireDefault(_recipe);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var RecipeList = _react2.default.createClass({
-	    displayName: 'RecipeList',
+	var Navigation = _react2.default.createClass({
+	    displayName: 'Navigation',
 
-	    getInitialState: function getInitialState() {
-	        return {
-	            list: [],
-	            selectedRecipe: null
-	        };
-	    },
-	    componentWillMount: function componentWillMount() {
-	        var me = this;
-	        $.get('../processAction.php', { action: 'GET_LIST' }, function (response) {
-	            me.setState({ list: response });
-	        }, "json");
-	    },
-	    select: function select(e) {
-	        $.get('../processAction.php', {
-	            action: 'GET_RECIPE',
-	            id: e.target.id
-	        }, function (response) {
-	            var openContent = document.querySelector(".open-content");
-	            _reactDom2.default.unmountComponentAtNode(openContent);
-	            _reactDom2.default.render(_react2.default.createElement(_recipe2.default, { data: response }), openContent);
-	        }, "json");
+	    toggle: function toggle() {
+	        var nav = document.querySelector(".navigation");
+	        if (nav.className == "navigation") {
+	            nav.className += " show";
+	        } else {
+	            nav.className = "navigation";
+	        }
 	    },
 	    render: function render() {
-	        var me = this;
-	        var key = 0;
-	        var list = this.state.list.map(function (recipe) {
-	            return _react2.default.createElement(
-	                'div',
-	                { key: key++, id: recipe.id, onClick: me.select },
-	                recipe.title
-	            );
-	        });
-
 	        return _react2.default.createElement(
 	            'div',
-	            null,
-	            list,
-	            _react2.default.createElement('div', { className: 'open-content' })
+	            { className: 'navigation-content' },
+	            _react2.default.createElement('div', { className: 'toggle', onClick: this.toggle })
 	        );
 	    }
 	});
 
-	exports.default = RecipeList;
+	exports.default = Navigation;
 
 /***/ },
 /* 168 */
@@ -20558,7 +20527,7 @@
 
 
 	// module
-	exports.push([module.id, "body * {\n  font-family: Verdana, Arial, sans-serif;\n  font-size: 18px; }\n\nbody input,\nbody textarea,\nbody select {\n  border: 1px solid grey; }\n\n.data-label {\n  color: #505050; }\n\n.single-value-item {\n  line-height: 26px;\n  margin: 5px 0;\n  display: flex;\n  flex-direction: column; }\n\n.column {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: stretch; }\n  .column > * {\n    padding: 5px;\n    margin: 5px; }\n  .column.column-3 > * {\n    width: 33%; }\n  .column.column-2 > * {\n    width: 50%; }\n\n.full-recipe > header {\n  padding-left: 10px;\n  font-size: 24px;\n  font-family: Impact, Charcoal, sans-serif;\n  color: #519aba; }\n\n.full-recipe > .column > * {\n  background-color: #D0D0D0; }\n\n.header-content {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: center;\n  border-bottom: 2px solid #519aba;\n  padding-bottom: 5px;\n  margin-bottom: 5px; }\n  .header-content > h1 {\n    color: #519aba;\n    margin: 0;\n    font-size: 50px;\n    font-family: Impact, Charcoal, sans-serif; }\n  .header-content nav > a {\n    padding-right: 10px;\n    text-decoration: underline; }\n\n.search > input {\n  font-size: 16px;\n  height: 20px;\n  width: 540px;\n  color: #519aba;\n  border-radius: 4px;\n  background-image: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAABmJLR0QAqgCqAKohOK4IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AsRBBwx9UVFcgAAASBJREFUOMutlL1KA0EUhb+NVu4rBIQQOzvzEgYtouArnNrtXSTpImh9X0GIFgF9ClstFF0hj6BWCjZ3ZJDsTEBPMz97+Dh37s4URDKzEqiBfaDv20/AHBhLeiejIoIdALOM/1DSVcrQWQK7AQaSCkkFMPA9gJmZjZIJvcw3X1eSLpYZzewYOPdlKemjLWEdkrXBAPxbSHqaKnnP5zV5Bc9RCrjlCe5ytMizmWzKf6oDPPqh7+TMkadJAec+H68QYOLjZQoYQEMzqxLpKmA31+XCzSMg3IBb4CQ0wMucRLAG6Ev6yl29GNqmxju8AHqSPlu7LOkaKIEz4PUXZAps+IOxALrAs5mttyZcVWa2Brw49F7S9p/+Qz+7HvAQvQE/+gYLKV6t6i2B7gAAAABJRU5ErkJggg==\");\n  background-position: 100% 6px;\n  background-repeat: no-repeat;\n  padding: 5px; }\n\n.search > input:focus {\n  outline: none; }\n\n.search .results {\n  width: 552px;\n  background-color: white;\n  box-shadow: 5px 5px 10px #D0D0D0;\n  position: absolute;\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-start;\n  transform: perspective(800px) rotateX(-90deg);\n  transform-origin: top;\n  transition: all 0.5s linear; }\n  .search .results.show {\n    transform: perspective(0px) rotateX(0deg); }\n  .search .results .row {\n    border-top: 1px solid #D0D0D0;\n    border-bottom: 1px solid #D0D0D0; }\n    .search .results .row:hover {\n      background-color: #D0D0D0; }\n    .search .results .row:last-child .row-content {\n      border-bottom: none;\n      padding-bottom: 10px; }\n    .search .results .row:first-child .row-content {\n      border-top: none;\n      padding-top: 10px; }\n  .search .results .row-content {\n    display: flex;\n    flex-direction: row;\n    justify-content: flex-start;\n    align-items: stretch;\n    margin: 0px 10px;\n    padding: 5px 0; }\n    .search .results .row-content .details {\n      padding-left: 20px;\n      display: flex;\n      flex-direction: column;\n      justify-content: center; }\n      .search .results .row-content .details .title {\n        font-size: 20px; }\n        .search .results .row-content .details .title .highlight {\n          font-weight: bold;\n          font-size: 20px; }\n      .search .results .row-content .details .author {\n        font-size: 14px;\n        color: #505050; }\n    .search .results .row-content .image {\n      width: 50px;\n      height: 50px; }\n", ""]);
+	exports.push([module.id, "body {\n  overflow: hidden;\n  margin: 0; }\n  body * {\n    font-family: Verdana, Arial, sans-serif;\n    font-size: 18px; }\n  body input,\n  body textarea,\n  body select {\n    border: 1px solid grey; }\n\n.site-body {\n  display: flex;\n  flex: 1;\n  height: 100vh; }\n  .site-body > .navigation {\n    order: -1;\n    width: 50px;\n    background-color: #519aba;\n    transition: width 0.5s; }\n    .site-body > .navigation .navigation-content {\n      position: relative; }\n    .site-body > .navigation.show {\n      width: 200px; }\n      .site-body > .navigation.show .toggle::before, .site-body > .navigation.show .toggle::after {\n        width: 15px; }\n      .site-body > .navigation.show .toggle::before {\n        transform: rotate(-45deg); }\n      .site-body > .navigation.show .toggle::after {\n        transform: rotate(45deg);\n        top: 14px; }\n    .site-body > .navigation .toggle {\n      position: absolute;\n      right: 0;\n      top: 10px;\n      width: 50px;\n      height: 25px; }\n      .site-body > .navigation .toggle::before, .site-body > .navigation .toggle::after {\n        content: \" \";\n        transition: all 0.5s linear;\n        background-color: black;\n        position: absolute;\n        right: 15px;\n        width: 25px;\n        height: 3px; }\n      .site-body > .navigation .toggle::before {\n        top: 5px; }\n      .site-body > .navigation .toggle::after {\n        top: 15px; }\n  .site-body > .open-content {\n    flex: 1;\n    overflow: scroll;\n    padding: 5px; }\n\n.data-label {\n  color: #505050; }\n\n.single-value-item {\n  line-height: 26px;\n  margin: 5px 0;\n  display: flex;\n  flex-direction: column; }\n\n.column {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: stretch; }\n  .column > * {\n    padding: 5px;\n    margin: 5px; }\n  .column.column-3 > * {\n    width: 33%; }\n  .column.column-2 > * {\n    width: 50%; }\n\n.full-recipe > header {\n  padding-left: 10px;\n  font-size: 24px;\n  font-family: Impact, Charcoal, sans-serif;\n  color: #519aba; }\n\n.full-recipe > .column > * {\n  background-color: #D0D0D0; }\n\nheader {\n  border-bottom: 2px solid #519aba; }\n  header .header-content {\n    display: flex;\n    flex-direction: row;\n    justify-content: space-between;\n    align-items: center;\n    padding-bottom: 5px;\n    margin-bottom: 5px; }\n    header .header-content > h1 {\n      color: #519aba;\n      margin: 0;\n      font-size: 50px;\n      font-family: Impact, Charcoal, sans-serif; }\n    header .header-content nav > a {\n      padding-right: 10px;\n      text-decoration: underline; }\n\n.search > input {\n  font-size: 16px;\n  height: 20px;\n  width: 540px;\n  color: #519aba;\n  border-radius: 4px;\n  background-image: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAABmJLR0QAqgCqAKohOK4IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AsRBBwx9UVFcgAAASBJREFUOMutlL1KA0EUhb+NVu4rBIQQOzvzEgYtouArnNrtXSTpImh9X0GIFgF9ClstFF0hj6BWCjZ3ZJDsTEBPMz97+Dh37s4URDKzEqiBfaDv20/AHBhLeiejIoIdALOM/1DSVcrQWQK7AQaSCkkFMPA9gJmZjZIJvcw3X1eSLpYZzewYOPdlKemjLWEdkrXBAPxbSHqaKnnP5zV5Bc9RCrjlCe5ytMizmWzKf6oDPPqh7+TMkadJAec+H68QYOLjZQoYQEMzqxLpKmA31+XCzSMg3IBb4CQ0wMucRLAG6Ev6yl29GNqmxju8AHqSPlu7LOkaKIEz4PUXZAps+IOxALrAs5mttyZcVWa2Brw49F7S9p/+Qz+7HvAQvQE/+gYLKV6t6i2B7gAAAABJRU5ErkJggg==\");\n  background-position: 100% 6px;\n  background-repeat: no-repeat;\n  padding: 5px; }\n\n.search > input:focus {\n  outline: none; }\n\n.search .results {\n  width: 552px;\n  background-color: white;\n  box-shadow: 5px 5px 10px #D0D0D0;\n  position: absolute;\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-start;\n  transform: perspective(800px) rotateX(-90deg);\n  transform-origin: top;\n  transition: all 0.5s linear; }\n  .search .results.show {\n    transform: perspective(0px) rotateX(0deg); }\n  .search .results .row {\n    border-top: 1px solid #D0D0D0;\n    border-bottom: 1px solid #D0D0D0; }\n    .search .results .row:hover {\n      background-color: #D0D0D0; }\n    .search .results .row:last-child .row-content {\n      border-bottom: none;\n      padding-bottom: 10px; }\n    .search .results .row:first-child .row-content {\n      border-top: none;\n      padding-top: 10px; }\n  .search .results .row-content {\n    display: flex;\n    flex-direction: row;\n    justify-content: flex-start;\n    align-items: stretch;\n    margin: 0px 10px;\n    padding: 5px 0; }\n    .search .results .row-content .details {\n      padding-left: 20px;\n      display: flex;\n      flex-direction: column;\n      justify-content: center; }\n      .search .results .row-content .details .title {\n        font-size: 20px; }\n        .search .results .row-content .details .title .highlight {\n          font-weight: bold;\n          font-size: 20px; }\n      .search .results .row-content .details .author {\n        font-size: 14px;\n        color: #505050; }\n    .search .results .row-content .image {\n      width: 50px;\n      height: 50px; }\n", ""]);
 
 	// exports
 
