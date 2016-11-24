@@ -2,6 +2,7 @@ import React from 'react';
 import SingleValue from './singleValue.jsx';
 import Steps from './steps.jsx';
 import Ingredients from './ingredients.jsx';
+require("../style/components/recipe.scss");
 
 var Recipe = React.createClass({
     getInitialState: function() {

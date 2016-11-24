@@ -1,4 +1,5 @@
 import React from 'react';
+require("../style/components/singleValue.scss");
 
 var SingleValue = React.createClass({
     update: function(e) {

@@ -1,0 +1,22 @@
+@import "../variables.scss";
+header {
+    background-color: $theme-color-main;
+    .header-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        >h1 {
+            color: $theme-text-header;
+            margin: 0;
+            font-size: 50px;
+            font-family: $theme-text-font-family;
+        }
+        nav {
+            >a {
+                padding-right: 10px;
+                text-decoration: underline;
+            }
+        }
+    }
+}

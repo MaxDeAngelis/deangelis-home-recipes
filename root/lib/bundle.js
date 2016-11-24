@@ -58,13 +58,13 @@
 
 	var _header2 = _interopRequireDefault(_header);
 
-	var _navigation = __webpack_require__(167);
+	var _navigation = __webpack_require__(177);
 
 	var _navigation2 = _interopRequireDefault(_navigation);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	__webpack_require__(168);
+	__webpack_require__(180);
 
 	_reactDom2.default.render(_react2.default.createElement(_header2.default, null), document.querySelector("header"));
 	_reactDom2.default.render(_react2.default.createElement(_navigation2.default, null), document.querySelector(".navigation"));
@@ -19783,6 +19783,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	__webpack_require__(175);
+
 	var Header = _react2.default.createClass({
 	    displayName: 'Header',
 
@@ -19839,6 +19841,8 @@
 	var _recipe2 = _interopRequireDefault(_recipe);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	__webpack_require__(173);
 
 	var Search = _react2.default.createClass({
 	    displayName: 'Search',
@@ -19991,15 +19995,17 @@
 
 	var _singleValue2 = _interopRequireDefault(_singleValue);
 
-	var _steps = __webpack_require__(163);
+	var _steps = __webpack_require__(167);
 
 	var _steps2 = _interopRequireDefault(_steps);
 
-	var _ingredients = __webpack_require__(164);
+	var _ingredients = __webpack_require__(168);
 
 	var _ingredients2 = _interopRequireDefault(_ingredients);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	__webpack_require__(171);
 
 	var Recipe = _react2.default.createClass({
 	    displayName: 'Recipe',
@@ -20148,6 +20154,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	__webpack_require__(163);
+
 	var SingleValue = _react2.default.createClass({
 	    displayName: "SingleValue",
 
@@ -20186,330 +20194,20 @@
 /* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Steps = _react2.default.createClass({
-	    displayName: "Steps",
-
-	    renderDisplay: function renderDisplay(steps) {
-	        var key = 0;
-	        return steps.map(function (step) {
-	            return _react2.default.createElement(
-	                "li",
-	                { key: key++ },
-	                " ",
-	                step,
-	                " "
-	            );
-	        });
-	    },
-	    renderForm: function renderForm(steps) {
-	        var key = 0;
-	        return steps.map(function (step) {
-	            return _react2.default.createElement(
-	                "li",
-	                { key: key++ },
-	                _react2.default.createElement("textarea", { value: step, onChange: function onChange() {} })
-	            );
-	        });
-	    },
-	    render: function render() {
-	        var list;
-	        var key = 0;
-	        var steps = this.props.data.steps.split("|");
-	        if (this.props.data.editable) {
-	            list = this.renderForm(steps);
-	        } else {
-	            list = this.renderDisplay(steps);
-	        }
-
-	        return _react2.default.createElement(
-	            "section",
-	            null,
-	            _react2.default.createElement(
-	                "label",
-	                { className: "data-label" },
-	                "Steps"
-	            ),
-	            _react2.default.createElement(
-	                "ol",
-	                null,
-	                " ",
-	                list,
-	                " "
-	            )
-	        );
-	    }
-	});
-
-	exports.default = Steps;
-
-/***/ },
-/* 164 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(158);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _autocomplete = __webpack_require__(165);
-
-	var _autocomplete2 = _interopRequireDefault(_autocomplete);
-
-	var _dropdown = __webpack_require__(166);
-
-	var _dropdown2 = _interopRequireDefault(_dropdown);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Ingredients = _react2.default.createClass({
-	    displayName: 'Ingredients',
-
-	    getInitialState: function getInitialState() {
-	        return {
-	            ingredients: [],
-	            units: [],
-	            currentIngredients: this.props.data.ingredients
-	        };
-	    },
-	    componentWillMount: function componentWillMount() {
-	        var me = this;
-	        $.get('../processAction.php', { action: 'GET_DATA_INGREDIENTS' }, function (response) {
-	            me.setState({ ingredients: response });
-	        }, "json");
-
-	        $.get('../processAction.php', { action: 'GET_DATA_UNITS' }, function (response) {
-	            me.setState({ units: response });
-	        }, "json");
-	    },
-	    renderDisplay: function renderDisplay() {
-	        var key = 0;
-	        return this.state.currentIngredients.map(function (ing) {
-	            return _react2.default.createElement(
-	                'li',
-	                { key: key++ },
-	                ing.quantity + " " + ing.units + " " + ing.ingredientName,
-	                ' '
-	            );
-	        });
-	    },
-	    renderForm: function renderForm() {
-	        var key = 0;
-	        var me = this;
-	        var source = function source(request, response) {
-	            response(me.state.ingredients.map(function (ingredient) {
-	                return ingredient.name;
-	            }));
-	        };
-
-	        return this.state.currentIngredients.map(function (ing) {
-	            return _react2.default.createElement(
-	                'li',
-	                { key: key++, className: 'column column-3' },
-	                _react2.default.createElement('input', { value: ing.quantity, onChange: function onChange() {} }),
-	                _react2.default.createElement(_dropdown2.default, { options: me.state.units,
-	                    change: function change() {
-	                        console.log("d");
-	                    } }),
-	                _react2.default.createElement(_autocomplete2.default, { value: ing.ingredientName,
-	                    source: source,
-	                    change: function change() {
-	                        console.log("a");
-	                    } })
-	            );
-	        });
-	    },
-	    render: function render() {
-	        var list;
-	        if (this.props.data.editable) {
-	            list = this.renderForm();
-	        } else {
-	            list = this.renderDisplay();
-	        }
-
-	        return _react2.default.createElement(
-	            'section',
-	            null,
-	            _react2.default.createElement(
-	                'label',
-	                { className: 'data-label' },
-	                'Ingredients'
-	            ),
-	            _react2.default.createElement(
-	                'ul',
-	                null,
-	                list
-	            ),
-	            this.props.children
-	        );
-	    }
-	});
-
-	exports.default = Ingredients;
-
-/***/ },
-/* 165 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(158);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var AutoComplete = _react2.default.createClass({
-	  displayName: 'AutoComplete',
-
-	  render: function render() {
-	    return _react2.default.createElement('input', { value: this.props.value,
-	      onChange: this.props.change });
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.updateAutocomplete();
-	  },
-
-	  componentDidUpdate: function componentDidUpdate() {
-	    this.updateAutocomplete();
-	  },
-
-	  updateAutocomplete: function updateAutocomplete() {
-	    var source = this.props.source;
-	    $(_reactDom2.default.findDOMNode(this)).autocomplete({ source: source });
-	  }
-	});
-
-	exports.default = AutoComplete;
-
-/***/ },
-/* 166 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Dropdown = _react2.default.createClass({
-	    displayName: 'Dropdown',
-
-	    render: function render() {
-	        var me = this;
-	        var key = 0;
-	        var options = this.props.options.map(function (option) {
-	            return _react2.default.createElement(
-	                'option',
-	                { key: key++, value: option },
-	                option
-	            );
-	        });
-
-	        return _react2.default.createElement(
-	            'select',
-	            { onChange: this.props.change },
-	            options
-	        );
-	    }
-	});
-
-	exports.default = Dropdown;
-
-/***/ },
-/* 167 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(158);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Navigation = _react2.default.createClass({
-	    displayName: 'Navigation',
-
-	    toggle: function toggle() {
-	        var nav = document.querySelector(".navigation");
-	        if (nav.className == "navigation") {
-	            nav.className += " show";
-	        } else {
-	            nav.className = "navigation";
-	        }
-	    },
-	    render: function render() {
-	        return _react2.default.createElement(
-	            'div',
-	            { className: 'navigation-content' },
-	            _react2.default.createElement('div', { className: 'toggle', onClick: this.toggle })
-	        );
-	    }
-	});
-
-	exports.default = Navigation;
-
-/***/ },
-/* 168 */
-/***/ function(module, exports, __webpack_require__) {
-
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(169);
+	var content = __webpack_require__(164);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(171)(content, {});
+	var update = __webpack_require__(166)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!./style.scss", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!./style.scss");
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./singleValue.scss", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./singleValue.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -20519,21 +20217,21 @@
 	}
 
 /***/ },
-/* 169 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(170)();
+	exports = module.exports = __webpack_require__(165)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "body {\n  overflow: hidden;\n  margin: 0; }\n  body * {\n    font-family: Verdana, Arial, sans-serif;\n    font-size: 18px; }\n  body input,\n  body textarea,\n  body select {\n    border: 1px solid grey; }\n\n.site-body {\n  display: flex;\n  flex: 1;\n  height: 100vh; }\n  .site-body > .navigation {\n    order: -1;\n    width: 50px;\n    background-color: #519aba;\n    transition: width 0.5s; }\n    .site-body > .navigation .navigation-content {\n      position: relative; }\n    .site-body > .navigation.show {\n      width: 200px; }\n      .site-body > .navigation.show .toggle::before, .site-body > .navigation.show .toggle::after {\n        width: 15px; }\n      .site-body > .navigation.show .toggle::before {\n        transform: rotate(-45deg); }\n      .site-body > .navigation.show .toggle::after {\n        transform: rotate(45deg);\n        top: 14px; }\n    .site-body > .navigation .toggle {\n      position: absolute;\n      right: 0;\n      top: 10px;\n      width: 50px;\n      height: 25px; }\n      .site-body > .navigation .toggle::before, .site-body > .navigation .toggle::after {\n        content: \" \";\n        transition: all 0.5s linear;\n        background-color: black;\n        position: absolute;\n        right: 15px;\n        width: 25px;\n        height: 3px; }\n      .site-body > .navigation .toggle::before {\n        top: 5px; }\n      .site-body > .navigation .toggle::after {\n        top: 15px; }\n  .site-body > .open-content {\n    flex: 1;\n    overflow: scroll;\n    padding: 5px; }\n\n.data-label {\n  color: #505050; }\n\n.single-value-item {\n  line-height: 26px;\n  margin: 5px 0;\n  display: flex;\n  flex-direction: column; }\n\n.column {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: stretch; }\n  .column > * {\n    padding: 5px;\n    margin: 5px; }\n  .column.column-3 > * {\n    width: 33%; }\n  .column.column-2 > * {\n    width: 50%; }\n\n.full-recipe > header {\n  padding-left: 10px;\n  font-size: 24px;\n  font-family: Impact, Charcoal, sans-serif;\n  color: #519aba; }\n\n.full-recipe > .column > * {\n  background-color: #D0D0D0; }\n\nheader {\n  border-bottom: 2px solid #519aba; }\n  header .header-content {\n    display: flex;\n    flex-direction: row;\n    justify-content: space-between;\n    align-items: center;\n    padding-bottom: 5px;\n    margin-bottom: 5px; }\n    header .header-content > h1 {\n      color: #519aba;\n      margin: 0;\n      font-size: 50px;\n      font-family: Impact, Charcoal, sans-serif; }\n    header .header-content nav > a {\n      padding-right: 10px;\n      text-decoration: underline; }\n\n.search > input {\n  font-size: 16px;\n  height: 20px;\n  width: 540px;\n  color: #519aba;\n  border-radius: 4px;\n  background-image: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAABmJLR0QAqgCqAKohOK4IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AsRBBwx9UVFcgAAASBJREFUOMutlL1KA0EUhb+NVu4rBIQQOzvzEgYtouArnNrtXSTpImh9X0GIFgF9ClstFF0hj6BWCjZ3ZJDsTEBPMz97+Dh37s4URDKzEqiBfaDv20/AHBhLeiejIoIdALOM/1DSVcrQWQK7AQaSCkkFMPA9gJmZjZIJvcw3X1eSLpYZzewYOPdlKemjLWEdkrXBAPxbSHqaKnnP5zV5Bc9RCrjlCe5ytMizmWzKf6oDPPqh7+TMkadJAec+H68QYOLjZQoYQEMzqxLpKmA31+XCzSMg3IBb4CQ0wMucRLAG6Ev6yl29GNqmxju8AHqSPlu7LOkaKIEz4PUXZAps+IOxALrAs5mttyZcVWa2Brw49F7S9p/+Qz+7HvAQvQE/+gYLKV6t6i2B7gAAAABJRU5ErkJggg==\");\n  background-position: 100% 6px;\n  background-repeat: no-repeat;\n  padding: 5px; }\n\n.search > input:focus {\n  outline: none; }\n\n.search .results {\n  width: 552px;\n  background-color: white;\n  box-shadow: 5px 5px 10px #D0D0D0;\n  position: absolute;\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-start;\n  transform: perspective(800px) rotateX(-90deg);\n  transform-origin: top;\n  transition: all 0.5s linear; }\n  .search .results.show {\n    transform: perspective(0px) rotateX(0deg); }\n  .search .results .row {\n    border-top: 1px solid #D0D0D0;\n    border-bottom: 1px solid #D0D0D0; }\n    .search .results .row:hover {\n      background-color: #D0D0D0; }\n    .search .results .row:last-child .row-content {\n      border-bottom: none;\n      padding-bottom: 10px; }\n    .search .results .row:first-child .row-content {\n      border-top: none;\n      padding-top: 10px; }\n  .search .results .row-content {\n    display: flex;\n    flex-direction: row;\n    justify-content: flex-start;\n    align-items: stretch;\n    margin: 0px 10px;\n    padding: 5px 0; }\n    .search .results .row-content .details {\n      padding-left: 20px;\n      display: flex;\n      flex-direction: column;\n      justify-content: center; }\n      .search .results .row-content .details .title {\n        font-size: 20px; }\n        .search .results .row-content .details .title .highlight {\n          font-weight: bold;\n          font-size: 20px; }\n      .search .results .row-content .details .author {\n        font-size: 14px;\n        color: #505050; }\n    .search .results .row-content .image {\n      width: 50px;\n      height: 50px; }\n", ""]);
+	exports.push([module.id, ".data-label {\n  color: #5f5f5f; }\n\n.single-value-item {\n  line-height: 26px;\n  margin: 5px 0;\n  display: flex;\n  flex-direction: column; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 170 */
+/* 165 */
 /***/ function(module, exports) {
 
 	/*
@@ -20589,7 +20287,7 @@
 
 
 /***/ },
-/* 171 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -20838,6 +20536,547 @@
 		if(oldSrc)
 			URL.revokeObjectURL(oldSrc);
 	}
+
+
+/***/ },
+/* 167 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Steps = _react2.default.createClass({
+	    displayName: "Steps",
+
+	    renderDisplay: function renderDisplay(steps) {
+	        var key = 0;
+	        return steps.map(function (step) {
+	            return _react2.default.createElement(
+	                "li",
+	                { key: key++ },
+	                " ",
+	                step,
+	                " "
+	            );
+	        });
+	    },
+	    renderForm: function renderForm(steps) {
+	        var key = 0;
+	        return steps.map(function (step) {
+	            return _react2.default.createElement(
+	                "li",
+	                { key: key++ },
+	                _react2.default.createElement("textarea", { value: step, onChange: function onChange() {} })
+	            );
+	        });
+	    },
+	    render: function render() {
+	        var list;
+	        var key = 0;
+	        var steps = this.props.data.steps.split("|");
+	        if (this.props.data.editable) {
+	            list = this.renderForm(steps);
+	        } else {
+	            list = this.renderDisplay(steps);
+	        }
+
+	        return _react2.default.createElement(
+	            "section",
+	            null,
+	            _react2.default.createElement(
+	                "label",
+	                { className: "data-label" },
+	                "Steps"
+	            ),
+	            _react2.default.createElement(
+	                "ol",
+	                null,
+	                " ",
+	                list,
+	                " "
+	            )
+	        );
+	    }
+	});
+
+	exports.default = Steps;
+
+/***/ },
+/* 168 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(158);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _autocomplete = __webpack_require__(169);
+
+	var _autocomplete2 = _interopRequireDefault(_autocomplete);
+
+	var _dropdown = __webpack_require__(170);
+
+	var _dropdown2 = _interopRequireDefault(_dropdown);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Ingredients = _react2.default.createClass({
+	    displayName: 'Ingredients',
+
+	    getInitialState: function getInitialState() {
+	        return {
+	            ingredients: [],
+	            units: [],
+	            currentIngredients: this.props.data.ingredients
+	        };
+	    },
+	    componentWillMount: function componentWillMount() {
+	        var me = this;
+	        $.get('../processAction.php', { action: 'GET_DATA_INGREDIENTS' }, function (response) {
+	            me.setState({ ingredients: response });
+	        }, "json");
+
+	        $.get('../processAction.php', { action: 'GET_DATA_UNITS' }, function (response) {
+	            me.setState({ units: response });
+	        }, "json");
+	    },
+	    renderDisplay: function renderDisplay() {
+	        var key = 0;
+	        return this.state.currentIngredients.map(function (ing) {
+	            return _react2.default.createElement(
+	                'li',
+	                { key: key++ },
+	                ing.quantity + " " + ing.units + " " + ing.ingredientName,
+	                ' '
+	            );
+	        });
+	    },
+	    renderForm: function renderForm() {
+	        var key = 0;
+	        var me = this;
+	        var source = function source(request, response) {
+	            response(me.state.ingredients.map(function (ingredient) {
+	                return ingredient.name;
+	            }));
+	        };
+
+	        return this.state.currentIngredients.map(function (ing) {
+	            return _react2.default.createElement(
+	                'li',
+	                { key: key++, className: 'column column-3' },
+	                _react2.default.createElement('input', { value: ing.quantity, onChange: function onChange() {} }),
+	                _react2.default.createElement(_dropdown2.default, { options: me.state.units,
+	                    change: function change() {
+	                        console.log("d");
+	                    } }),
+	                _react2.default.createElement(_autocomplete2.default, { value: ing.ingredientName,
+	                    source: source,
+	                    change: function change() {
+	                        console.log("a");
+	                    } })
+	            );
+	        });
+	    },
+	    render: function render() {
+	        var list;
+	        if (this.props.data.editable) {
+	            list = this.renderForm();
+	        } else {
+	            list = this.renderDisplay();
+	        }
+
+	        return _react2.default.createElement(
+	            'section',
+	            null,
+	            _react2.default.createElement(
+	                'label',
+	                { className: 'data-label' },
+	                'Ingredients'
+	            ),
+	            _react2.default.createElement(
+	                'ul',
+	                null,
+	                list
+	            ),
+	            this.props.children
+	        );
+	    }
+	});
+
+	exports.default = Ingredients;
+
+/***/ },
+/* 169 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(158);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var AutoComplete = _react2.default.createClass({
+	  displayName: 'AutoComplete',
+
+	  render: function render() {
+	    return _react2.default.createElement('input', { value: this.props.value,
+	      onChange: this.props.change });
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.updateAutocomplete();
+	  },
+
+	  componentDidUpdate: function componentDidUpdate() {
+	    this.updateAutocomplete();
+	  },
+
+	  updateAutocomplete: function updateAutocomplete() {
+	    var source = this.props.source;
+	    $(_reactDom2.default.findDOMNode(this)).autocomplete({ source: source });
+	  }
+	});
+
+	exports.default = AutoComplete;
+
+/***/ },
+/* 170 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Dropdown = _react2.default.createClass({
+	    displayName: 'Dropdown',
+
+	    render: function render() {
+	        var me = this;
+	        var key = 0;
+	        var options = this.props.options.map(function (option) {
+	            return _react2.default.createElement(
+	                'option',
+	                { key: key++, value: option },
+	                option
+	            );
+	        });
+
+	        return _react2.default.createElement(
+	            'select',
+	            { onChange: this.props.change },
+	            options
+	        );
+	    }
+	});
+
+	exports.default = Dropdown;
+
+/***/ },
+/* 171 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(172);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(166)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./recipe.scss", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./recipe.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(165)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".full-recipe > header {\n  padding-left: 10px;\n  font-size: 24px;\n  font-family: Impact, Charcoal, sans-serif;\n  color: #f1f1f1;\n  background-color: #5f5f5f; }\n\n.full-recipe > .column > * {\n  background-color: #f1f1f1; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(174);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(166)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./search.scss", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./search.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(165)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".search > input {\n  font-size: 16px;\n  height: 20px;\n  width: 540px;\n  color: #5f5f5f;\n  border-radius: 4px;\n  background-image: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAABmJLR0QAqgCqAKohOK4IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AsRBBwx9UVFcgAAASBJREFUOMutlL1KA0EUhb+NVu4rBIQQOzvzEgYtouArnNrtXSTpImh9X0GIFgF9ClstFF0hj6BWCjZ3ZJDsTEBPMz97+Dh37s4URDKzEqiBfaDv20/AHBhLeiejIoIdALOM/1DSVcrQWQK7AQaSCkkFMPA9gJmZjZIJvcw3X1eSLpYZzewYOPdlKemjLWEdkrXBAPxbSHqaKnnP5zV5Bc9RCrjlCe5ytMizmWzKf6oDPPqh7+TMkadJAec+H68QYOLjZQoYQEMzqxLpKmA31+XCzSMg3IBb4CQ0wMucRLAG6Ev6yl29GNqmxju8AHqSPlu7LOkaKIEz4PUXZAps+IOxALrAs5mttyZcVWa2Brw49F7S9p/+Qz+7HvAQvQE/+gYLKV6t6i2B7gAAAABJRU5ErkJggg==\");\n  background-position: 100% 6px;\n  background-repeat: no-repeat;\n  border-color: #5f5f5f;\n  padding: 5px; }\n\n.search > input:focus {\n  outline: none; }\n\n.search .results {\n  width: 552px;\n  background-color: #f1f1f1;\n  box-shadow: 5px 5px 10px black;\n  position: absolute;\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-start;\n  transform: perspective(800px) rotateX(-90deg);\n  transform-origin: top;\n  transition: all 0.5s linear; }\n  .search .results.show {\n    transform: perspective(0px) rotateX(0deg); }\n  .search .results .row {\n    border-top: 1px solid #5f5f5f;\n    border-bottom: 1px solid #5f5f5f; }\n    .search .results .row:hover {\n      background-color: #4CAF50; }\n    .search .results .row:last-child .row-content {\n      border-bottom: none;\n      padding-bottom: 10px; }\n    .search .results .row:first-child .row-content {\n      border-top: none;\n      padding-top: 10px; }\n  .search .results .row-content {\n    display: flex;\n    flex-direction: row;\n    justify-content: flex-start;\n    align-items: stretch;\n    margin: 0px 10px;\n    padding: 5px 0; }\n    .search .results .row-content .details {\n      padding-left: 20px;\n      display: flex;\n      flex-direction: column;\n      justify-content: center; }\n      .search .results .row-content .details .title {\n        font-size: 20px; }\n        .search .results .row-content .details .title .highlight {\n          font-weight: bold;\n          font-size: 20px; }\n      .search .results .row-content .details .author {\n        font-size: 14px;\n        color: #5f5f5f; }\n    .search .results .row-content .image {\n      width: 50px;\n      height: 50px; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(176);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(166)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./header.scss", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./header.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(165)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "header {\n  background-color: #5f5f5f; }\n  header .header-content {\n    display: flex;\n    flex-direction: row;\n    justify-content: space-between;\n    align-items: center; }\n    header .header-content > h1 {\n      color: #f1f1f1;\n      margin: 0;\n      font-size: 50px;\n      font-family: Impact, Charcoal, sans-serif; }\n    header .header-content nav > a {\n      padding-right: 10px;\n      text-decoration: underline; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(158);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	__webpack_require__(178);
+
+	var Navigation = _react2.default.createClass({
+	    displayName: 'Navigation',
+
+	    home: function home() {
+	        debugger;
+	        var openContent = document.querySelector(".open-content");
+	        _reactDom2.default.unmountComponentAtNode(openContent);
+	        //ReactDOM.render(<Recipe data={response} />, openContent);
+	    },
+	    toggle: function toggle() {
+	        debugger;
+	        var nav = document.querySelector(".navigation");
+	        if (nav.className == "navigation") {
+	            nav.className += " show";
+	        } else {
+	            nav.className = "navigation";
+	        }
+	    },
+	    render: function render() {
+	        return _react2.default.createElement(
+	            'ul',
+	            { className: 'navigation-content' },
+	            _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement('a', { className: 'link toggle', onClick: this.toggle })
+	            ),
+	            _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                    'a',
+	                    { className: 'link', onClick: this.home },
+	                    'Home'
+	                )
+	            ),
+	            _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                    'a',
+	                    { className: 'link', onClick: this.home },
+	                    'Administrator'
+	                )
+	            )
+	        );
+	    }
+	});
+
+	exports.default = Navigation;
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(179);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(166)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./navigation.scss", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./navigation.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(165)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".navigation {\n  width: 50px;\n  background-color: #4CAF50;\n  transition: width 0.5s; }\n  .navigation .navigation-content {\n    position: relative;\n    flex-direction: row;\n    justify-content: flex-start;\n    align-items: stretch;\n    height: 100%;\n    list-style-type: none;\n    margin: 0;\n    padding: 0; }\n    .navigation .navigation-content > li {\n      height: 35px; }\n    .navigation .navigation-content .link {\n      height: 35px;\n      display: block;\n      line-height: 35px;\n      color: #f1f1f1;\n      padding-left: 10px; }\n      .navigation .navigation-content .link:hover {\n        background-color: #5f5f5f; }\n    .navigation .navigation-content .toggle {\n      float: right;\n      width: 50px;\n      padding: 0; }\n      .navigation .navigation-content .toggle::before, .navigation .navigation-content .toggle::after {\n        content: \" \";\n        transition: all 0.5s linear;\n        background-color: black;\n        position: absolute;\n        right: 15px;\n        width: 25px;\n        height: 3px; }\n      .navigation .navigation-content .toggle::before {\n        top: 10px; }\n      .navigation .navigation-content .toggle::after {\n        top: 20px; }\n      .navigation .navigation-content .toggle:hover {\n        background-color: transparent; }\n  .navigation.show {\n    width: 200px; }\n    .navigation.show .toggle {\n      width: 35px; }\n      .navigation.show .toggle::before, .navigation.show .toggle::after {\n        right: 12px;\n        width: 15px; }\n      .navigation.show .toggle::before {\n        transform: rotate(-45deg); }\n      .navigation.show .toggle::after {\n        transform: rotate(45deg);\n        top: 19px; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(181);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(166)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!./main.scss", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!./main.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 181 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(165)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "body {\n  overflow: hidden;\n  margin: 0; }\n  body * {\n    font-family: Verdana, Arial, sans-serif;\n    font-size: 18px; }\n  body input,\n  body textarea,\n  body select {\n    border: 1px solid grey; }\n\n.site-body {\n  display: flex;\n  flex: 1;\n  height: 100vh; }\n  .site-body > .navigation {\n    order: -1; }\n  .site-body > .open-content {\n    flex: 1;\n    overflow: scroll;\n    padding: 5px 5px 50px 5px; }\n\n.column {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: stretch; }\n  .column > * {\n    padding: 5px;\n    margin: 5px; }\n  .column.column-3 > * {\n    width: 33%; }\n  .column.column-2 > * {\n    width: 50%; }\n", ""]);
+
+	// exports
 
 
 /***/ }

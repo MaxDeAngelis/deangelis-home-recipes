@@ -1,0 +1,49 @@
+@import "variables.scss";
+body {
+    overflow: hidden;
+    margin: 0;
+    * {
+        font-family: Verdana, Arial, sans-serif;
+        font-size: 18px;
+    }
+    input,
+    textarea,
+    select {
+        border: 1px solid grey;
+    }
+}
+
+.site-body {
+    display: flex;
+    flex: 1;
+    height: 100vh;
+    >.navigation {
+        order: -1;
+    }
+    >.open-content {
+        flex: 1;
+        overflow: scroll;
+        padding: 5px 5px 50px 5px;
+    }
+}
+
+.column {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    >* {
+        padding: 5px;
+        margin: 5px;
+    }
+    &.column-3 {
+        >* {
+            width: 33%;
+        }
+    }
+    &.column-2 {
+        >* {
+            width: 50%;
+        }
+    }
+}

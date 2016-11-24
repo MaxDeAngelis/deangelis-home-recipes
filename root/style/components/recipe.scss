@@ -1,0 +1,15 @@
+@import "../variables.scss";
+.full-recipe {
+    >header {
+        padding-left: 10px;
+        font-size: 24px;
+        font-family: $theme-text-font-family;
+        color: $theme-text-header;
+        background-color: $theme-color-main;
+    }
+    >.column {
+        >* {
+            background-color: $theme-color-content;
+        }
+    }
+}

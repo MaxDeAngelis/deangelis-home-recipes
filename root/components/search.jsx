@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Recipe from './recipe.jsx';
+require("../style/components/search.scss");
 
 const Search = React.createClass({
     getInitialState: function () {

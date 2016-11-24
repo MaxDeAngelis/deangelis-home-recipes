@@ -1,0 +1,77 @@
+@import "../variables.scss";
+.search {
+    >input {
+        font-size: 16px;
+        height: 20px;
+        width: 540px;
+        color: $theme-text-label;
+        border-radius: 4px;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAABmJLR0QAqgCqAKohOK4IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AsRBBwx9UVFcgAAASBJREFUOMutlL1KA0EUhb+NVu4rBIQQOzvzEgYtouArnNrtXSTpImh9X0GIFgF9ClstFF0hj6BWCjZ3ZJDsTEBPMz97+Dh37s4URDKzEqiBfaDv20/AHBhLeiejIoIdALOM/1DSVcrQWQK7AQaSCkkFMPA9gJmZjZIJvcw3X1eSLpYZzewYOPdlKemjLWEdkrXBAPxbSHqaKnnP5zV5Bc9RCrjlCe5ytMizmWzKf6oDPPqh7+TMkadJAec+H68QYOLjZQoYQEMzqxLpKmA31+XCzSMg3IBb4CQ0wMucRLAG6Ev6yl29GNqmxju8AHqSPlu7LOkaKIEz4PUXZAps+IOxALrAs5mttyZcVWa2Brw49F7S9p/+Qz+7HvAQvQE/+gYLKV6t6i2B7gAAAABJRU5ErkJggg==');
+        background-position: 100% 6px;
+        background-repeat: no-repeat;
+        border-color: $theme-text-label;
+        padding: 5px;
+    }
+    >input:focus {
+        outline: none;
+    }
+    .results {
+        width: 552px;
+        background-color: $theme-color-content;
+        box-shadow: 5px 5px 10px black;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        transform: perspective(800px) rotateX(-90deg);
+        transform-origin: top;
+        transition: all 0.5s linear;
+        &.show {
+            transform: perspective(0px) rotateX(0deg);
+        }
+        .row {
+            border-top: 1px solid $theme-color-main;
+            border-bottom: 1px solid $theme-color-main;
+            &:hover {
+                background-color: $theme-color-accent;
+            }
+            &:last-child .row-content {
+                border-bottom: none;
+                padding-bottom: 10px;
+            }
+            &:first-child .row-content {
+                border-top: none;
+                padding-top: 10px;
+            }
+        }
+        .row-content {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: stretch;
+            margin: 0px 10px;
+            padding: 5px 0;
+            .details {
+                padding-left: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                .title {
+                    font-size: 20px;
+                    .highlight {
+                        font-weight: bold;
+                        font-size: 20px;
+                    }
+                }
+                .author {
+                    font-size: 14px;
+                    color: $theme-text-label;
+                }
+            }
+            .image {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    }
+}

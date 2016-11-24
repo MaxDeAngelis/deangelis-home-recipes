@@ -1,5 +1,6 @@
 import React from 'react';
 import Search from './search.jsx';
+require("../style/components/header.scss");
 
 var Header = React.createClass({
     render: function() {
