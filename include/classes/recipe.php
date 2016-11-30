@@ -48,7 +48,7 @@ class Recipe {
                 case 'steps':
                     $this->steps = $value;
                     break;
-                case 'modeDate':
+                case 'modDate':
                     $this->dateCreated = $value;
                     break;
                 case 'picture':

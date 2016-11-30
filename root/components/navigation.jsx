@@ -20,9 +20,10 @@ var Navigation = React.createClass({
     },
     render: function() {
         return (<ul className="navigation-content">
-            <li><a className="link toggle" onClick={this.toggle}></a></li>
-            <li><a className="link" onClick={this.home}>Home</a></li>
-            <li><a className="link" onClick={this.home}>Administrator</a></li>
+            <li className="link"><a className="toggle" onClick={this.toggle}></a></li>
+            <li className="link ti-home hover" onClick={this.home}><span className="text">Home</span></li>
+            <li className="link ti-user hover" onClick={this.home}><span className="text">Administrator</span></li>
+            <li className="link ti-plus hover" onClick={this.home}><span className="text">New</span></li>
         </ul>
         );
     }
