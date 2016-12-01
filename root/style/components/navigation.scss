@@ -1,7 +1,7 @@
 @import "../variables.scss";
 .navigation {
     width: 50px;
-    background-color: $theme-color-accent;
+    background-color: $theme-color-two;
     transition: width 0.5s;
     .navigation-content {
         position: relative;
@@ -24,7 +24,7 @@
                 transition: all 0.5s;
             }
             &.hover:hover {
-                background-color: $theme-color-main;
+                background-color: $theme-color-one;
             }
             &::before {
                 font-size: 26px;

@@ -1,15 +1,16 @@
 @import "../variables.scss";
 .full-recipe {
-    >header {
-        padding-left: 10px;
-        font-size: 24px;
-        font-family: $theme-text-font-family;
-        color: $theme-text-header;
-        background-color: $theme-color-main;
-    }
-    >.column {
-        >* {
-            background-color: $theme-color-content;
+    >.recipe-title {
+        padding-left: 20px;
+        border-bottom: 2px solid $theme-color-one;
+        >span {
+            color: $theme-color-one;
+            line-height: 50px;
+            font-size: 24px;
+        }
+        >.text {
+            font-family: $theme-text-font-family;
+            padding-right: 10px;
         }
     }
 }

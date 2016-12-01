@@ -17,7 +17,7 @@
     }
     .results {
         width: 552px;
-        background-color: $theme-color-content;
+        background-color: white;
         box-shadow: 5px 5px 10px black;
         position: absolute;
         display: flex;
@@ -30,10 +30,10 @@
             transform: perspective(0px) rotateX(0deg);
         }
         .row {
-            border-top: 1px solid $theme-color-main;
-            border-bottom: 1px solid $theme-color-main;
+            border-top: 1px solid $theme-color-one;
+            border-bottom: 1px solid $theme-color-one;
             &:hover {
-                background-color: $theme-color-accent;
+                background-color: $theme-color-two;
             }
             &:last-child .row-content {
                 border-bottom: none;

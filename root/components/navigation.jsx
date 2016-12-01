@@ -4,13 +4,11 @@ require("../style/components/navigation.scss");
 
 var Navigation = React.createClass({
     home: function() {
-        debugger;
         var openContent = document.querySelector(".open-content");
         ReactDOM.unmountComponentAtNode(openContent);
         //ReactDOM.render(<Recipe data={response} />, openContent);
     },
     toggle: function() {
-        debugger;
         var nav = document.querySelector(".navigation");
         if (nav.className == "navigation") {
             nav.className += " show";

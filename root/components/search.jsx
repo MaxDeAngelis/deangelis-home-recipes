@@ -87,7 +87,6 @@ const Search = React.createClass({
         document.querySelector(".search > .results").className = "results";
     },
     select: function (e) {
-        debugger;
         var element = e.target;
         while (element.className != "row") {
             element = element.parentElement;

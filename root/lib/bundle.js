@@ -19936,7 +19936,6 @@
 	        document.querySelector(".search > .results").className = "results";
 	    },
 	    select: function select(e) {
-	        debugger;
 	        var element = e.target;
 	        while (element.className != "row") {
 	            element = element.parentElement;
@@ -20065,17 +20064,9 @@
 	            return false;
 	        }
 	        var addLink = "";
-	        var editButton = _react2.default.createElement(
-	            'button',
-	            { onClick: this.edit },
-	            'Edit'
-	        );
+	        var editButton = _react2.default.createElement('span', { className: 'ti-pencil', onClick: this.edit });
 	        if (editable) {
-	            editButton = _react2.default.createElement(
-	                'button',
-	                { onClick: this.save },
-	                'Save'
-	            );
+	            editButton = _react2.default.createElement('span', { className: 'ti-save', onClick: this.save });
 	            addLink = _react2.default.createElement(
 	                'a',
 	                { onClick: this.addIngredient },
@@ -20086,11 +20077,15 @@
 	        return _react2.default.createElement(
 	            'main',
 	            { className: 'full-recipe' },
-	            editButton,
 	            _react2.default.createElement(
 	                'header',
-	                null,
-	                this.props.data.title
+	                { className: 'recipe-title' },
+	                _react2.default.createElement(
+	                    'span',
+	                    { className: 'text' },
+	                    this.props.data.title
+	                ),
+	                editButton
 	            ),
 	            _react2.default.createElement(
 	                'section',
@@ -20841,7 +20836,7 @@
 
 
 	// module
-	exports.push([module.id, ".full-recipe > header {\n  padding-left: 10px;\n  font-size: 24px;\n  font-family: Impact, Charcoal, sans-serif;\n  color: #f1f1f1;\n  background-color: #565656; }\n\n.full-recipe > .column > * {\n  background-color: #d7cec7; }\n", ""]);
+	exports.push([module.id, ".full-recipe > .recipe-title {\n  padding-left: 20px;\n  border-bottom: 2px solid #004882; }\n  .full-recipe > .recipe-title > span {\n    color: #004882;\n    line-height: 50px;\n    font-size: 24px; }\n  .full-recipe > .recipe-title > .text {\n    font-family: Impact, Charcoal, sans-serif;\n    padding-right: 10px; }\n", ""]);
 
 	// exports
 
@@ -20881,7 +20876,7 @@
 
 
 	// module
-	exports.push([module.id, ".search > input {\n  font-size: 16px;\n  height: 20px;\n  width: 540px;\n  color: #5f5f5f;\n  border-radius: 4px;\n  background-image: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAABmJLR0QAqgCqAKohOK4IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AsRBBwx9UVFcgAAASBJREFUOMutlL1KA0EUhb+NVu4rBIQQOzvzEgYtouArnNrtXSTpImh9X0GIFgF9ClstFF0hj6BWCjZ3ZJDsTEBPMz97+Dh37s4URDKzEqiBfaDv20/AHBhLeiejIoIdALOM/1DSVcrQWQK7AQaSCkkFMPA9gJmZjZIJvcw3X1eSLpYZzewYOPdlKemjLWEdkrXBAPxbSHqaKnnP5zV5Bc9RCrjlCe5ytMizmWzKf6oDPPqh7+TMkadJAec+H68QYOLjZQoYQEMzqxLpKmA31+XCzSMg3IBb4CQ0wMucRLAG6Ev6yl29GNqmxju8AHqSPlu7LOkaKIEz4PUXZAps+IOxALrAs5mttyZcVWa2Brw49F7S9p/+Qz+7HvAQvQE/+gYLKV6t6i2B7gAAAABJRU5ErkJggg==\");\n  background-position: 100% 6px;\n  background-repeat: no-repeat;\n  border-color: #5f5f5f;\n  padding: 5px; }\n\n.search > input:focus {\n  outline: none; }\n\n.search .results {\n  width: 552px;\n  background-color: #d7cec7;\n  box-shadow: 5px 5px 10px black;\n  position: absolute;\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-start;\n  transform: perspective(800px) rotateX(-90deg);\n  transform-origin: top;\n  transition: all 0.5s linear; }\n  .search .results.show {\n    transform: perspective(0px) rotateX(0deg); }\n  .search .results .row {\n    border-top: 1px solid #565656;\n    border-bottom: 1px solid #565656; }\n    .search .results .row:hover {\n      background-color: #c09f80; }\n    .search .results .row:last-child .row-content {\n      border-bottom: none;\n      padding-bottom: 10px; }\n    .search .results .row:first-child .row-content {\n      border-top: none;\n      padding-top: 10px; }\n  .search .results .row-content {\n    display: flex;\n    flex-direction: row;\n    justify-content: flex-start;\n    align-items: stretch;\n    margin: 0px 10px;\n    padding: 5px 0; }\n    .search .results .row-content .details {\n      padding-left: 20px;\n      display: flex;\n      flex-direction: column;\n      justify-content: center; }\n      .search .results .row-content .details .title {\n        font-size: 20px; }\n        .search .results .row-content .details .title .highlight {\n          font-weight: bold;\n          font-size: 20px; }\n      .search .results .row-content .details .author {\n        font-size: 14px;\n        color: #5f5f5f; }\n    .search .results .row-content .image {\n      width: 50px;\n      height: 50px; }\n", ""]);
+	exports.push([module.id, ".search > input {\n  font-size: 16px;\n  height: 20px;\n  width: 540px;\n  color: #5f5f5f;\n  border-radius: 4px;\n  background-image: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAABmJLR0QAqgCqAKohOK4IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AsRBBwx9UVFcgAAASBJREFUOMutlL1KA0EUhb+NVu4rBIQQOzvzEgYtouArnNrtXSTpImh9X0GIFgF9ClstFF0hj6BWCjZ3ZJDsTEBPMz97+Dh37s4URDKzEqiBfaDv20/AHBhLeiejIoIdALOM/1DSVcrQWQK7AQaSCkkFMPA9gJmZjZIJvcw3X1eSLpYZzewYOPdlKemjLWEdkrXBAPxbSHqaKnnP5zV5Bc9RCrjlCe5ytMizmWzKf6oDPPqh7+TMkadJAec+H68QYOLjZQoYQEMzqxLpKmA31+XCzSMg3IBb4CQ0wMucRLAG6Ev6yl29GNqmxju8AHqSPlu7LOkaKIEz4PUXZAps+IOxALrAs5mttyZcVWa2Brw49F7S9p/+Qz+7HvAQvQE/+gYLKV6t6i2B7gAAAABJRU5ErkJggg==\");\n  background-position: 100% 6px;\n  background-repeat: no-repeat;\n  border-color: #5f5f5f;\n  padding: 5px; }\n\n.search > input:focus {\n  outline: none; }\n\n.search .results {\n  width: 552px;\n  background-color: white;\n  box-shadow: 5px 5px 10px black;\n  position: absolute;\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-start;\n  transform: perspective(800px) rotateX(-90deg);\n  transform-origin: top;\n  transition: all 0.5s linear; }\n  .search .results.show {\n    transform: perspective(0px) rotateX(0deg); }\n  .search .results .row {\n    border-top: 1px solid #004882;\n    border-bottom: 1px solid #004882; }\n    .search .results .row:hover {\n      background-color: #0096cf; }\n    .search .results .row:last-child .row-content {\n      border-bottom: none;\n      padding-bottom: 10px; }\n    .search .results .row:first-child .row-content {\n      border-top: none;\n      padding-top: 10px; }\n  .search .results .row-content {\n    display: flex;\n    flex-direction: row;\n    justify-content: flex-start;\n    align-items: stretch;\n    margin: 0px 10px;\n    padding: 5px 0; }\n    .search .results .row-content .details {\n      padding-left: 20px;\n      display: flex;\n      flex-direction: column;\n      justify-content: center; }\n      .search .results .row-content .details .title {\n        font-size: 20px; }\n        .search .results .row-content .details .title .highlight {\n          font-weight: bold;\n          font-size: 20px; }\n      .search .results .row-content .details .author {\n        font-size: 14px;\n        color: #5f5f5f; }\n    .search .results .row-content .image {\n      width: 50px;\n      height: 50px; }\n", ""]);
 
 	// exports
 
@@ -20921,7 +20916,7 @@
 
 
 	// module
-	exports.push([module.id, "header {\n  background-color: #565656; }\n  header .header-content {\n    display: flex;\n    flex-direction: row;\n    justify-content: space-between;\n    align-items: center; }\n    header .header-content > h1 {\n      color: #f1f1f1;\n      margin: 0;\n      font-size: 50px;\n      font-family: Impact, Charcoal, sans-serif; }\n    header .header-content nav > a {\n      padding-right: 10px;\n      text-decoration: underline; }\n", ""]);
+	exports.push([module.id, ".site-header {\n  background-color: #004882; }\n  .site-header .header-content {\n    display: flex;\n    flex-direction: row;\n    justify-content: space-between;\n    align-items: center; }\n    .site-header .header-content > h1 {\n      color: #f1f1f1;\n      margin: 0;\n      font-size: 50px;\n      font-family: Impact, Charcoal, sans-serif; }\n    .site-header .header-content nav > a {\n      padding-right: 10px;\n      text-decoration: underline; }\n", ""]);
 
 	// exports
 
@@ -20952,13 +20947,11 @@
 	    displayName: 'Navigation',
 
 	    home: function home() {
-	        debugger;
 	        var openContent = document.querySelector(".open-content");
 	        _reactDom2.default.unmountComponentAtNode(openContent);
 	        //ReactDOM.render(<Recipe data={response} />, openContent);
 	    },
 	    toggle: function toggle() {
-	        debugger;
 	        var nav = document.querySelector(".navigation");
 	        if (nav.className == "navigation") {
 	            nav.className += " show";
@@ -21043,7 +21036,7 @@
 
 
 	// module
-	exports.push([module.id, ".navigation {\n  width: 50px;\n  background-color: #c09f80;\n  transition: width 0.5s; }\n  .navigation .navigation-content {\n    position: relative;\n    flex-direction: row;\n    justify-content: flex-start;\n    align-items: stretch;\n    height: 100%;\n    list-style-type: none;\n    margin: 0;\n    padding: 0;\n    overflow: hidden; }\n    .navigation .navigation-content .link {\n      height: 35px;\n      display: block;\n      line-height: 35px;\n      color: #f1f1f1;\n      padding-left: 10px; }\n      .navigation .navigation-content .link > .text {\n        opacity: 0;\n        transition: all 0.5s; }\n      .navigation .navigation-content .link.hover:hover {\n        background-color: #565656; }\n      .navigation .navigation-content .link::before {\n        font-size: 26px;\n        padding-right: 5px; }\n    .navigation .navigation-content .toggle {\n      padding: 0;\n      width: 50px;\n      float: right;\n      display: block;\n      height: 35px; }\n      .navigation .navigation-content .toggle::before, .navigation .navigation-content .toggle::after {\n        content: \" \";\n        transition: all 0.5s linear;\n        background-color: black;\n        position: absolute;\n        right: 15px;\n        width: 25px;\n        height: 3px;\n        padding: 0; }\n      .navigation .navigation-content .toggle::before {\n        top: 10px; }\n      .navigation .navigation-content .toggle::after {\n        top: 20px; }\n  .navigation.show {\n    width: 200px; }\n    .navigation.show .toggle {\n      width: 35px; }\n      .navigation.show .toggle::before, .navigation.show .toggle::after {\n        right: 12px;\n        width: 15px; }\n      .navigation.show .toggle::before {\n        transform: rotate(-45deg); }\n      .navigation.show .toggle::after {\n        transform: rotate(45deg);\n        top: 19px; }\n    .navigation.show .link > .text {\n      opacity: 1; }\n", ""]);
+	exports.push([module.id, ".navigation {\n  width: 50px;\n  background-color: #0096cf;\n  transition: width 0.5s; }\n  .navigation .navigation-content {\n    position: relative;\n    flex-direction: row;\n    justify-content: flex-start;\n    align-items: stretch;\n    height: 100%;\n    list-style-type: none;\n    margin: 0;\n    padding: 0;\n    overflow: hidden; }\n    .navigation .navigation-content .link {\n      height: 35px;\n      display: block;\n      line-height: 35px;\n      color: #f1f1f1;\n      padding-left: 10px; }\n      .navigation .navigation-content .link > .text {\n        opacity: 0;\n        transition: all 0.5s; }\n      .navigation .navigation-content .link.hover:hover {\n        background-color: #004882; }\n      .navigation .navigation-content .link::before {\n        font-size: 26px;\n        padding-right: 5px; }\n    .navigation .navigation-content .toggle {\n      padding: 0;\n      width: 50px;\n      float: right;\n      display: block;\n      height: 35px; }\n      .navigation .navigation-content .toggle::before, .navigation .navigation-content .toggle::after {\n        content: \" \";\n        transition: all 0.5s linear;\n        background-color: black;\n        position: absolute;\n        right: 15px;\n        width: 25px;\n        height: 3px;\n        padding: 0; }\n      .navigation .navigation-content .toggle::before {\n        top: 10px; }\n      .navigation .navigation-content .toggle::after {\n        top: 20px; }\n  .navigation.show {\n    width: 200px; }\n    .navigation.show .toggle {\n      width: 35px; }\n      .navigation.show .toggle::before, .navigation.show .toggle::after {\n        right: 12px;\n        width: 15px; }\n      .navigation.show .toggle::before {\n        transform: rotate(-45deg); }\n      .navigation.show .toggle::after {\n        transform: rotate(45deg);\n        top: 19px; }\n    .navigation.show .link > .text {\n      opacity: 1; }\n", ""]);
 
 	// exports
 
@@ -21083,7 +21076,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n  overflow: hidden;\n  margin: 0; }\n  body * {\n    font-family: Verdana, Arial, sans-serif;\n    font-size: 18px; }\n  body input,\n  body textarea,\n  body select {\n    border: 1px solid grey; }\n\n.site-body {\n  display: flex;\n  flex: 1;\n  height: 100vh; }\n  .site-body > .navigation {\n    order: -1; }\n  .site-body > .open-content {\n    flex: 1;\n    overflow: scroll;\n    padding: 5px 5px 50px 5px; }\n\n.column {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: stretch; }\n  .column > * {\n    padding: 5px;\n    margin: 5px; }\n  .column.column-3 > * {\n    width: 33%; }\n  .column.column-2 > * {\n    width: 50%; }\n", ""]);
+	exports.push([module.id, "body {\n  overflow: hidden;\n  margin: 0; }\n  body * {\n    font-family: Verdana, Arial, sans-serif;\n    font-size: 18px; }\n  body input,\n  body textarea,\n  body select {\n    border: 1px solid grey; }\n\n.site-body {\n  display: flex;\n  flex: 1;\n  height: 100vh; }\n  .site-body > .navigation {\n    order: -1; }\n  .site-body > .open-content {\n    flex: 1;\n    overflow: scroll;\n    padding: 0;\n    margin-bottom: 50px; }\n\n.column {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: stretch; }\n  .column > * {\n    padding: 5px;\n    margin: 5px; }\n  .column.column-3 > * {\n    width: 33%; }\n  .column.column-2 > * {\n    width: 50%; }\n", ""]);
 
 	// exports
 

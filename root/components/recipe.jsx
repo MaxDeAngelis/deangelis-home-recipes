@@ -60,15 +60,14 @@ var Recipe = React.createClass({
             return false;
         }
         var addLink = "";
-        var editButton = <button onClick = {this.edit}>Edit</button>;
+        var editButton = <span className="ti-pencil" onClick = {this.edit}></span>;
         if (editable) {
-            editButton = <button onClick = {this.save}>Save</button>;
+            editButton = <span className="ti-save" onClick = {this.save}></span>;
             addLink = <a onClick = {this.addIngredient}>Add ingredient</a>
         }
 
         return ( <main className="full-recipe">
-            { editButton }
-            <header>{ this.props.data.title }</header>
+            <header className="recipe-title"><span className="text">{ this.props.data.title }</span>{ editButton }</header>
             <section className="column column-3">
                 <section>
                     <SingleValue data = {this.getData("Servings", "servings")}/>

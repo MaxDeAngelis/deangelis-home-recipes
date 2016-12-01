@@ -1,6 +1,6 @@
 @import "../variables.scss";
-header {
-    background-color: $theme-color-main;
+.site-header {
+    background-color: $theme-color-one;
     .header-content {
         display: flex;
         flex-direction: row;
