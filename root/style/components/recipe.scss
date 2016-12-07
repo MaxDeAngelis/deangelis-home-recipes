@@ -3,10 +3,12 @@
     >.recipe-title {
         padding-left: 20px;
         border-bottom: 2px solid $theme-color-one;
-        >span {
+        >* {
             color: $theme-color-one;
-            line-height: 50px;
             font-size: 24px;
+        }
+        >span {
+            line-height: 50px;
         }
         >.text {
             font-family: $theme-text-font-family;

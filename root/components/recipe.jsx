@@ -21,6 +21,17 @@ var Recipe = React.createClass({
         this.setState({
             editable: false
         });
+
+        $.get('../processAction.php',
+            {
+                action: 'SAVE_RECIPE',
+                recipe: this.state.recipe
+            },
+            function (response) {
+                debugger;
+            },
+            "json"
+        );
     },
     update: function(key, newValue) {
         var tempRecipe = this.state.recipe;
@@ -30,6 +41,25 @@ var Recipe = React.createClass({
             recipe: tempRecipe
         });
         console.log(newValue)
+    },
+    componentDidUpdate: function() {
+        if (this.state.editable) {
+            var field = document.querySelector(".recipe-title > input");
+            var parentElement = field.parentNode;
+            var tempSpan = document.createElement("SPAN");
+            tempSpan.style.overflow = "hidden";
+            tempSpan.style.display = "inline-block";
+            tempSpan.className = "text";
+            tempSpan.innerText = field.value;
+            parentElement.appendChild(tempSpan);
+
+            field.style.width = tempSpan.scrollWidth + "px";
+            parentElement.removeChild(tempSpan)
+            tempSpan = null;
+        }
+    },
+    updateTitle: function(e) {
+        this.update("title", e.target.value);
     },
     addIngredient: function() {
         var tempRecipe = this.state.recipe;
@@ -59,15 +89,27 @@ var Recipe = React.createClass({
         if (recipeData == null) {
             return false;
         }
-        var addLink = "";
+        var addLink;
+        var header = <header className="recipe-title">
+                        <span className="text">{ this.props.data.title }</span>
+                        <span className="ti-pencil" onClick = {this.edit}></span>
+                     </header>;
+
         var editButton = <span className="ti-pencil" onClick = {this.edit}></span>;
+        var title = <span className="text">{ this.props.data.title }</span>;
         if (editable) {
-            editButton = <span className="ti-save" onClick = {this.save}></span>;
+            header = <header className="recipe-title">
+                                <input className="text" onChange = {this.updateTitle} value = {this.props.data.title}/>
+                                <span className="ti-save" onClick = {this.save}></span>
+                            </header>;
+
             addLink = <a onClick = {this.addIngredient}>Add ingredient</a>
         }
+        
+
 
         return ( <main className="full-recipe">
-            <header className="recipe-title"><span className="text">{ this.props.data.title }</span>{ editButton }</header>
+            {header}
             <section className="column column-3">
                 <section>
                     <SingleValue data = {this.getData("Servings", "servings")}/>

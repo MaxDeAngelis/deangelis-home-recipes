@@ -11,16 +11,6 @@ const Search = React.createClass({
             searchTerms: []
         };
     },
-    componentWillMount: function () {
-        var me = this;
-        $.get('../processAction.php',
-            { action: 'GET_LIST' },
-            function (response) {
-                me.setState({ fullList: response.slice(0), filteredList: response.slice(0) });
-            },
-            "json"
-        );
-    },
     getRegExObj: function(searchRegEx) {
         var returnObj = null;
         try {
@@ -81,7 +71,15 @@ const Search = React.createClass({
         this.setState({ filteredList: filteredList , searchTerms: searchTerms});
     },
     focus: function () {
-        document.querySelector(".search > .results").className += " show";
+        var me = this;
+        $.get('../processAction.php',
+            { action: 'GET_LIST' },
+            function (response) {
+                me.setState({ fullList: response.slice(0), filteredList: response.slice(0) });
+                document.querySelector(".search > .results").className += " show";
+            },
+            "json"
+        );
     },
     blur: function () {
         document.querySelector(".search > .results").className = "results";

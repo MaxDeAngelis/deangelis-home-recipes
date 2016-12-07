@@ -9,7 +9,9 @@ body {
     input,
     textarea,
     select {
-        border: 1px solid grey;
+        border-radius: 4px;
+        border: 1px solid #565656;
+        padding: 3px;
     }
 }
 

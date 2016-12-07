@@ -34,4 +34,25 @@ class DatabaseQuery {
 	}
 }
 
+class DatabaseUpdate {
+	public $sucess = false;
+	public $message = "";
+
+	function __construct($sql) {
+		$conn = new mysqli('localhost', 'recipes', 'recipes', 'recipes');
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+			$this->message = "Connection failed: " . $conn->connect_error;
+		} else {
+			$result = $conn->query($sql);
+			$conn->close();
+
+			if ($result === false) {
+				$this->message = 'Failed to update database';
+			} else {
+				$this->sucess = true;
+			}
+		}
+	}
+}
 ?>

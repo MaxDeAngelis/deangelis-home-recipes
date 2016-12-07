@@ -19854,12 +19854,6 @@
 	            searchTerms: []
 	        };
 	    },
-	    componentWillMount: function componentWillMount() {
-	        var me = this;
-	        $.get('../processAction.php', { action: 'GET_LIST' }, function (response) {
-	            me.setState({ fullList: response.slice(0), filteredList: response.slice(0) });
-	        }, "json");
-	    },
 	    getRegExObj: function getRegExObj(searchRegEx) {
 	        var returnObj = null;
 	        try {
@@ -19930,7 +19924,11 @@
 	        this.setState({ filteredList: filteredList, searchTerms: searchTerms });
 	    },
 	    focus: function focus() {
-	        document.querySelector(".search > .results").className += " show";
+	        var me = this;
+	        $.get('../processAction.php', { action: 'GET_LIST' }, function (response) {
+	            me.setState({ fullList: response.slice(0), filteredList: response.slice(0) });
+	            document.querySelector(".search > .results").className += " show";
+	        }, "json");
 	    },
 	    blur: function blur() {
 	        document.querySelector(".search > .results").className = "results";
@@ -20025,6 +20023,13 @@
 	        this.setState({
 	            editable: false
 	        });
+
+	        $.get('../processAction.php', {
+	            action: 'SAVE_RECIPE',
+	            recipe: this.state.recipe
+	        }, function (response) {
+	            debugger;
+	        }, "json");
 	    },
 	    update: function update(key, newValue) {
 	        var tempRecipe = this.state.recipe;
@@ -20034,6 +20039,25 @@
 	            recipe: tempRecipe
 	        });
 	        console.log(newValue);
+	    },
+	    componentDidUpdate: function componentDidUpdate() {
+	        if (this.state.editable) {
+	            var field = document.querySelector(".recipe-title > input");
+	            var parentElement = field.parentNode;
+	            var tempSpan = document.createElement("SPAN");
+	            tempSpan.style.overflow = "hidden";
+	            tempSpan.style.display = "inline-block";
+	            tempSpan.className = "text";
+	            tempSpan.innerText = field.value;
+	            parentElement.appendChild(tempSpan);
+
+	            field.style.width = tempSpan.scrollWidth + "px";
+	            parentElement.removeChild(tempSpan);
+	            tempSpan = null;
+	        }
+	    },
+	    updateTitle: function updateTitle(e) {
+	        this.update("title", e.target.value);
 	    },
 	    addIngredient: function addIngredient() {
 	        var tempRecipe = this.state.recipe;
@@ -20063,10 +20087,32 @@
 	        if (recipeData == null) {
 	            return false;
 	        }
-	        var addLink = "";
+	        var addLink;
+	        var header = _react2.default.createElement(
+	            'header',
+	            { className: 'recipe-title' },
+	            _react2.default.createElement(
+	                'span',
+	                { className: 'text' },
+	                this.props.data.title
+	            ),
+	            _react2.default.createElement('span', { className: 'ti-pencil', onClick: this.edit })
+	        );
+
 	        var editButton = _react2.default.createElement('span', { className: 'ti-pencil', onClick: this.edit });
+	        var title = _react2.default.createElement(
+	            'span',
+	            { className: 'text' },
+	            this.props.data.title
+	        );
 	        if (editable) {
-	            editButton = _react2.default.createElement('span', { className: 'ti-save', onClick: this.save });
+	            header = _react2.default.createElement(
+	                'header',
+	                { className: 'recipe-title' },
+	                _react2.default.createElement('input', { className: 'text', onChange: this.updateTitle, value: this.props.data.title }),
+	                _react2.default.createElement('span', { className: 'ti-save', onClick: this.save })
+	            );
+
 	            addLink = _react2.default.createElement(
 	                'a',
 	                { onClick: this.addIngredient },
@@ -20077,16 +20123,7 @@
 	        return _react2.default.createElement(
 	            'main',
 	            { className: 'full-recipe' },
-	            _react2.default.createElement(
-	                'header',
-	                { className: 'recipe-title' },
-	                _react2.default.createElement(
-	                    'span',
-	                    { className: 'text' },
-	                    this.props.data.title
-	                ),
-	                editButton
-	            ),
+	            header,
 	            _react2.default.createElement(
 	                'section',
 	                { className: 'column column-3' },
@@ -20677,15 +20714,17 @@
 	            return _react2.default.createElement(
 	                'li',
 	                { key: key++, className: 'column column-3' },
-	                _react2.default.createElement('input', { value: ing.quantity, onChange: function onChange() {} }),
+	                _react2.default.createElement('input', { value: ing.quantity, onChange: function onChange() {
+	                        console.log("x");
+	                    } }),
 	                _react2.default.createElement(_dropdown2.default, { options: me.state.units,
 	                    change: function change() {
-	                        console.log("d");
+	                        console.log("y");
 	                    } }),
 	                _react2.default.createElement(_autocomplete2.default, { value: ing.ingredientName,
 	                    source: source,
 	                    change: function change() {
-	                        console.log("a");
+	                        console.log("z");
 	                    } })
 	            );
 	        });
@@ -20836,7 +20875,7 @@
 
 
 	// module
-	exports.push([module.id, ".full-recipe > .recipe-title {\n  padding-left: 20px;\n  border-bottom: 2px solid #004882; }\n  .full-recipe > .recipe-title > span {\n    color: #004882;\n    line-height: 50px;\n    font-size: 24px; }\n  .full-recipe > .recipe-title > .text {\n    font-family: Impact, Charcoal, sans-serif;\n    padding-right: 10px; }\n", ""]);
+	exports.push([module.id, ".full-recipe > .recipe-title {\n  padding-left: 20px;\n  border-bottom: 2px solid #004882; }\n  .full-recipe > .recipe-title > * {\n    color: #004882;\n    font-size: 24px; }\n  .full-recipe > .recipe-title > span {\n    line-height: 50px; }\n  .full-recipe > .recipe-title > .text {\n    font-family: Impact, Charcoal, sans-serif;\n    padding-right: 10px; }\n", ""]);
 
 	// exports
 
@@ -21076,7 +21115,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n  overflow: hidden;\n  margin: 0; }\n  body * {\n    font-family: Verdana, Arial, sans-serif;\n    font-size: 18px; }\n  body input,\n  body textarea,\n  body select {\n    border: 1px solid grey; }\n\n.site-body {\n  display: flex;\n  flex: 1;\n  height: 100vh; }\n  .site-body > .navigation {\n    order: -1; }\n  .site-body > .open-content {\n    flex: 1;\n    overflow: scroll;\n    padding: 0;\n    margin-bottom: 50px; }\n\n.column {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: stretch; }\n  .column > * {\n    padding: 5px;\n    margin: 5px; }\n  .column.column-3 > * {\n    width: 33%; }\n  .column.column-2 > * {\n    width: 50%; }\n", ""]);
+	exports.push([module.id, "body {\n  overflow: hidden;\n  margin: 0; }\n  body * {\n    font-family: Verdana, Arial, sans-serif;\n    font-size: 18px; }\n  body input,\n  body textarea,\n  body select {\n    border-radius: 4px;\n    border: 1px solid #565656;\n    padding: 3px; }\n\n.site-body {\n  display: flex;\n  flex: 1;\n  height: 100vh; }\n  .site-body > .navigation {\n    order: -1; }\n  .site-body > .open-content {\n    flex: 1;\n    overflow: scroll;\n    padding: 0;\n    margin-bottom: 50px; }\n\n.column {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: stretch; }\n  .column > * {\n    padding: 5px;\n    margin: 5px; }\n  .column.column-3 > * {\n    width: 33%; }\n  .column.column-2 > * {\n    width: 50%; }\n", ""]);
 
 	// exports
 

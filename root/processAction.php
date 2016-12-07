@@ -20,8 +20,11 @@
 		case ACTIONS::GET_DATA_UNITS:
 			$action = new GetDataUnits();
 			break;
+		case ACTIONS::SAVE_RECIPE:
+			$action = new SaveRecipe($_GET['recipe']);
+			break;
 	    default:
-	        $action = new Action;
+	        $action = new Action("");
 	        break;
 	}
 
