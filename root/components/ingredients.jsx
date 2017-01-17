@@ -29,6 +29,29 @@ var Ingredients = React.createClass({
             "json"
         );
     },
+    saveIngredients: function(e, key) {
+        var value = e.currentTarget.value;
+        var i = e.currentTarget.parentNode.dataset.ingKey;
+
+        var tempIngredientsList = this.state.currentIngredients;
+
+        tempIngredientsList[i][key] = value;
+
+        this.setState({
+           currentIngredients: tempIngredientsList
+        });
+
+        this.props.data.update("ingredients", this.state.currentIngredients);
+    },
+    updateQuantity: function(e) {
+        this.saveIngredients(e, "quantity");
+    },
+    updateUnit: function(e) {
+        this.saveIngredients(e, "units");
+    },
+    updateIngredientName: function(e) {
+        this.saveIngredients(e, "ingredientName");
+    },
     renderDisplay: function() {
         var key = 0;
         return this.state.currentIngredients.map(function(ing) {
@@ -36,7 +59,7 @@ var Ingredients = React.createClass({
         });
     },
     renderForm: function() {
-        var key = 0;
+        var key = -1;
         var me = this;
         var source = function( request, response ) {
             response(me.state.ingredients.map(function(ingredient) {
@@ -45,13 +68,14 @@ var Ingredients = React.createClass({
         }
 
         return this.state.currentIngredients.map(function(ing) {
-            return ( <li key = {key++} className="column column-3">
-                    <input value = {ing.quantity} onChange = {function(){console.log("x")}}/>
+            key++;
+            return ( <li key={key} data-ing-key={key} className="ingredient column column-3">
+                    <input value = {ing.quantity} onChange = {me.updateQuantity}/>
                     <Dropdown options = {me.state.units}
-                                   change = {function(){console.log("y")}}/>
+                                   change = {me.updateUnit}/>
                     <AutoComplete value = {ing.ingredientName}
                                  source = {source}
-                                 change = {function(){ console.log("z")}}/>
+                                 change = {me.updateIngredientName}/>
                 </li>
             );
         });

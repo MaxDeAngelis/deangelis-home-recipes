@@ -2,6 +2,8 @@ import React from 'react';
 import SingleValue from './singleValue.jsx';
 import Steps from './steps.jsx';
 import Ingredients from './ingredients.jsx';
+import RecipeHeader from './recipeHeader.jsx';
+import RecipeSubHeader from './recipeSubHeader.jsx';
 require("../style/components/recipe.scss");
 
 var Recipe = React.createClass({
@@ -42,25 +44,6 @@ var Recipe = React.createClass({
         });
         console.log(newValue)
     },
-    componentDidUpdate: function() {
-        if (this.state.editable) {
-            var field = document.querySelector(".recipe-title > input");
-            var parentElement = field.parentNode;
-            var tempSpan = document.createElement("SPAN");
-            tempSpan.style.overflow = "hidden";
-            tempSpan.style.display = "inline-block";
-            tempSpan.className = "text";
-            tempSpan.innerText = field.value;
-            parentElement.appendChild(tempSpan);
-
-            field.style.width = tempSpan.scrollWidth + "px";
-            parentElement.removeChild(tempSpan)
-            tempSpan = null;
-        }
-    },
-    updateTitle: function(e) {
-        this.update("title", e.target.value);
-    },
     addIngredient: function() {
         var tempRecipe = this.state.recipe;
 
@@ -90,54 +73,41 @@ var Recipe = React.createClass({
             return false;
         }
         var addLink;
-        var header = <header className="recipe-title">
-                        <span className="text">{ this.props.data.title }</span>
-                        <span className="ti-pencil" onClick = {this.edit}></span>
-                     </header>;
-
-        var editButton = <span className="ti-pencil" onClick = {this.edit}></span>;
-        var title = <span className="text">{ this.props.data.title }</span>;
         if (editable) {
-            header = <header className="recipe-title">
-                                <input className="text" onChange = {this.updateTitle} value = {this.props.data.title}/>
-                                <span className="ti-save" onClick = {this.save}></span>
-                            </header>;
-
             addLink = <a onClick = {this.addIngredient}>Add ingredient</a>
         }
-        
-
-
+        /*
+            <SingleValue data = {this.getData("Category", "category")}/>
+            <SingleValue data = {this.getData("Season", "season")}/>
+        */
         return ( <main className="full-recipe">
-            {header}
-            <section className="column column-3">
-                <section>
-                    <SingleValue data = {this.getData("Servings", "servings")}/>
-                    <SingleValue data = {this.getData("Cook time", "cookTime")}/>
-                    <SingleValue data = {this.getData("Prep time", "prepTime")}/>
-                </section>
-                <section>
-                    <SingleValue data = {this.getData("Category", "category")}/>
-                    <SingleValue data = {this.getData("Season", "season")}/>
-                </section>
-                <section>
-                    <SingleValue data = {this.getData("First name", "firstName")}/>
-                    <SingleValue data = {this.getData("Last name", "lastName")}/>
-                    <SingleValue data = {this.getData("Date modified", "dateCreated")}/>
-                </section>
-            </section>
-            <section className="column column-2">
-                <Steps data = {{
-                    steps: this.state.recipe.steps,
+                <RecipeHeader data= {{
+                    title: this.props.data.title,
+                    creator: this.props.data.firstName + " " + this.props.data.lastName,
+                    creation: this.props.data.dateCreated,
+                    edit: this.edit,
+                    save: this.save,
+                    update: this.update,
                     editable: this.state.editable
                 }}/>
-                <Ingredients data = {{
-                    ingredients: this.state.recipe.ingredients,
-                    editable: this.state.editable
-                }}>
-                    {addLink}
-                </Ingredients>
-            </section>
+                <div className="recipe-images">
+                    <img src={this.state.recipe.picture}/>
+                </div>
+                <RecipeSubHeader data= {this.props.data}/>
+                
+                <main className="recipe-body">
+                        <Ingredients data = {{
+                            ingredients: this.state.recipe.ingredients,
+                            update: this.update,
+                            editable: this.state.editable
+                        }}>
+                            {addLink}
+                        </Ingredients>
+                        <Steps data = {{
+                            steps: this.state.recipe.steps,
+                            editable: this.state.editable
+                        }}/>
+                </main>
             </main>
         );
     }

@@ -1,18 +1,15 @@
 @import "../variables.scss";
 .full-recipe {
-    >.recipe-title {
-        padding-left: 20px;
-        border-bottom: 2px solid $theme-color-one;
-        >* {
-            color: $theme-color-one;
-            font-size: 24px;
-        }
-        >span {
-            line-height: 50px;
-        }
-        >.text {
-            font-family: $theme-text-font-family;
-            padding-right: 10px;
-        }
+    .recipe-images {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0;
+    }
+    .recipe-body {
+        padding: 10px;
+        display: flex;
+        justify-content: space-around;
     }
 }

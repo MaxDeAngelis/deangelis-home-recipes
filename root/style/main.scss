@@ -2,9 +2,11 @@
 body {
     overflow: hidden;
     margin: 0;
+    font-family: TensoMedium, TensoLight, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 18px;
     * {
-        font-family: Verdana, Arial, sans-serif;
-        font-size: 18px;
+        font-family: inherit;
+        font-size: inherit;
     }
     input,
     textarea,

@@ -10,16 +10,17 @@ class SaveRecipe extends Action {
 	public function process() {
 		// Update the recipe information itself
         $sql = "UPDATE recipes 
-                        SET name = '{$this->recipe["title"]}', 
-                        steps = '{$this->recipe["steps"]}', 
-                        cookTime = '{$this->recipe["cookTime"]}', 
-                        prepTime = '{$this->recipe["prepTime"]}', 
-                        category = '{$this->recipe["category"]}', 
-                        season = '{$this->recipe["season"]}', 
-                        servings = {$this->recipe["servings"]}
-        			WHERE recipeId = {$this->recipe["id"]};";
+					SET name = '{$this->recipe["title"]}', 
+					steps = '{$this->recipe["steps"]}', 
+					cookTime = '{$this->recipe["cookTime"]}', 
+					prepTime = '{$this->recipe["prepTime"]}', 
+					category = '{$this->recipe["category"]}', 
+					season = '{$this->recipe["season"]}', 
+					servings = {$this->recipe["servings"]}
+					
+					WHERE recipeId = {$this->recipe["id"]};";
 
-        $response = new DatabaseUpdate($sql);
+        $response = new DatabaseTransaction($sql);
 
 		if ($response->sucess) {
 			return "{'status' : 'Updated' }";

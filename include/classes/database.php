@@ -1,4 +1,29 @@
 <?php
+class DatabaseTransaction {
+	public $sucess = false;
+	public $message = "";
+
+	function __construct($sqlList) {
+		$conn = new mysqli('localhost', 'recipes', 'recipes', 'recipes');
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+			$this->message = "Connection failed: " . $conn->connect_error;
+		} else {
+			$result = $conn->query($sqlList);
+			
+			$conn->commit();
+			
+			$conn->close();
+
+			if ($result === false) {
+				$this->message = 'Failed to update database';
+			} else {
+				$this->sucess = true;
+			}
+		}
+
+	}
+}
 
 class DatabaseQuery {
 	public $sucess = false;

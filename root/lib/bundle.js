@@ -58,13 +58,13 @@
 
 	var _header2 = _interopRequireDefault(_header);
 
-	var _navigation = __webpack_require__(177);
+	var _navigation = __webpack_require__(183);
 
 	var _navigation2 = _interopRequireDefault(_navigation);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	__webpack_require__(180);
+	__webpack_require__(186);
 
 	_reactDom2.default.render(_react2.default.createElement(_header2.default, null), document.querySelector("header"));
 	_reactDom2.default.render(_react2.default.createElement(_navigation2.default, null), document.querySelector(".navigation"));
@@ -19783,7 +19783,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	__webpack_require__(175);
+	__webpack_require__(181);
 
 	var Header = _react2.default.createClass({
 	    displayName: 'Header',
@@ -19842,7 +19842,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	__webpack_require__(173);
+	__webpack_require__(179);
 
 	var Search = _react2.default.createClass({
 	    displayName: 'Search',
@@ -20000,9 +20000,17 @@
 
 	var _ingredients2 = _interopRequireDefault(_ingredients);
 
+	var _recipeHeader = __webpack_require__(171);
+
+	var _recipeHeader2 = _interopRequireDefault(_recipeHeader);
+
+	var _recipeSubHeader = __webpack_require__(174);
+
+	var _recipeSubHeader2 = _interopRequireDefault(_recipeSubHeader);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	__webpack_require__(171);
+	__webpack_require__(177);
 
 	var Recipe = _react2.default.createClass({
 	    displayName: 'Recipe',
@@ -20040,25 +20048,6 @@
 	        });
 	        console.log(newValue);
 	    },
-	    componentDidUpdate: function componentDidUpdate() {
-	        if (this.state.editable) {
-	            var field = document.querySelector(".recipe-title > input");
-	            var parentElement = field.parentNode;
-	            var tempSpan = document.createElement("SPAN");
-	            tempSpan.style.overflow = "hidden";
-	            tempSpan.style.display = "inline-block";
-	            tempSpan.className = "text";
-	            tempSpan.innerText = field.value;
-	            parentElement.appendChild(tempSpan);
-
-	            field.style.width = tempSpan.scrollWidth + "px";
-	            parentElement.removeChild(tempSpan);
-	            tempSpan = null;
-	        }
-	    },
-	    updateTitle: function updateTitle(e) {
-	        this.update("title", e.target.value);
-	    },
 	    addIngredient: function addIngredient() {
 	        var tempRecipe = this.state.recipe;
 
@@ -20088,81 +20077,51 @@
 	            return false;
 	        }
 	        var addLink;
-	        var header = _react2.default.createElement(
-	            'header',
-	            { className: 'recipe-title' },
-	            _react2.default.createElement(
-	                'span',
-	                { className: 'text' },
-	                this.props.data.title
-	            ),
-	            _react2.default.createElement('span', { className: 'ti-pencil', onClick: this.edit })
-	        );
-
-	        var editButton = _react2.default.createElement('span', { className: 'ti-pencil', onClick: this.edit });
-	        var title = _react2.default.createElement(
-	            'span',
-	            { className: 'text' },
-	            this.props.data.title
-	        );
 	        if (editable) {
-	            header = _react2.default.createElement(
-	                'header',
-	                { className: 'recipe-title' },
-	                _react2.default.createElement('input', { className: 'text', onChange: this.updateTitle, value: this.props.data.title }),
-	                _react2.default.createElement('span', { className: 'ti-save', onClick: this.save })
-	            );
-
 	            addLink = _react2.default.createElement(
 	                'a',
 	                { onClick: this.addIngredient },
 	                'Add ingredient'
 	            );
 	        }
-
+	        /*
+	            <SingleValue data = {this.getData("Category", "category")}/>
+	            <SingleValue data = {this.getData("Season", "season")}/>
+	        */
 	        return _react2.default.createElement(
 	            'main',
 	            { className: 'full-recipe' },
-	            header,
+	            _react2.default.createElement(_recipeHeader2.default, { data: {
+	                    title: this.props.data.title,
+	                    creator: this.props.data.firstName + " " + this.props.data.lastName,
+	                    creation: this.props.data.dateCreated,
+	                    edit: this.edit,
+	                    save: this.save,
+	                    update: this.update,
+	                    editable: this.state.editable
+	                } }),
 	            _react2.default.createElement(
-	                'section',
-	                { className: 'column column-3' },
-	                _react2.default.createElement(
-	                    'section',
-	                    null,
-	                    _react2.default.createElement(_singleValue2.default, { data: this.getData("Servings", "servings") }),
-	                    _react2.default.createElement(_singleValue2.default, { data: this.getData("Cook time", "cookTime") }),
-	                    _react2.default.createElement(_singleValue2.default, { data: this.getData("Prep time", "prepTime") })
-	                ),
-	                _react2.default.createElement(
-	                    'section',
-	                    null,
-	                    _react2.default.createElement(_singleValue2.default, { data: this.getData("Category", "category") }),
-	                    _react2.default.createElement(_singleValue2.default, { data: this.getData("Season", "season") })
-	                ),
-	                _react2.default.createElement(
-	                    'section',
-	                    null,
-	                    _react2.default.createElement(_singleValue2.default, { data: this.getData("First name", "firstName") }),
-	                    _react2.default.createElement(_singleValue2.default, { data: this.getData("Last name", "lastName") }),
-	                    _react2.default.createElement(_singleValue2.default, { data: this.getData("Date modified", "dateCreated") })
-	                )
+	                'div',
+	                { className: 'recipe-images' },
+	                _react2.default.createElement('img', { src: this.state.recipe.picture })
 	            ),
+	            _react2.default.createElement(_recipeSubHeader2.default, { data: this.props.data }),
 	            _react2.default.createElement(
-	                'section',
-	                { className: 'column column-2' },
-	                _react2.default.createElement(_steps2.default, { data: {
-	                        steps: this.state.recipe.steps,
-	                        editable: this.state.editable
-	                    } }),
+	                'main',
+	                { className: 'recipe-body' },
 	                _react2.default.createElement(
 	                    _ingredients2.default,
 	                    { data: {
 	                            ingredients: this.state.recipe.ingredients,
+	                            update: this.update,
 	                            editable: this.state.editable
 	                        } },
 	                    addLink
-	                )
+	                ),
+	                _react2.default.createElement(_steps2.default, { data: {
+	                        steps: this.state.recipe.steps,
+	                        editable: this.state.editable
+	                    } })
 	            )
 	        );
 	    }
@@ -20627,7 +20586,7 @@
 	            _react2.default.createElement(
 	                "label",
 	                { className: "data-label" },
-	                "Steps"
+	                "Directions"
 	            ),
 	            _react2.default.createElement(
 	                "ol",
@@ -20690,6 +20649,29 @@
 	            me.setState({ units: response });
 	        }, "json");
 	    },
+	    saveIngredients: function saveIngredients(e, key) {
+	        var value = e.currentTarget.value;
+	        var i = e.currentTarget.parentNode.dataset.ingKey;
+
+	        var tempIngredientsList = this.state.currentIngredients;
+
+	        tempIngredientsList[i][key] = value;
+
+	        this.setState({
+	            currentIngredients: tempIngredientsList
+	        });
+
+	        this.props.data.update("ingredients", this.state.currentIngredients);
+	    },
+	    updateQuantity: function updateQuantity(e) {
+	        this.saveIngredients(e, "quantity");
+	    },
+	    updateUnit: function updateUnit(e) {
+	        this.saveIngredients(e, "units");
+	    },
+	    updateIngredientName: function updateIngredientName(e) {
+	        this.saveIngredients(e, "ingredientName");
+	    },
 	    renderDisplay: function renderDisplay() {
 	        var key = 0;
 	        return this.state.currentIngredients.map(function (ing) {
@@ -20702,7 +20684,7 @@
 	        });
 	    },
 	    renderForm: function renderForm() {
-	        var key = 0;
+	        var key = -1;
 	        var me = this;
 	        var source = function source(request, response) {
 	            response(me.state.ingredients.map(function (ingredient) {
@@ -20711,21 +20693,16 @@
 	        };
 
 	        return this.state.currentIngredients.map(function (ing) {
+	            key++;
 	            return _react2.default.createElement(
 	                'li',
-	                { key: key++, className: 'column column-3' },
-	                _react2.default.createElement('input', { value: ing.quantity, onChange: function onChange() {
-	                        console.log("x");
-	                    } }),
+	                { key: key, 'data-ing-key': key, className: 'ingredient column column-3' },
+	                _react2.default.createElement('input', { value: ing.quantity, onChange: me.updateQuantity }),
 	                _react2.default.createElement(_dropdown2.default, { options: me.state.units,
-	                    change: function change() {
-	                        console.log("y");
-	                    } }),
+	                    change: me.updateUnit }),
 	                _react2.default.createElement(_autocomplete2.default, { value: ing.ingredientName,
 	                    source: source,
-	                    change: function change() {
-	                        console.log("z");
-	                    } })
+	                    change: me.updateIngredientName })
 	            );
 	        });
 	    },
@@ -20844,10 +20821,258 @@
 /* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	__webpack_require__(172);
+
+	var RecipeHeader = _react2.default.createClass({
+	    displayName: "RecipeHeader",
+
+	    componentDidUpdate: function componentDidUpdate() {
+	        if (this.props.data.editable) {
+	            var field = document.querySelector(".recipe-title input.title");
+	            var parentElement = field.parentNode;
+	            var tempSpan = document.createElement("SPAN");
+	            tempSpan.style.overflow = "hidden";
+	            tempSpan.style.display = "inline-block";
+	            tempSpan.className = "title";
+	            tempSpan.innerText = field.value;
+	            parentElement.appendChild(tempSpan);
+
+	            field.style.width = tempSpan.scrollWidth + "px";
+	            parentElement.removeChild(tempSpan);
+	            tempSpan = null;
+	        }
+	    },
+	    updateTitle: function updateTitle(e) {
+	        this.props.data.update("title", e.target.value);
+	    },
+	    render: function render() {
+	        var created = new Date(this.props.data.creation);
+	        var creator = _react2.default.createElement(
+	            "div",
+	            { className: "addition-info" },
+	            _react2.default.createElement(
+	                "span",
+	                { className: "author" },
+	                this.props.data.creator
+	            ),
+	            _react2.default.createElement(
+	                "span",
+	                { className: "creation-date" },
+	                "(",
+	                created.toDateString(),
+	                ")"
+	            )
+	        );
+
+	        if (this.props.data.editable) {
+	            return _react2.default.createElement(
+	                "header",
+	                { className: "recipe-title" },
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "recipe-info" },
+	                    _react2.default.createElement("input", { className: "title", onChange: this.updateTitle, value: this.props.data.title }),
+	                    _react2.default.createElement("span", { className: "ti-save", onClick: this.props.data.save })
+	                ),
+	                creator
+	            );
+	        } else {
+	            return _react2.default.createElement(
+	                "header",
+	                { className: "recipe-title" },
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "recipe-info" },
+	                    _react2.default.createElement(
+	                        "span",
+	                        { className: "title" },
+	                        this.props.data.title
+	                    ),
+	                    _react2.default.createElement("span", { className: "ti-pencil", onClick: this.props.data.edit })
+	                ),
+	                creator
+	            );
+	        }
+	    }
+	});
+
+	exports.default = RecipeHeader;
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(172);
+	var content = __webpack_require__(173);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(166)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./recipeHeader.scss", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./recipeHeader.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(165)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".recipe-title {\n  padding-left: 20px;\n  border-bottom: 2px solid #004882;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center; }\n  .recipe-title .title,\n  .recipe-title .ti-save,\n  .recipe-title .ti-pencil {\n    color: #004882;\n    font-size: 40px; }\n  .recipe-title .ti-pencil {\n    margin: 10px 10px 0 0;\n    border: 1px solid transparent; }\n  .recipe-title .title {\n    display: inline-block;\n    padding: 5px;\n    margin: 5px 10px 0 0;\n    border: 1px solid transparent;\n    font-family: TensoMedium, TensoLight, \"Helvetica Neue\", Helvetica, Arial, sans-serif; }\n  .recipe-title input.title {\n    border: 1px solid #5f5f5f; }\n  .recipe-title .addition-info {\n    font-size: 14px;\n    color: #5f5f5f;\n    padding: 0 0 10px 5px; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	__webpack_require__(175);
+
+	var RecipeSubHeader = _react2.default.createClass({
+	    displayName: "RecipeSubHeader",
+
+	    render: function render() {
+	        return _react2.default.createElement(
+	            "div",
+	            { className: "recipe-sub-header" },
+	            _react2.default.createElement("span", { className: "ti-timer" }),
+	            _react2.default.createElement(
+	                "span",
+	                { className: "prep-time" },
+	                _react2.default.createElement(
+	                    "label",
+	                    null,
+	                    "Prep"
+	                ),
+	                _react2.default.createElement(
+	                    "span",
+	                    null,
+	                    this.props.data.cookTime
+	                )
+	            ),
+	            _react2.default.createElement(
+	                "span",
+	                { className: "cook-time" },
+	                _react2.default.createElement(
+	                    "label",
+	                    null,
+	                    "Cook"
+	                ),
+	                _react2.default.createElement(
+	                    "span",
+	                    null,
+	                    this.props.data.cookTime
+	                )
+	            ),
+	            _react2.default.createElement("span", { className: "ti-pie-chart" }),
+	            _react2.default.createElement(
+	                "span",
+	                { className: "servings" },
+	                _react2.default.createElement(
+	                    "span",
+	                    { className: "text" },
+	                    this.props.data.servings
+	                ),
+	                _react2.default.createElement(
+	                    "label",
+	                    null,
+	                    "servings"
+	                )
+	            )
+	        );
+	    }
+	});
+
+	exports.default = RecipeSubHeader;
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(176);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(166)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./recipeSubHeader.scss", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./recipeSubHeader.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(165)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".recipe-sub-header {\n  height: 50px;\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-start;\n  align-items: center;\n  border-top: 1px solid #5f5f5f;\n  border-bottom: 1px solid #5f5f5f;\n  font-size: 14px;\n  color: #5f5f5f;\n  margin: 0 10px;\n  padding: 0 10px; }\n  .recipe-sub-header .prep-time,\n  .recipe-sub-header .cook-time {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    padding-right: 10px; }\n    .recipe-sub-header .prep-time > span,\n    .recipe-sub-header .cook-time > span {\n      display: inline-block; }\n  .recipe-sub-header .ti-timer,\n  .recipe-sub-header .ti-pie-chart {\n    font-size: 24px;\n    padding-right: 10px; }\n  .recipe-sub-header .servings > label {\n    padding-left: 5px; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(178);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(166)(content, {});
@@ -20867,7 +21092,7 @@
 	}
 
 /***/ },
-/* 172 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(165)();
@@ -20875,19 +21100,19 @@
 
 
 	// module
-	exports.push([module.id, ".full-recipe > .recipe-title {\n  padding-left: 20px;\n  border-bottom: 2px solid #004882; }\n  .full-recipe > .recipe-title > * {\n    color: #004882;\n    font-size: 24px; }\n  .full-recipe > .recipe-title > span {\n    line-height: 50px; }\n  .full-recipe > .recipe-title > .text {\n    font-family: Impact, Charcoal, sans-serif;\n    padding-right: 10px; }\n", ""]);
+	exports.push([module.id, ".full-recipe .recipe-images {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  padding: 10px 0; }\n\n.full-recipe .recipe-body {\n  padding: 10px;\n  display: flex;\n  justify-content: space-around; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 173 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(174);
+	var content = __webpack_require__(180);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(166)(content, {});
@@ -20907,7 +21132,7 @@
 	}
 
 /***/ },
-/* 174 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(165)();
@@ -20921,13 +21146,13 @@
 
 
 /***/ },
-/* 175 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(176);
+	var content = __webpack_require__(182);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(166)(content, {});
@@ -20947,7 +21172,7 @@
 	}
 
 /***/ },
-/* 176 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(165)();
@@ -20955,13 +21180,13 @@
 
 
 	// module
-	exports.push([module.id, ".site-header {\n  background-color: #004882; }\n  .site-header .header-content {\n    display: flex;\n    flex-direction: row;\n    justify-content: space-between;\n    align-items: center; }\n    .site-header .header-content > h1 {\n      color: #f1f1f1;\n      margin: 0;\n      font-size: 50px;\n      font-family: Impact, Charcoal, sans-serif; }\n    .site-header .header-content nav > a {\n      padding-right: 10px;\n      text-decoration: underline; }\n", ""]);
+	exports.push([module.id, ".site-header {\n  background-color: #004882; }\n  .site-header .header-content {\n    display: flex;\n    flex-direction: row;\n    justify-content: space-between;\n    align-items: center; }\n    .site-header .header-content > h1 {\n      color: #f1f1f1;\n      margin: 0;\n      font-size: 50px;\n      font-family: TensoMedium, TensoLight, \"Helvetica Neue\", Helvetica, Arial, sans-serif; }\n    .site-header .header-content nav > a {\n      padding-right: 10px;\n      text-decoration: underline; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 177 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20980,7 +21205,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	__webpack_require__(178);
+	__webpack_require__(184);
 
 	var Navigation = _react2.default.createClass({
 	    displayName: 'Navigation',
@@ -21041,13 +21266,13 @@
 	exports.default = Navigation;
 
 /***/ },
-/* 178 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(179);
+	var content = __webpack_require__(185);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(166)(content, {});
@@ -21067,7 +21292,7 @@
 	}
 
 /***/ },
-/* 179 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(165)();
@@ -21075,19 +21300,19 @@
 
 
 	// module
-	exports.push([module.id, ".navigation {\n  width: 50px;\n  background-color: #0096cf;\n  transition: width 0.5s; }\n  .navigation .navigation-content {\n    position: relative;\n    flex-direction: row;\n    justify-content: flex-start;\n    align-items: stretch;\n    height: 100%;\n    list-style-type: none;\n    margin: 0;\n    padding: 0;\n    overflow: hidden; }\n    .navigation .navigation-content .link {\n      height: 35px;\n      display: block;\n      line-height: 35px;\n      color: #f1f1f1;\n      padding-left: 10px; }\n      .navigation .navigation-content .link > .text {\n        opacity: 0;\n        transition: all 0.5s; }\n      .navigation .navigation-content .link.hover:hover {\n        background-color: #004882; }\n      .navigation .navigation-content .link::before {\n        font-size: 26px;\n        padding-right: 5px; }\n    .navigation .navigation-content .toggle {\n      padding: 0;\n      width: 50px;\n      float: right;\n      display: block;\n      height: 35px; }\n      .navigation .navigation-content .toggle::before, .navigation .navigation-content .toggle::after {\n        content: \" \";\n        transition: all 0.5s linear;\n        background-color: black;\n        position: absolute;\n        right: 15px;\n        width: 25px;\n        height: 3px;\n        padding: 0; }\n      .navigation .navigation-content .toggle::before {\n        top: 10px; }\n      .navigation .navigation-content .toggle::after {\n        top: 20px; }\n  .navigation.show {\n    width: 200px; }\n    .navigation.show .toggle {\n      width: 35px; }\n      .navigation.show .toggle::before, .navigation.show .toggle::after {\n        right: 12px;\n        width: 15px; }\n      .navigation.show .toggle::before {\n        transform: rotate(-45deg); }\n      .navigation.show .toggle::after {\n        transform: rotate(45deg);\n        top: 19px; }\n    .navigation.show .link > .text {\n      opacity: 1; }\n", ""]);
+	exports.push([module.id, ".navigation {\n  width: 50px;\n  background-color: #0096cf;\n  transition: width 0.5s; }\n  .navigation .navigation-content {\n    position: relative;\n    flex-direction: row;\n    justify-content: flex-start;\n    align-items: stretch;\n    height: 100%;\n    list-style-type: none;\n    margin: 0;\n    padding: 0;\n    overflow: hidden; }\n    .navigation .navigation-content .link {\n      height: 35px;\n      display: block;\n      line-height: 35px;\n      color: #f1f1f1;\n      padding-left: 10px; }\n      .navigation .navigation-content .link > .text {\n        opacity: 0;\n        transition: all 0.5s; }\n      .navigation .navigation-content .link.hover:hover {\n        background-color: #004882; }\n      .navigation .navigation-content .link::before {\n        font-size: 26px;\n        padding-right: 5px; }\n    .navigation .navigation-content .toggle {\n      padding: 0;\n      width: 50px;\n      float: right;\n      display: block;\n      height: 35px; }\n      .navigation .navigation-content .toggle::before, .navigation .navigation-content .toggle::after {\n        content: \" \";\n        transition: all 0.5s linear;\n        background-color: #f1f1f1;\n        position: absolute;\n        right: 15px;\n        width: 25px;\n        height: 3px;\n        padding: 0; }\n      .navigation .navigation-content .toggle::before {\n        top: 10px; }\n      .navigation .navigation-content .toggle::after {\n        top: 20px; }\n  .navigation.show {\n    width: 200px; }\n    .navigation.show .toggle {\n      width: 35px; }\n      .navigation.show .toggle::before, .navigation.show .toggle::after {\n        right: 12px;\n        width: 15px; }\n      .navigation.show .toggle::before {\n        transform: rotate(-45deg); }\n      .navigation.show .toggle::after {\n        transform: rotate(45deg);\n        top: 19px; }\n    .navigation.show .link > .text {\n      opacity: 1; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 180 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(181);
+	var content = __webpack_require__(187);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(166)(content, {});
@@ -21107,7 +21332,7 @@
 	}
 
 /***/ },
-/* 181 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(165)();
@@ -21115,7 +21340,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n  overflow: hidden;\n  margin: 0; }\n  body * {\n    font-family: Verdana, Arial, sans-serif;\n    font-size: 18px; }\n  body input,\n  body textarea,\n  body select {\n    border-radius: 4px;\n    border: 1px solid #565656;\n    padding: 3px; }\n\n.site-body {\n  display: flex;\n  flex: 1;\n  height: 100vh; }\n  .site-body > .navigation {\n    order: -1; }\n  .site-body > .open-content {\n    flex: 1;\n    overflow: scroll;\n    padding: 0;\n    margin-bottom: 50px; }\n\n.column {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: stretch; }\n  .column > * {\n    padding: 5px;\n    margin: 5px; }\n  .column.column-3 > * {\n    width: 33%; }\n  .column.column-2 > * {\n    width: 50%; }\n", ""]);
+	exports.push([module.id, "body {\n  overflow: hidden;\n  margin: 0;\n  font-family: TensoMedium, TensoLight, \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n  font-size: 18px; }\n  body * {\n    font-family: inherit;\n    font-size: inherit; }\n  body input,\n  body textarea,\n  body select {\n    border-radius: 4px;\n    border: 1px solid #565656;\n    padding: 3px; }\n\n.site-body {\n  display: flex;\n  flex: 1;\n  height: 100vh; }\n  .site-body > .navigation {\n    order: -1; }\n  .site-body > .open-content {\n    flex: 1;\n    overflow: scroll;\n    padding: 0;\n    margin-bottom: 50px; }\n\n.column {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: stretch; }\n  .column > * {\n    padding: 5px;\n    margin: 5px; }\n  .column.column-3 > * {\n    width: 33%; }\n  .column.column-2 > * {\n    width: 50%; }\n", ""]);
 
 	// exports
 
