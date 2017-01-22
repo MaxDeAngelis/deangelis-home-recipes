@@ -20,31 +20,11 @@ var Recipe = React.createClass({
         });
     },
     save: function() {
-        debugger;
-
         this.setState({
             editable: false
         });
 
         this.props.onSave(this.props.recipe);
-    },
-    update: function(key, newValue) {
-        var tempRecipe = this.props.recipe;
-        tempRecipe[key] = newValue;
-        console.log(key + " - " + newValue)
-        this.setState({
-            recipe: tempRecipe
-        });
-        console.log(newValue)
-    },
-    addIngredient: function() {
-        var tempRecipe = this.props.recipe;
-
-        this.props.recipe.ingredients.push({
-            id: "",
-            unit: "",
-            ingredientName: ""
-        })
     },
     render: function() {
         if (this.props.recipe == null) {
@@ -53,7 +33,7 @@ var Recipe = React.createClass({
 
         var addLink;
         if (this.state.editable) {
-            addLink = <a onClick = {this.addIngredient}>Add ingredient</a>
+            addLink = <a onClick = {this.props.onAddIngredient}>Add ingredient</a>
         }
 
         return ( <main className="full-recipe">
@@ -63,7 +43,7 @@ var Recipe = React.createClass({
                     creation: this.props.recipe.dateCreated,
                     edit: this.edit,
                     save: this.save,
-                    update: this.update,
+                    update: this.props.onUpdateValue,
                     editable: this.state.editable
                 }}/>
                 <div className="recipe-images">
@@ -74,7 +54,7 @@ var Recipe = React.createClass({
                 <main className="recipe-body">
                         <Ingredients data = {{
                             ingredients: this.props.recipe.ingredients,
-                            update: this.update,
+                            update: this.props.onUpdateValue,
                             editable: this.state.editable
                         }}>
                             {addLink}

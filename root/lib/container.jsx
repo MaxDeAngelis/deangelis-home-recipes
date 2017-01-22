@@ -14,7 +14,10 @@ function getState() {
 
         // CALLBACKS
         saveRecipe: Actions.saveRecipe,
-        getRecipe: Actions.getRecipe
+        getRecipe: Actions.getRecipe,
+        addIngredient: Actions.addIngredient,
+        removeIngredient: Actions.removeIngredient,
+        updateValue: Actions.updateValue
     }
 }
 

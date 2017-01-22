@@ -35,9 +35,24 @@ class RecipeStore extends ReduceStore {
                 }
 
                 this._processAction(action, callback, false);
-                
-                state = recipe;
-                return state;            
+                return Object.assign({}, state, recipe);    
+            case ActionTypes.ADD_INGREDIENT:
+                var newState = this.getState();
+                newState.ingredients.push({
+                    id: "",
+                    unit: "",
+                    ingredientName: ""
+                });    
+                return Object.assign({}, state, newState);   
+            case ActionTypes.REMOVE_INGREDIENT:
+                var newState = this.getState();
+                newState[action.key] = action.value;
+
+                return Object.assign({}, state, newState);  
+            case ActionTypes.UPDATE_VALUE:
+                var newState = this.getState();
+                newState[action.key] = action.value;
+                return Object.assign({}, state, newState); 
             default:
                 return state;
         }

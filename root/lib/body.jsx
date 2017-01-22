@@ -14,6 +14,9 @@ function Body(props) {
                     <Recipe 
                         recipe={props.openRecipe} 
                         onSave={props.saveRecipe}
+                        onAddIngredient={props.addIngredient}
+                        onRemoveIngredient={props.removeIngredient}
+                        onUpdateValue={props.updateValue}
                     />
                 </main>
                 <nav className="navigation">
