@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = { 
-    entry: './root/lib/main.jsx',
+    entry: './root/lib/root.jsx',
      output: {
         path: __dirname,
         filename: './root/lib/bundle.js'
@@ -10,9 +10,10 @@ module.exports = { 
     /*plugins: [
       new webpack.optimize.UglifyJsPlugin({minimize: true})
     ],*/
-     module: {   
+    devtool: 'inline-source-map',
+    module: {   
         loaders: [{
-                test: /.jsx?$/,
+                test: /.(jsx)?$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/,
                 query: {

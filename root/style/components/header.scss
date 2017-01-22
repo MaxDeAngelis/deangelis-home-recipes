@@ -1,7 +1,6 @@
 @import "../variables.scss";
-.site-header {
-    background-color: $theme-color-one;
     .header-content {
+        background-color: $theme-color-one;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -19,4 +18,3 @@
             }
         }
     }
-}

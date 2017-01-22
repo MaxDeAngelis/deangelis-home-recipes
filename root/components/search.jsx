@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Recipe from './recipe.jsx';
+import Actions from '../lib/actions.js';
+
 require("../style/components/search.scss");
 
 const Search = React.createClass({
@@ -90,19 +92,7 @@ const Search = React.createClass({
             element = element.parentElement;
         }
         var id = element.dataset.id;
-
-        $.get('../processAction.php',
-            {
-                action: 'GET_RECIPE',
-                id: id
-            },
-            function (response) {
-                var openContent = document.querySelector(".open-content");
-                ReactDOM.unmountComponentAtNode(openContent);
-                ReactDOM.render(<Recipe data={response} />, openContent);
-            },
-            "json"
-        );
+        this.props.getRecipe(id);
     },
     render: function () {
         var key = 0;

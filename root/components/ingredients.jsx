@@ -7,8 +7,7 @@ var Ingredients = React.createClass({
     getInitialState: function() {
         return {
             ingredients: [],
-            units: [],
-            currentIngredients: this.props.data.ingredients
+            units: []
         };
     },
     componentWillMount: function() {
@@ -33,7 +32,7 @@ var Ingredients = React.createClass({
         var value = e.currentTarget.value;
         var i = e.currentTarget.parentNode.dataset.ingKey;
 
-        var tempIngredientsList = this.state.currentIngredients;
+        var tempIngredientsList = this.props.data.ingredients;
 
         tempIngredientsList[i][key] = value;
 
@@ -41,7 +40,7 @@ var Ingredients = React.createClass({
            currentIngredients: tempIngredientsList
         });
 
-        this.props.data.update("ingredients", this.state.currentIngredients);
+        this.props.data.update("ingredients", this.props.data.ingredients);
     },
     updateQuantity: function(e) {
         this.saveIngredients(e, "quantity");
@@ -54,7 +53,7 @@ var Ingredients = React.createClass({
     },
     renderDisplay: function() {
         var key = 0;
-        return this.state.currentIngredients.map(function(ing) {
+        return this.props.data.ingredients.map(function(ing) {
             return <li key = {key++} >{ing.quantity + " " + ing.units + " " + ing.ingredientName} </li>;
         });
     },
@@ -67,7 +66,7 @@ var Ingredients = React.createClass({
             }))
         }
 
-        return this.state.currentIngredients.map(function(ing) {
+        return this.props.data.ingredients.map(function(ing) {
             key++;
             return ( <li key={key} data-ing-key={key} className="ingredient column column-3">
                     <input value = {ing.quantity} onChange = {me.updateQuantity}/>

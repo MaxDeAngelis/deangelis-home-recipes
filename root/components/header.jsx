@@ -4,14 +4,14 @@ require("../style/components/header.scss");
 
 var Header = React.createClass({
     render: function() {
-        return (<div className="header-content">
+        return (<header className="header-content">
             <h1>Family Recipe</h1>
-            <Search/>
+            <Search getRecipe={this.props.getRecipe} />
             <nav>
                 <a>Login</a>
                 <a>Log Out</a>
             </nav>
-        </div>
+        </header>
         );
     }
 });

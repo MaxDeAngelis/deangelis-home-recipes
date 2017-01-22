@@ -8,22 +8,23 @@
 
 
 	switch ($_GET['action']) {
-	    case ACTIONS::GET_LIST:
-	        $action = new GetList();
-	        break;
-		case ACTIONS::GET_RECIPE:
-	        $action = new GetRecipe($_GET);
-	        break;
-		case ACTIONS::GET_DATA_INGREDIENTS:
-			$action = new GetDataIngredients();
-			break;
-		case ACTIONS::GET_DATA_UNITS:
-			$action = new GetDataUnits();
-			break;
-		case ACTIONS::SAVE_RECIPE:
-			$action = new SaveRecipe($_GET['recipe']);
-			break;
-	    default:
+
+	case ACTIONS::GET_LIST:
+		$action = new GetList();
+		break;
+	case ACTIONS::GET_RECIPE:
+		$action = new GetRecipe($_GET);
+		break;
+	case ACTIONS::GET_DATA_INGREDIENTS:
+		$action = new GetDataIngredients();
+		break;
+	case ACTIONS::GET_DATA_UNITS:
+		$action = new GetDataUnits();
+		break;
+	case ACTIONS::SAVE_RECIPE:
+		$action = new SaveRecipe($_GET['recipe']);
+		break;
+	default:
 	        $action = new Action("");
 	        break;
 	}
