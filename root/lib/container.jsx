@@ -16,7 +16,9 @@ function getState() {
         saveRecipe: Actions.saveRecipe,
         getRecipe: Actions.getRecipe,
         addIngredient: Actions.addIngredient,
-        removeIngredient: Actions.removeIngredient,
+        addStep: Actions.addStep,
+        deleteStep: Actions.deleteStep,
+        deleteIngredient: Actions.deleteIngredient,
         updateValue: Actions.updateValue
     }
 }

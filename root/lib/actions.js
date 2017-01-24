@@ -19,9 +19,20 @@ const Actions = {
             action: ActionTypes.ADD_INGREDIENT
         });
     },
-    removeIngredient() {
+    addStep() {
         Dispatcher.dispatch({
-            action: ActionTypes.REMOVE_INGREDIENT,
+            action: ActionTypes.ADD_STEP
+        });
+    },
+    deleteStep(data) {
+        Dispatcher.dispatch({
+            action: ActionTypes.DELETE_STEP,
+            index: data
+        });
+    },
+    deleteIngredient(data) {
+        Dispatcher.dispatch({
+            action: ActionTypes.DELETE_INGREDIENT,
             index: data
         });
     },

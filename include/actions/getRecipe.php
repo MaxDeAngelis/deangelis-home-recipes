@@ -20,7 +20,7 @@ class GetRecipe extends Action {
 			$recipe = $response->results[0];
 
 			// Get the ingredients for the given recipe
-			$sql = "SELECT quantity, units, ingredientName, ingredientId
+			$sql = "SELECT refId, quantity, units, ingredientName, ingredientId
 						FROM recipes NATURAL JOIN recipeingredients LEFT JOIN ingredients USING(ingredientId)
 						WHERE recipeId = {$this->id};";
 			$response = new DatabaseQuery($sql);

@@ -31,11 +31,6 @@ var Recipe = React.createClass({
             return false;
         }
 
-        var addLink;
-        if (this.state.editable) {
-            addLink = <a onClick = {this.props.onAddIngredient}>Add ingredient</a>
-        }
-
         return ( <main className="full-recipe">
                 <RecipeHeader data= {{
                     title: this.props.recipe.title,
@@ -52,17 +47,20 @@ var Recipe = React.createClass({
                 <RecipeSubHeader data= {this.props.recipe}/>
                 
                 <main className="recipe-body">
-                        <Ingredients data = {{
-                            ingredients: this.props.recipe.ingredients,
-                            update: this.props.onUpdateValue,
-                            editable: this.state.editable
-                        }}>
-                            {addLink}
-                        </Ingredients>
-                        <Steps data = {{
-                            steps: this.props.recipe.steps,
-                            editable: this.state.editable
-                        }}/>
+                        <Ingredients 
+                            ingredients = {this.props.recipe.ingredients}
+                            update = {this.props.onUpdateValue}
+                            add = {this.props.onAddIngredient}
+                            delete = {this.props.onDeleteIngredient}
+                            editable = {this.state.editable}
+                        />
+                        <Steps 
+                            steps = {this.props.recipe.steps}
+                            update = {this.props.onUpdateValue}
+                            add = {this.props.onAddStep}
+                            delete = {this.props.onDeleteStep}
+                            editable = {this.state.editable}
+                        />
                 </main>
             </main>
         );

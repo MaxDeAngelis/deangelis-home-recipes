@@ -8,8 +8,10 @@ class SaveRecipe extends Action {
 	}
 
 	public function process() {
-		// Update the recipe information itself
-        $sql = "UPDATE recipes 
+		$recipeId = $this->recipe["id"];
+		$sqlList = array();
+		
+		array_push($sqlList, "UPDATE recipes 
 					SET name = '{$this->recipe["title"]}', 
 					steps = '{$this->recipe["steps"]}', 
 					cookTime = '{$this->recipe["cookTime"]}', 
@@ -18,9 +20,18 @@ class SaveRecipe extends Action {
 					season = '{$this->recipe["season"]}', 
 					servings = {$this->recipe["servings"]}
 					
-					WHERE recipeId = {$this->recipe["id"]};";
+					WHERE recipeId = {$recipeId};");
 
-        $response = new DatabaseTransaction($sql);
+		// Generate calls to add ingredients
+        foreach ($this->recipe["ingredients"] as $ingredient) {
+			array_push($sqlList, "SELECT AddIng('{$ingredient["ingredientName"]}', 
+												'{$ingredient["units"]}', 
+												'{$ingredient["quantity"]}', 
+												{$recipeId}, 
+												{$ingredient["refId"]});");
+		}
+
+		$response = new DatabaseTransaction($sqlList);
 
 		if ($response->sucess) {
 			return "{'status' : 'Updated' }";

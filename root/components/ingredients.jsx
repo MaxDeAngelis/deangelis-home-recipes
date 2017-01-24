@@ -32,7 +32,7 @@ var Ingredients = React.createClass({
         var value = e.currentTarget.value;
         var i = e.currentTarget.parentNode.dataset.ingKey;
 
-        var tempIngredientsList = this.props.data.ingredients;
+        var tempIngredientsList = this.props.ingredients;
 
         tempIngredientsList[i][key] = value;
 
@@ -40,7 +40,7 @@ var Ingredients = React.createClass({
            currentIngredients: tempIngredientsList
         });
 
-        this.props.data.update("ingredients", this.props.data.ingredients);
+        this.props.update("ingredients", this.props.ingredients);
     },
     updateQuantity: function(e) {
         this.saveIngredients(e, "quantity");
@@ -51,10 +51,15 @@ var Ingredients = React.createClass({
     updateIngredientName: function(e) {
         this.saveIngredients(e, "ingredientName");
     },
+    deleteIngredient: function(e) {
+        var index = e.target.parentNode.dataset.ingKey;
+
+        this.props.delete(index);
+    },
     renderDisplay: function() {
         var key = 0;
-        return this.props.data.ingredients.map(function(ing) {
-            return <li key = {key++} >{ing.quantity + " " + ing.units + " " + ing.ingredientName} </li>;
+        return this.props.ingredients.map(function(ing) {
+            return <li key = {key++} >{ing.quantity + " " + ing.units + " " + ing.ingredientName}</li>;
         });
     },
     renderForm: function() {
@@ -66,7 +71,7 @@ var Ingredients = React.createClass({
             }))
         }
 
-        return this.props.data.ingredients.map(function(ing) {
+        return this.props.ingredients.map(function(ing) {
             key++;
             return ( <li key={key} data-ing-key={key} className="ingredient column column-3">
                     <input value = {ing.quantity} onChange = {me.updateQuantity}/>
@@ -75,14 +80,17 @@ var Ingredients = React.createClass({
                     <AutoComplete value = {ing.ingredientName}
                                  source = {source}
                                  change = {me.updateIngredientName}/>
+                    <a className="ti-trash" onClick={me.deleteIngredient}/>
                 </li>
             );
         });
     },
     render: function() {
         var list;
-        if (this.props.data.editable) {
+        var addLink;
+        if (this.props.editable) {
             list = this.renderForm();
+            addLink = <a className="ti-plus" onClick={this.props.add}>Add ingredient</a>
         } else {
             list = this.renderDisplay();
         }
@@ -90,7 +98,7 @@ var Ingredients = React.createClass({
         return ( <section>
                 <label className="data-label">Ingredients</label>
                 <ul>{list}</ul>
-                {this.props.children}
+                {addLink}
             </section>
         );
     }

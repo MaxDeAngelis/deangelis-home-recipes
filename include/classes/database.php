@@ -9,10 +9,14 @@ class DatabaseTransaction {
 			die("Connection failed: " . $conn->connect_error);
 			$this->message = "Connection failed: " . $conn->connect_error;
 		} else {
-			$result = $conn->query($sqlList);
-			
+			$conn->begin_transaction();
+
+			foreach ($sqlList as $sql) {
+	            $result = $conn->query($sql);
+				error_log($sql);
+	        }
+
 			$conn->commit();
-			
 			$conn->close();
 
 			if ($result === false) {

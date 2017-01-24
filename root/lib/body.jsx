@@ -15,7 +15,9 @@ function Body(props) {
                         recipe={props.openRecipe} 
                         onSave={props.saveRecipe}
                         onAddIngredient={props.addIngredient}
-                        onRemoveIngredient={props.removeIngredient}
+                        onAddStep={props.addStep}
+                        onDeleteStep={props.deleteStep}
+                        onDeleteIngredient={props.deleteIngredient}
                         onUpdateValue={props.updateValue}
                     />
                 </main>
