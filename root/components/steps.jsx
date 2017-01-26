@@ -1,19 +1,23 @@
 import React from 'react';
 
+require("../style/components/steps.scss");
+
 const Steps = React.createClass({
     renderDisplay: function(steps) {
         var key = 0;
         return steps.map(function(step) {
-            return <li key={key++}> {step} </li>;
+            return <li className="individual-step" key={key++}>{step}</li>;
         });
     },
     renderForm: function(steps) {
         var me = this;
         var key = 0;
         return steps.map(function(step) {
-            return <li key={key++} data-step-index={key - 1}>
-                <textarea onChange={me.updateStep} value={step}></textarea>
-                <a className="ti-trash" onClick={me.deleteStep}/>
+            return <li className="individual-step" key={key++} data-step-index={key - 1}>
+                <div className="step-content">
+                    <textarea onChange={me.updateStep} value={step}></textarea>
+                    <a className="ti-trash" onClick={me.deleteStep}/>
+                </div>
             </li> ;
         });
     },
@@ -49,9 +53,9 @@ const Steps = React.createClass({
             list = this.renderDisplay(steps);
         }
 
-        return ( <section>
+        return ( <section className="recipe-steps">
                 <label className="data-label">Directions</label>
-                <ol>{list}</ol>
+                <ol className="steps-list">{list}</ol>
                 {addLink}
             </section>
         );

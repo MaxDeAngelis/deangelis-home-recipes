@@ -22,6 +22,8 @@ class SaveRecipe extends Action {
 					
 					WHERE recipeId = {$recipeId};");
 
+		array_push($sqlList, "DELETE FROM recipeingredients WHERE recipeId = {$recipeId};");
+		
 		// Generate calls to add ingredients
         foreach ($this->recipe["ingredients"] as $ingredient) {
 			array_push($sqlList, "SELECT AddIng('{$ingredient["ingredientName"]}', 

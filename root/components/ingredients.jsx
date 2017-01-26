@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import AutoComplete from './autocomplete.jsx';
 import Dropdown from './dropdown.jsx';
 
+require("../style/components/ingredients.scss");
+
 var Ingredients = React.createClass({
     getInitialState: function() {
         return {
@@ -58,9 +60,11 @@ var Ingredients = React.createClass({
     },
     renderDisplay: function() {
         var key = 0;
-        return this.props.ingredients.map(function(ing) {
+        var list = this.props.ingredients.map(function(ing) {
             return <li key = {key++} >{ing.quantity + " " + ing.units + " " + ing.ingredientName}</li>;
         });
+
+        return (<ul>{list}</ul>);
     },
     renderForm: function() {
         var key = -1;
@@ -71,7 +75,7 @@ var Ingredients = React.createClass({
             }))
         }
 
-        return this.props.ingredients.map(function(ing) {
+        var list = this.props.ingredients.map(function(ing) {
             key++;
             return ( <li key={key} data-ing-key={key} className="ingredient column column-3">
                     <input value = {ing.quantity} onChange = {me.updateQuantity}/>
@@ -84,21 +88,23 @@ var Ingredients = React.createClass({
                 </li>
             );
         });
+
+        return (<ul className="editable">
+            {list}
+            <li><a className="ti-plus" onClick={this.props.add}>Add ingredient</a></li>
+        </ul>);
     },
     render: function() {
         var list;
-        var addLink;
         if (this.props.editable) {
             list = this.renderForm();
-            addLink = <a className="ti-plus" onClick={this.props.add}>Add ingredient</a>
         } else {
             list = this.renderDisplay();
         }
 
-        return ( <section>
+        return ( <section className="recipe-ingredients">
                 <label className="data-label">Ingredients</label>
-                <ul>{list}</ul>
-                {addLink}
+                {list}
             </section>
         );
     }
