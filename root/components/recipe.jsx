@@ -26,6 +26,34 @@ var Recipe = React.createClass({
 
         this.props.onSave(this.props.recipe);
     },
+    componentDidUpdate: function() {
+        var that = this;
+        if (this.props.recipe == null) {
+            return false;
+        }
+        var croppicContainerModalOptions = {
+                uploadUrl : '/processAction.php',
+                cropUrl : '/processAction.php',
+                modal : true,
+                imgEyecandyOpacity : 0.4,
+                doubleZoomControls:false,
+                customUploadButtonId:'EditImage',
+                //processInline:true,
+                //loadPicture: this.props.recipe.picture,
+                loaderHtml :'<div class="loading">',
+                uploadData :{
+                    action : "UPLOAD_IMAGE"   
+                },
+                cropData : {
+                    action : "CROP_IMAGE"
+                },
+                onAfterImgCrop: function(o) {
+                   debugger;
+                   that.props.onUpdateValue('picture', o.url);
+                }
+        }
+        var cropContainerModal = new Croppic('Cropper', croppicContainerModalOptions);
+    },
     render: function() {
         if (this.props.recipe == null) {
             return false;
@@ -42,7 +70,8 @@ var Recipe = React.createClass({
                     editable: this.state.editable
                 }}/>
                 <div className="recipe-images">
-                    <img src={this.props.recipe.picture}/>
+                    <button id='EditImage'>Edit</button>
+                    <img id='Cropper' src={this.props.recipe.picture}/>
                 </div>
                 <RecipeSubHeader data= {this.props.recipe}/>
                 
