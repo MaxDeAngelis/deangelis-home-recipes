@@ -73,6 +73,7 @@ const Search = React.createClass({
         this.setState({ filteredList: filteredList , searchTerms: searchTerms});
     },
     focus: function () {
+        debugger;
         var me = this;
         $.get('../processAction.php',
             { action: 'GET_LIST' },

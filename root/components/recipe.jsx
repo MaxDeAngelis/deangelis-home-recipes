@@ -9,6 +9,7 @@ import Actions from '../lib/actions.js';
 require("../style/components/recipe.scss");
 
 var Recipe = React.createClass({
+    cropper: null,
     getInitialState: function() {
         return {
             editing: false
@@ -31,6 +32,11 @@ var Recipe = React.createClass({
         if (this.props.recipe == null) {
             return false;
         }
+
+        if (this.cropper != null) {
+            cropper.destroy();
+        }
+
         var croppicContainerModalOptions = {
                 uploadUrl : '/processAction.php',
                 cropUrl : '/processAction.php',
@@ -48,11 +54,10 @@ var Recipe = React.createClass({
                     action : "CROP_IMAGE"
                 },
                 onAfterImgCrop: function(o) {
-                   debugger;
                    that.props.onUpdateValue('picture', o.url);
                 }
         }
-        var cropContainerModal = new Croppic('Cropper', croppicContainerModalOptions);
+        this.cropper = new Croppic('Cropper', croppicContainerModalOptions);
     },
     render: function() {
         if (this.props.recipe == null) {

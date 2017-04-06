@@ -1,16 +1,24 @@
-var path = require('path');
 var webpack = require('webpack');
 
 module.exports = { 
     entry: './root/lib/root.jsx',
-     output: {
-        path: __dirname,
-        filename: './root/lib/bundle.js'
+    output: {
+        path: 'root',
+        filename: 'bundle.js'
     },
     /*plugins: [
       new webpack.optimize.UglifyJsPlugin({minimize: true})
-    ],*/
-    devtool: 'inline-source-map',
+    ],
+    devtool: 'inline-source-map',*/
+    devServer: {
+        inline: true,
+        contentBase: "./root",
+        port: 8080,
+        proxy: [{
+            path: /./,
+            target: "http://localhost:8888/"
+        }]
+    },
     module: {   
         loaders: [{
                 test: /.(jsx)?$/,

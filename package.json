@@ -2,7 +2,7 @@
   "name": "familyrecipe",
   "version": "1.0.0",
   "description": "family recipe site",
-  "main": "webpack.config.js",
+  "main": "index.html",
   "dependencies": {
     "babel-core": "^6.18.0",
     "babel-loader": "^6.2.1",
@@ -20,10 +20,12 @@
     "node-sass": "^3.10.1",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
-    "webpack": "^1.12.12"
+    "webpack": "^1.13.0",
+    "webpack-dev-server": "^1.14.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack",
+    "start": "webpack-dev-server"
   },
   "author": "",
   "license": "ISC"

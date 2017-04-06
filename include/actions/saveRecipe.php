@@ -11,6 +11,34 @@ class SaveRecipe extends Action {
 		$recipeId = $this->recipe["id"];
 		$sqlList = array();
 		
+		$newPicture = $this->recipe["picture"];
+		error_log("-----------------------------------------------------------------------------------");
+		error_log("Before: " . $newPictureLocation);
+
+
+		$response = new DatabaseQuery("SELECT picture FROM recipes WHERE recipeId = {$recipeId};");
+
+		// If the image was changed then delete the old one and rename the new one
+		if ($response->sucess && strpos($this->recipe["picture"], "temp_") !== false) {
+			$temp = explode(".", $this->recipe["picture"]);
+			$extension = end($temp);			
+
+			// Recalculate the new image name with extension
+			$newPicture = "images/recipes/recipe_" . $recipeId . "." . $extension;
+			$oldPicture = $response->results[0]["picture"];
+
+			// Get the full paths
+			$oldPath = $_SERVER['DOCUMENT_ROOT'] . "/" . $this->recipe["picture"];
+			$newPath = $_SERVER['DOCUMENT_ROOT'] . "/" . $newPicture;
+
+			// Delete the original image
+			unlink($oldPath);
+
+			// Rename the new image
+			rename($oldPath, $newPath);
+		}
+		error_log("After: " . $newPicture);
+
 		array_push($sqlList, "UPDATE recipes 
 					SET name = '{$this->recipe["title"]}', 
 					steps = '{$this->recipe["steps"]}', 
@@ -18,7 +46,8 @@ class SaveRecipe extends Action {
 					prepTime = '{$this->recipe["prepTime"]}', 
 					category = '{$this->recipe["category"]}', 
 					season = '{$this->recipe["season"]}', 
-					servings = {$this->recipe["servings"]}
+					servings = {$this->recipe["servings"]},
+					picture = '{$newPicture}'
 					
 					WHERE recipeId = {$recipeId};");
 
@@ -32,6 +61,8 @@ class SaveRecipe extends Action {
 												{$recipeId}, 
 												{$ingredient["refId"]});");
 		}
+
+		
 
 		$response = new DatabaseTransaction($sqlList);
 

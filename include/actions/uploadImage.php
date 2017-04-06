@@ -33,11 +33,12 @@ class UploadImage extends Action {
 				$filename = $this->image["tmp_name"];
 				list($width, $height) = getimagesize( $filename );
 
-				move_uploaded_file($filename,  $imagePath . $this->image["name"]);
+				$newLocation = "temp_recipe_".rand().".".$extension;
+				move_uploaded_file($filename,  $imagePath . $newLocation);
 
 				$response = array(
 					"status" => 'success',
-					"url" => "images/recipes/" . $this->image["name"],
+					"url" => "images/recipes/" . $newLocation,
 					"width" => $width,
 					"height" => $height );
 			}

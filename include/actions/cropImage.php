@@ -25,15 +25,12 @@ class CropImage extends Action {
 		// rotation angle
 		$angle = $this->data['rotation'];
 
-		$jpeg_quality = 100;
-
-		$output_filename = "images/recipes/recipe_".rand();
+		$output_filename = "images/recipes/temp_recipe_".rand();
 
 		// uncomment line below to save the cropped image in the same location as the original image.
 		//$output_filename = dirname($imgUrl) . "/croppedImg_".rand();
 
 		$what = getimagesize($imgUrl);
-        error_log('MIME' . strtolower($what['mime']));
 		switch(strtolower($what['mime'])) {
 			case 'image/png':
 				$img_r = imagecreatefrompng($imgUrl);
@@ -90,7 +87,7 @@ class CropImage extends Action {
 
 			// finally output png image
 			//imagepng($final_image, $output_filename.$type, $png_quality);
-			imagejpeg($final_image, $_SERVER['DOCUMENT_ROOT'] . "/" . $output_filename.$type, $jpeg_quality);
+			imagejpeg($final_image, $_SERVER['DOCUMENT_ROOT'] . "/" . $output_filename.$type, 100);
 
 			// Delete the original image
 			unlink($imgUrl);
