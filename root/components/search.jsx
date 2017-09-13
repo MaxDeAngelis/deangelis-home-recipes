@@ -41,7 +41,7 @@ const Search = React.createClass({
     getRecipeHTML: function (recipe) {
         return (<div className="row" key={recipe.id} data-id={recipe.id}>
             <div className="row-content" onClick={this.select}>
-                <img className="image" src={recipe.picture} />
+                <img className="image" src={recipe.picture + "?" + new Date().getTime()} />
                 <div className="details">
                     <div className="title" dangerouslySetInnerHTML={this.getHighlightedTitle(recipe.title)}></div>
                     <div className="author">{recipe.firstName + " " + recipe.lastName}</div>
@@ -73,7 +73,6 @@ const Search = React.createClass({
         this.setState({ filteredList: filteredList , searchTerms: searchTerms});
     },
     focus: function () {
-        debugger;
         var me = this;
         $.get('../processAction.php',
             { action: 'GET_LIST' },

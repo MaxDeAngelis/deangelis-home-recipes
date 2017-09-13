@@ -12,7 +12,7 @@ var Recipe = React.createClass({
     cropper: null,
     getInitialState: function() {
         return {
-            editing: false
+            editable: false
         };
     },
     edit: function() {
@@ -34,7 +34,7 @@ var Recipe = React.createClass({
         }
 
         if (this.cropper != null) {
-            cropper.destroy();
+            this.cropper.destroy();
         }
 
         var croppicContainerModalOptions = {
@@ -63,6 +63,15 @@ var Recipe = React.createClass({
         if (this.props.recipe == null) {
             return false;
         }
+        var cropper = "";
+        if (this.state.editable) {
+            cropper = <div>
+                          <button id='EditImage'>Edit</button>
+                          <img id='Cropper' src={this.props.recipe.picture + "?" + new Date().getTime()}/>
+                      </div>;
+        } else {
+            cropper = <img src={this.props.recipe.picture + "?" + new Date().getTime()}/>
+        }
 
         return ( <main className="full-recipe">
                 <RecipeHeader data= {{
@@ -75,8 +84,7 @@ var Recipe = React.createClass({
                     editable: this.state.editable
                 }}/>
                 <div className="recipe-images">
-                    <button id='EditImage'>Edit</button>
-                    <img id='Cropper' src={this.props.recipe.picture}/>
+                    {cropper}
                 </div>
                 <RecipeSubHeader data= {this.props.recipe}/>
                 

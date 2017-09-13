@@ -71,7 +71,7 @@ var Ingredients = React.createClass({
         var me = this;
         var source = function( request, response ) {
             response(me.state.ingredients.map(function(ingredient) {
-                return ingredient.name;
+                return ingredient.ingredientName;
             }))
         }
 

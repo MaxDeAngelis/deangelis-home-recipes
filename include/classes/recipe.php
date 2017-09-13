@@ -11,11 +11,17 @@ class Recipe {
     public $season = "";
     public $steps = "";
     public $dateCreated = "";
-    public $picture = "";
+    public $picture = "images/no-image-uploaded.jpg";
     public $creator = "";
     public $ingredients = array();
 
     function __construct($recipe) {
+        $this->ingredients[0] = new Ingredient(null);
+
+        if ($recipe == null) {
+            return null;
+        }
+
         foreach ($recipe as $key => $value) {
             switch ($key) {
                 case 'recipeId':
@@ -52,7 +58,9 @@ class Recipe {
                     $this->dateCreated = $value;
                     break;
                 case 'picture':
-                    $this->picture = $value;
+                    if ($value != "") {
+                        $this->picture = $value;
+                    }
                     break;
                 case 'ownerId':
                     $this->creator = $value;

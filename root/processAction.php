@@ -22,6 +22,9 @@
 	case ACTIONS::GET_RECIPE:
 		$action = new GetRecipe($data);
 		break;
+	case ACTIONS::NEW_RECIPE:
+		$action = new NewRecipe($data);
+		break;
 	case ACTIONS::GET_DATA_INGREDIENTS:
 		$action = new GetDataIngredients();
 		break;

@@ -1,20 +1,25 @@
 <?php
 class Ingredient {
-    public $id = "";
-    public $name = "";
-    public $defaultUnit = "";
+    public $ingredientId = "";
+    public $ingredientName = "Please enter ingredients ...";
+    public $quantity = "";
+    public $units = "";
 
     function __construct($ingredient) {
+        if ($ingredient == null) {
+            return $this;
+        }
+
         foreach ($ingredient as $key => $value) {
             switch ($key) {
                 case 'ingredientId':
-                    $this->id = $value;
+                    $this->ingredientId = $value;
                     break;
                 case 'ingredientName':
-                    $this->name = $value;
+                    $this->ingredientName = $value;
                     break;
-                case 'defaultUnit':
-                    $this->defaultUnit = $value;
+                case 'units':
+                    $this->units = $value;
                     break;
             }
         }

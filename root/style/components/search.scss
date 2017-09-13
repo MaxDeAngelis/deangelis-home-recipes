@@ -26,6 +26,7 @@
         transform: perspective(800px) rotateX(-90deg);
         transform-origin: top;
         transition: all 0.5s linear;
+        z-index: 10;
         &.show {
             transform: perspective(0px) rotateX(0deg);
         }

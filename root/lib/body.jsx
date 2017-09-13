@@ -22,7 +22,9 @@ function Body(props) {
                     />
                 </main>
                 <nav className="navigation">
-                    <Navigation/>
+                    <Navigation
+                        onNew={props.newRecipe}
+                    />
                 </nav>
             </div>
         </section>);

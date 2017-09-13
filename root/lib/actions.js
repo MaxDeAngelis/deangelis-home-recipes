@@ -14,6 +14,11 @@ const Actions = {
             id: data
         });
     },
+    newRecipe() {
+        Dispatcher.dispatch({
+            action: ActionTypes.NEW_RECIPE
+        });
+    },
     addIngredient() {
         Dispatcher.dispatch({
             action: ActionTypes.ADD_INGREDIENT

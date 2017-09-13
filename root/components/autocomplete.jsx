@@ -15,8 +15,11 @@ var AutoComplete = React.createClass({
     },
 
     updateAutocomplete: function() {
-      var source = this.props.source;
-      $(ReactDOM.findDOMNode(this)).autocomplete({source: source});
+      var me = this;
+      $(ReactDOM.findDOMNode(this)).autocomplete({
+        source: me.props.source,
+        change: me.props.change
+      });
     }
 });
 

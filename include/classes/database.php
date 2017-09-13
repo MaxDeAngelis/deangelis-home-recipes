@@ -2,6 +2,7 @@
 class DatabaseTransaction {
 	public $sucess = false;
 	public $message = "";
+	public $results = array();
 
 	function __construct($sqlList) {
 		$conn = new mysqli('localhost', 'recipes', 'recipes', 'recipes');
@@ -12,8 +13,11 @@ class DatabaseTransaction {
 			$conn->begin_transaction();
 
 			foreach ($sqlList as $sql) {
-	            $result = $conn->query($sql);
-				error_log($sql);
+				$result = $conn->query($sql);
+				#error_log($sql);
+				#error_log(print_r($result, true));
+				array_push($this->results, $result);
+				
 	        }
 
 			$conn->commit();

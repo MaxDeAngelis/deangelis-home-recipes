@@ -6,10 +6,10 @@ module.exports = { 
         path: 'root',
         filename: 'bundle.js'
     },
-    /*plugins: [
+    plugins: [
       new webpack.optimize.UglifyJsPlugin({minimize: true})
     ],
-    devtool: 'inline-source-map',*/
+    devtool: 'inline-source-map',
     devServer: {
         inline: true,
         contentBase: "./root",

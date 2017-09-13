@@ -24,6 +24,7 @@ class RecipeStore extends ReduceStore {
     }
 
     reduce(state, action) {
+        console.log(action.action);
         switch (action.action) {
             case ActionTypes.SAVE_RECIPE:
                 this._processAction(action, null, false);
@@ -35,7 +36,15 @@ class RecipeStore extends ReduceStore {
                 }
 
                 this._processAction(action, callback, false);
-                return Object.assign({}, state, recipe);    
+                return Object.assign({}, state, recipe);   
+            case ActionTypes.NEW_RECIPE:
+                var recipe = null;
+                var callback = function (response) {
+                    recipe = response;
+                }
+
+                this._processAction(action, callback, false);
+                return Object.assign({}, state, recipe);  
             case ActionTypes.ADD_INGREDIENT:
                 var newState = this.getState();
                 newState.ingredients.push({

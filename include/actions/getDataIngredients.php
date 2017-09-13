@@ -10,6 +10,7 @@ class GetDataIngredients extends Action {
 		$sql = "SELECT ingredientId, ingredientName, defaultUnit
 								FROM ingredients
 								ORDER BY ingredientName;";
+								
 		$response = new DatabaseQuery($sql);
 
 		if ($response->sucess) {

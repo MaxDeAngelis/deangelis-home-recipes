@@ -44,7 +44,11 @@ const Steps = React.createClass({
     render: function() {
         var list;
         var key = 0;
-        var steps = this.props.steps.split("|");
+        if (this.props.steps === null || this.props.steps == "") {
+            var steps = ["Please enter some steps ..."];
+        } else {
+            var steps = this.props.steps.split("|");            
+        }
         var addLink;
         if (this.props.editable) {
             list = this.renderForm(steps);

@@ -15,6 +15,7 @@ function getState() {
         // CALLBACKS
         saveRecipe: Actions.saveRecipe,
         getRecipe: Actions.getRecipe,
+        newRecipe: Actions.newRecipe,
         addIngredient: Actions.addIngredient,
         addStep: Actions.addStep,
         deleteStep: Actions.deleteStep,

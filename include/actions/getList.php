@@ -6,7 +6,7 @@ class GetList extends Action {
 	}
 
 	public function process() {
-		$response = new DatabaseQuery("SELECT recipeId, name, picture, firstName, lastName FROM recipes INNER JOIN person ON(person.personId = recipes.ownerId)");
+		$response = new DatabaseQuery("SELECT recipeId, name, picture, firstName, lastName FROM recipes INNER JOIN person ON(person.personId = recipes.ownerId) WHERE recipes.name != '';");
 
 		if ($response->sucess) {
 			$list = array();

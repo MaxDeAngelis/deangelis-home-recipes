@@ -17,11 +17,12 @@ var Navigation = React.createClass({
         }
     },
     render: function() {
+        debugger;
         return (<ul className="navigation-content">
             <li className="link"><a className="toggle" onClick={this.toggle}></a></li>
             <li className="link ti-home hover" onClick={this.home}><span className="text">Home</span></li>
             <li className="link ti-user hover" onClick={this.home}><span className="text">Administrator</span></li>
-            <li className="link ti-plus hover" onClick={this.home}><span className="text">New</span></li>
+            <li className="link ti-plus hover" onClick={this.props.onNew}><span className="text">New</span></li>
         </ul>
         );
     }

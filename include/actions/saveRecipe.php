@@ -12,42 +12,43 @@ class SaveRecipe extends Action {
 		$sqlList = array();
 		
 		$newPicture = $this->recipe["picture"];
-		error_log("-----------------------------------------------------------------------------------");
-		error_log("Before: " . $newPictureLocation);
-
-
-		$response = new DatabaseQuery("SELECT picture FROM recipes WHERE recipeId = {$recipeId};");
 
 		// If the image was changed then delete the old one and rename the new one
-		if ($response->sucess && strpos($this->recipe["picture"], "temp_") !== false) {
-			$temp = explode(".", $this->recipe["picture"]);
-			$extension = end($temp);			
+		// because of cropper it will have a temp in the name since it was just cropped
+		// TODO: Somehow this sometimes runs when name does not contain temp and image is delete :(
+		if (strpos($this->recipe["picture"], "temp_") !== false) {
+			#error_log($this->recipe["picture"]);
+			$response = new DatabaseQuery("SELECT picture FROM recipes WHERE recipeId = {$recipeId};");
 
-			// Recalculate the new image name with extension
-			$newPicture = "images/recipes/recipe_" . $recipeId . "." . $extension;
-			$oldPicture = $response->results[0]["picture"];
+			if ($response->sucess) {
+				$temp = explode(".", $this->recipe["picture"]);
+				$extension = end($temp);			
 
-			// Get the full paths
-			$oldPath = $_SERVER['DOCUMENT_ROOT'] . "/" . $this->recipe["picture"];
-			$newPath = $_SERVER['DOCUMENT_ROOT'] . "/" . $newPicture;
+				// Recalculate the new image name with extension
+				$newPicture = "images/recipes/recipe_" . $recipeId . "." . $extension;
+				$oldPicture = $response->results[0]["picture"];
 
-			// Delete the original image
-			unlink($oldPath);
+				// Get the full paths
+				$oldPath = $_SERVER['DOCUMENT_ROOT'] . "/" . $this->recipe["picture"];
+				$newPath = $_SERVER['DOCUMENT_ROOT'] . "/" . $newPicture;
 
-			// Rename the new image
-			rename($oldPath, $newPath);
+				// Delete the original image
+				unlink($oldPicture);
+
+				// Rename the new temp image to match recipe id
+				rename($oldPath, $newPath);
+			}
 		}
-		error_log("After: " . $newPicture);
 
 		array_push($sqlList, "UPDATE recipes 
 					SET name = '{$this->recipe["title"]}', 
-					steps = '{$this->recipe["steps"]}', 
-					cookTime = '{$this->recipe["cookTime"]}', 
-					prepTime = '{$this->recipe["prepTime"]}', 
-					category = '{$this->recipe["category"]}', 
-					season = '{$this->recipe["season"]}', 
-					servings = {$this->recipe["servings"]},
-					picture = '{$newPicture}'
+						steps = '{$this->recipe["steps"]}', 
+						cookTime = '{$this->recipe["cookTime"]}', 
+						prepTime = '{$this->recipe["prepTime"]}', 
+						category = '{$this->recipe["category"]}', 
+						season = '{$this->recipe["season"]}', 
+						servings = {$this->recipe["servings"]},
+						picture = '{$newPicture}'
 					
 					WHERE recipeId = {$recipeId};");
 
@@ -58,14 +59,10 @@ class SaveRecipe extends Action {
 			array_push($sqlList, "SELECT AddIng('{$ingredient["ingredientName"]}', 
 												'{$ingredient["units"]}', 
 												'{$ingredient["quantity"]}', 
-												{$recipeId}, 
-												{$ingredient["refId"]});");
+												{$recipeId})");
 		}
 
-		
-
 		$response = new DatabaseTransaction($sqlList);
-
 		if ($response->sucess) {
 			return "{'status' : 'Updated' }";
 		} else {

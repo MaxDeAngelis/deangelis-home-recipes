@@ -22,6 +22,10 @@ var RecipeHeader = React.createClass({
         this.props.data.update("title", e.target.value);
     },
     render: function() {
+        if (this.props.data.title == "") {
+            this.props.data.title = "Please enter a new title ...";
+        }
+
         var created = new Date(this.props.data.creation);
         var creator = <div className="addition-info">
                       <span className="author">{this.props.data.creator}</span>
