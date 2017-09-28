@@ -32,8 +32,10 @@ class SaveRecipe extends Action {
 				$oldPath = $_SERVER['DOCUMENT_ROOT'] . "/" . $this->recipe["picture"];
 				$newPath = $_SERVER['DOCUMENT_ROOT'] . "/" . $newPicture;
 
-				// Delete the original image
-				unlink($oldPicture);
+				// Delete the original image if not the placeholder
+				if (strpos($oldPicture, "no-image-uploaded") === false) {
+					unlink($oldPicture);
+				}
 
 				// Rename the new temp image to match recipe id
 				rename($oldPath, $newPath);

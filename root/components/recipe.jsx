@@ -4,7 +4,7 @@ import Steps from './steps.jsx';
 import Ingredients from './ingredients.jsx';
 import RecipeHeader from './recipeHeader.jsx';
 import RecipeSubHeader from './recipeSubHeader.jsx';
-import Actions from '../lib/actions.js';
+import Cropper from './cropper.jsx';
 
 require("../style/components/recipe.scss");
 
@@ -16,63 +16,22 @@ var Recipe = React.createClass({
         };
     },
     edit: function() {
-        this.setState({
-            editable: true
-        });
+        this.setState({editable: true});
     },
     save: function() {
-        this.setState({
-            editable: false
-        });
-
         this.props.onSave(this.props.recipe);
+
+        this.props.onUpdateValue('picture', "images/recipes/recipe_" + this.props.recipe.id + ".png");
+
+        this.setState({editable: false});
     },
-    componentDidUpdate: function() {
-        var that = this;
-        if (this.props.recipe == null) {
-            return false;
-        }
-
-        if (this.cropper != null) {
-            this.cropper.destroy();
-        }
-
-        var croppicContainerModalOptions = {
-                uploadUrl : '/processAction.php',
-                cropUrl : '/processAction.php',
-                modal : true,
-                imgEyecandyOpacity : 0.4,
-                doubleZoomControls:false,
-                customUploadButtonId:'EditImage',
-                //processInline:true,
-                //loadPicture: this.props.recipe.picture,
-                loaderHtml :'<div class="loading">',
-                uploadData :{
-                    action : "UPLOAD_IMAGE"   
-                },
-                cropData : {
-                    action : "CROP_IMAGE"
-                },
-                onAfterImgCrop: function(o) {
-                   that.props.onUpdateValue('picture', o.url);
-                }
-        }
-        this.cropper = new Croppic('Cropper', croppicContainerModalOptions);
+    afterImageCrop: function(imageUrl) {        
+        this.props.onUpdateValue('picture', imageUrl);        
     },
     render: function() {
         if (this.props.recipe == null) {
             return false;
         }
-        var cropper = "";
-        if (this.state.editable) {
-            cropper = <div>
-                          <button id='EditImage'>Edit</button>
-                          <img id='Cropper' src={this.props.recipe.picture + "?" + new Date().getTime()}/>
-                      </div>;
-        } else {
-            cropper = <img src={this.props.recipe.picture + "?" + new Date().getTime()}/>
-        }
-
         return ( <main className="full-recipe">
                 <RecipeHeader data= {{
                     title: this.props.recipe.title,
@@ -84,7 +43,11 @@ var Recipe = React.createClass({
                     editable: this.state.editable
                 }}/>
                 <div className="recipe-images">
-                    {cropper}
+                    <Cropper
+                        image={this.props.recipe.picture}
+                        editable={this.state.editable}
+                        onAfterCrop={this.afterImageCrop}
+                    />
                 </div>
                 <RecipeSubHeader data= {this.props.recipe}/>
                 

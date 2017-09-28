@@ -50,7 +50,7 @@ const Search = React.createClass({
         </div>);
     },
     change: function (e) {
-        var searchTerms = e.target.value.split(" ");
+        var searchTerms = e.target.value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&").split(" ");
         var searchRegExString = ""
         for (var i = 0; i < searchTerms.length; i++) {
             searchRegExString += searchTerms[i] + ".*";

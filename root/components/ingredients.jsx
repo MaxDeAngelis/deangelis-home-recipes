@@ -31,12 +31,21 @@ var Ingredients = React.createClass({
         );
     },
     saveIngredients: function(e, key) {
-        var value = e.currentTarget.value;
-        var i = e.currentTarget.parentNode.dataset.ingKey;
+        var value = e.target.value;
+        var ingKey = null;
+        var currentElement = e.currentTarget;
+        while (ingKey == null) {
+            if (currentElement.dataset.ingKey != null) {
+                ingKey = currentElement.dataset.ingKey;
+                break;
+            } else {
+                currentElement = currentElement.parentNode;
+            }
+        }
 
         var tempIngredientsList = this.props.ingredients;
 
-        tempIngredientsList[i][key] = value;
+        tempIngredientsList[ingKey][key] = value;
 
         this.setState({
            currentIngredients: tempIngredientsList
@@ -61,7 +70,11 @@ var Ingredients = React.createClass({
     renderDisplay: function() {
         var key = 0;
         var list = this.props.ingredients.map(function(ing) {
-            return <li key = {key++} >{ing.quantity + " " + ing.units + " " + ing.ingredientName}</li>;
+            if (ing.ingredientName == "") {
+                return <li key = {key++} >Please enter ingredient...</li>;                
+            } else {
+                return <li key = {key++} >{ing.quantity + " " + ing.units + " " + ing.ingredientName}</li>;                
+            }
         });
 
         return (<ul>{list}</ul>);
@@ -69,10 +82,9 @@ var Ingredients = React.createClass({
     renderForm: function() {
         var key = -1;
         var me = this;
-        var source = function( request, response ) {
-            response(me.state.ingredients.map(function(ingredient) {
-                return ingredient.ingredientName;
-            }))
+        var ingredientList = [];
+        for (var i = 0; i < this.state.ingredients.length; i++) {
+            ingredientList.push(this.state.ingredients[i].ingredientName);
         }
 
         var list = this.props.ingredients.map(function(ing) {
@@ -82,7 +94,8 @@ var Ingredients = React.createClass({
                     <Dropdown options = {me.state.units}
                                    change = {me.updateUnit}/>
                     <AutoComplete value = {ing.ingredientName}
-                                 source = {source}
+                                 placeholder = "Please enter ingredient..."
+                                 source = {ingredientList}
                                  change = {me.updateIngredientName}/>
                     <a className="ti-trash" onClick={me.deleteIngredient}/>
                 </li>

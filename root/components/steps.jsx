@@ -6,6 +6,10 @@ const Steps = React.createClass({
     renderDisplay: function(steps) {
         var key = 0;
         return steps.map(function(step) {
+            if (step == "") {
+                step = "Please enter a step description...";
+            }
+
             return <li className="individual-step" key={key++}>{step}</li>;
         });
     },
@@ -15,7 +19,11 @@ const Steps = React.createClass({
         return steps.map(function(step) {
             return <li className="individual-step" key={key++} data-step-index={key - 1}>
                 <div className="step-content">
-                    <textarea onChange={me.updateStep} value={step}></textarea>
+                    <textarea  
+                        value={step}
+                        placeholder="Please enter a step description..."
+                        onChange={me.updateStep}>
+                    </textarea>
                     <a className="ti-trash" onClick={me.deleteStep}/>
                 </div>
             </li> ;
@@ -44,10 +52,9 @@ const Steps = React.createClass({
     render: function() {
         var list;
         var key = 0;
-        if (this.props.steps === null || this.props.steps == "") {
-            var steps = ["Please enter some steps ..."];
-        } else {
-            var steps = this.props.steps.split("|");            
+        var steps = [""];
+        if (this.props.steps != null ) {
+            steps = this.props.steps.split("|");            
         }
         var addLink;
         if (this.props.editable) {

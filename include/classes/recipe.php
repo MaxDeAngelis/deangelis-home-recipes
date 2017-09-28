@@ -11,7 +11,7 @@ class Recipe {
     public $season = "";
     public $steps = "";
     public $dateCreated = "";
-    public $picture = "images/no-image-uploaded.jpg";
+    public $picture = "";
     public $creator = "";
     public $ingredients = array();
 
@@ -58,9 +58,7 @@ class Recipe {
                     $this->dateCreated = $value;
                     break;
                 case 'picture':
-                    if ($value != "") {
-                        $this->picture = $value;
-                    }
+                    $this->picture = $value;
                     break;
                 case 'ownerId':
                     $this->creator = $value;

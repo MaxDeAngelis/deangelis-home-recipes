@@ -10,7 +10,12 @@ var RecipeHeader = React.createClass({
             tempSpan.style.overflow = "hidden";
             tempSpan.style.display = "inline-block";
             tempSpan.className = "title";
-            tempSpan.innerText = field.value;
+            if (field.value != "") {
+                tempSpan.innerText = field.value;
+            } else {
+                tempSpan.innerText = field.placeholder;
+            }
+            
             parentElement.appendChild(tempSpan);
 
             field.style.width = tempSpan.scrollWidth + "px";
@@ -22,10 +27,6 @@ var RecipeHeader = React.createClass({
         this.props.data.update("title", e.target.value);
     },
     render: function() {
-        if (this.props.data.title == "") {
-            this.props.data.title = "Please enter a new title ...";
-        }
-
         var created = new Date(this.props.data.creation);
         var creator = <div className="addition-info">
                       <span className="author">{this.props.data.creator}</span>
@@ -35,12 +36,19 @@ var RecipeHeader = React.createClass({
         if (this.props.data.editable) {
             return (<header className="recipe-title">
                         <div className="recipe-info">
-                            <input className="title" onChange = {this.updateTitle} value = {this.props.data.title}/>
+                            <input className="title" 
+                                value = {this.props.data.title}
+                                placeholder="Please enter a new title ..."
+                                onChange = {this.updateTitle}/>
                             <span className="ti-save" onClick = {this.props.data.save}></span>
                         </div>
                         {creator}
                     </header>);
         } else {
+            if (this.props.data.title == "") {
+                this.props.data.title = "Please enter a new title ...";
+            }
+
             return (<header className="recipe-title">
                         <div className="recipe-info">
                             <span className="title">{ this.props.data.title }</span>

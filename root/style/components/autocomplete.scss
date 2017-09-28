@@ -1,0 +1,32 @@
+@import "../variables.scss";
+.autocomplete {
+    position: relative;
+    .results {
+        background-color: white;
+        box-shadow: 5px 5px 10px black;
+        position: absolute;
+        left: 5px;
+        right: 5px;
+        transform: perspective(800px) rotateX(-90deg);
+        transform-origin: top;
+        transition: all 0.5s linear;
+        z-index: 10;
+        &.show {
+            transform: perspective(0px) rotateX(0deg);
+        }
+        .highlight {
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .item {
+            padding: 5px;
+            border-bottom: 1px solid $theme-color-one;
+            &:last-child {
+                border-bottom: none;
+            }
+            &:hover {
+                background-color: $theme-color-two;
+            }
+        }
+    }
+}

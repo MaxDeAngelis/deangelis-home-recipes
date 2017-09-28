@@ -1,7 +1,7 @@
 <?php
 class Ingredient {
     public $ingredientId = "";
-    public $ingredientName = "Please enter ingredients ...";
+    public $ingredientName = "";
     public $quantity = "";
     public $units = "";
 
