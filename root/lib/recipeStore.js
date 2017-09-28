@@ -69,7 +69,6 @@ class RecipeStore extends ReduceStore {
             case ActionTypes.UPDATE_VALUE:
                 var newState = this.getState();
                 newState[action.key] = action.value;
-                console.log("Update: " + action.key + " - " + action.value);
                 return Object.assign({}, state, newState); 
             default:
                 return state;
