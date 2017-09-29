@@ -14,20 +14,24 @@ var Ingredients = React.createClass({
     },
     componentWillMount: function() {
         var me = this;
-        $.get('../processAction.php',
-            { action: 'GET_DATA_INGREDIENTS' },
-            function(response) {
+        this.props.aServerRequest(
+            { 
+                action: 'GET_DATA_INGREDIENTS' 
+            },
+            function (response) {
                 me.setState({ ingredients: response });
             },
-            "json"
+            true
         );
 
-        $.get('../processAction.php',
-            { action: 'GET_DATA_UNITS' },
-            function(response) {
+        this.props.aServerRequest(
+            { 
+                action: 'GET_DATA_UNITS' 
+            },
+            function (response) {
                 me.setState({ units: response });
             },
-            "json"
+            true
         );
     },
     saveIngredients: function(e, key) {

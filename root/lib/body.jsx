@@ -8,7 +8,9 @@ import Recipe from '../components/recipe.jsx';
 
 function Body(props) {
   return (<section className="app-body">
-            <Header getRecipe={props.getRecipe}/>
+            <Header 
+                getRecipe={props.getRecipe}
+                aServerRequest={props.serverRequest}/>
             <div className="site-body">
                 <main className="open-content">
                     <Recipe 
@@ -19,6 +21,7 @@ function Body(props) {
                         onDeleteStep={props.deleteStep}
                         onDeleteIngredient={props.deleteIngredient}
                         onUpdateValue={props.updateValue}
+                        aServerRequest={props.serverRequest}
                     />
                 </main>
                 <nav className="navigation">

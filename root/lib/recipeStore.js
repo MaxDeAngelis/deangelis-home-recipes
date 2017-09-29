@@ -13,18 +13,30 @@ class RecipeStore extends ReduceStore {
     }
 
     _processAction(action, callback, async) {
-        $.ajax({
-            url: '../processAction.php',
-            method: 'GET',
-            dataType: 'json',
-            async: async,
-            data: action,
-            success: callback
-        });
+        var formData = new FormData();
+        for (var key in action) {
+            formData.append(key, action[key]);
+        }
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function() {
+            // Success is 4
+            if (xhr.readyState == 4) {
+                var response = JSON.parse(this.responseText);
+                callback(response);
+            }
+        }
+
+        xhr.open('post', 'processAction.php', async);
+        xhr.send(formData);
     }
 
     reduce(state, action) {
         switch (action.action) {
+            case ActionTypes.SERVER_REQUEST:
+                this._processAction(action.data, action.callback, action.async);
+                return state;
             case ActionTypes.SAVE_RECIPE:
                 this._processAction(action, null, false);
                 return state;

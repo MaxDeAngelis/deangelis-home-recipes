@@ -20,7 +20,8 @@ function getState() {
         addStep: Actions.addStep,
         deleteStep: Actions.deleteStep,
         deleteIngredient: Actions.deleteIngredient,
-        updateValue: Actions.updateValue
+        updateValue: Actions.updateValue,
+        serverRequest: Actions.serverRequest
     }
 }
 

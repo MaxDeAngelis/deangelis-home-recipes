@@ -47,6 +47,14 @@ const Actions = {
             key: key,
             value: value
         });
+    },
+    serverRequest(data, callback, async) {
+        Dispatcher.dispatch({
+            action: ActionTypes.SERVER_REQUEST,
+            data: data,
+            async: async,
+            callback: callback
+        });
     }
 
 };

@@ -74,13 +74,15 @@ const Search = React.createClass({
     },
     focus: function () {
         var me = this;
-        $.get('../processAction.php',
-            { action: 'GET_LIST' },
+        this.props.aServerRequest(
+            { 
+                action: 'GET_LIST' 
+            },
             function (response) {
                 me.setState({ fullList: response.slice(0), filteredList: response.slice(0) });
                 document.querySelector(".search > .results").className += " show";
             },
-            "json"
+            true
         );
     },
     blur: function () {

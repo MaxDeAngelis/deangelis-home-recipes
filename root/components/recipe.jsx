@@ -58,6 +58,7 @@ var Recipe = React.createClass({
                             add = {this.props.onAddIngredient}
                             delete = {this.props.onDeleteIngredient}
                             editable = {this.state.editable}
+                            aServerRequest = {this.props.aServerRequest}
                         />
                         <Steps 
                             steps = {this.props.recipe.steps}
