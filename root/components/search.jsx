@@ -80,13 +80,17 @@ const Search = React.createClass({
             },
             function (response) {
                 me.setState({ fullList: response.slice(0), filteredList: response.slice(0) });
-                document.querySelector(".search > .results").className += " show";
+                var results = ReactDOM.findDOMNode(me).querySelector(".results");
+                var pos = results.getBoundingClientRect();
+                results.style.maxHeight = (window.innerHeight - pos.top) + "px";
+
+                results.classList.add("show");
             },
             true
         );
     },
     blur: function () {
-        document.querySelector(".search > .results").className = "results";
+        ReactDOM.findDOMNode(this).querySelector(".results").classList.remove("show");
     },
     select: function (e) {
         var element = e.target;
@@ -95,6 +99,9 @@ const Search = React.createClass({
         }
         var id = element.dataset.id;
         this.props.getRecipe(id);
+    },
+    scroll: function (e) {
+
     },
     render: function () {
         var key = 0;

@@ -27,6 +27,7 @@
         transform-origin: top;
         transition: all 0.5s linear;
         z-index: 10;
+        overflow: scroll;
         &.show {
             transform: perspective(0px) rotateX(0deg);
         }

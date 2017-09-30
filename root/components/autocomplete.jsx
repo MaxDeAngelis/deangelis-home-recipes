@@ -69,6 +69,10 @@ var AutoComplete = React.createClass({
     },
     focus: function(e) {
       this.change(e);
+      var results = ReactDOM.findDOMNode(this).querySelector(".results");
+      var pos = results.getBoundingClientRect();
+      results.style.maxHeight = (window.innerHeight - pos.top) + "px";
+
       ReactDOM.findDOMNode(this).querySelector(".results").classList.add("show");
     },
     blur: function(e) {

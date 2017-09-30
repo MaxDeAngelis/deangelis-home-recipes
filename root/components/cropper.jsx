@@ -189,6 +189,7 @@ var Cropper = React.createClass({
 
         var formData = new FormData();
         formData.append('img', e.target.files[0])
+        formData.append('action', 'UPLOAD_IMAGE')
 
         var xhr = new XMLHttpRequest();
 
@@ -211,9 +212,12 @@ var Cropper = React.createClass({
             }
         }
 
-        xhr.open('post', 'processAction.php?action=UPLOAD_IMAGE', true);
+        xhr.open('POST', 'processAction.php', true);
 
         xhr.send(formData);
+
+        //xhr.setRequestHeader('Content-Type', 'application/json');
+        //xhr.send(JSON.stringify({ action: "UPLOAD_IMAGE", img : e.target.files[0]}));
     },
     handleCrop: function() {
         var data = this.toDataURL();

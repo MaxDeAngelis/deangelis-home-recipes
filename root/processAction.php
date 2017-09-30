@@ -6,12 +6,12 @@
 
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/classes/ingredient.php';
 
-	$data = array();
-
+	$str_json = file_get_contents('php://input');
+	
 	if (isset($_POST['action'])) {
 		$data = $_POST;
-	} elseif(isset($_GET['action'])) {
-		$data = $_GET;
+	} else {
+		$data = json_decode($str_json, true);		
 	}
 
 	switch ($data['action']) {

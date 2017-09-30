@@ -13,23 +13,21 @@ class RecipeStore extends ReduceStore {
     }
 
     _processAction(action, callback, async) {
-        var formData = new FormData();
-        for (var key in action) {
-            formData.append(key, action[key]);
-        }
-
         var xhr = new XMLHttpRequest();
 
         xhr.onreadystatechange = function() {
             // Success is 4
             if (xhr.readyState == 4) {
                 var response = JSON.parse(this.responseText);
-                callback(response);
+                if (typeof callback == "function") {
+                    callback(response);
+                }                
             }
         }
 
-        xhr.open('post', 'processAction.php', async);
-        xhr.send(formData);
+        xhr.open('POST', 'processAction.php', async);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify(action));
     }
 
     reduce(state, action) {
