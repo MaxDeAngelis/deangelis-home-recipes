@@ -1,6 +1,8 @@
 @import "../variables.scss";
     .header-content {
-        background-color: $theme-color-one;
+        background-color: white;
+        height: 60px;
+        padding: 0 25px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;

@@ -1,10 +1,7 @@
 import React from 'react';
-import SingleValue from './singleValue.jsx';
 import Steps from './steps.jsx';
 import Ingredients from './ingredients.jsx';
 import RecipeHeader from './recipeHeader.jsx';
-import RecipeSubHeader from './recipeSubHeader.jsx';
-import Cropper from './cropper.jsx';
 
 require("../style/components/recipe.scss");
 
@@ -19,52 +16,38 @@ var Recipe = React.createClass({
         this.setState({editable: true});
     },
     save: function() {
-        this.props.onSave(this.props.recipe);
+        this.props.aSaveRecipe(this.props.recipe);
 
-        this.props.onUpdateValue('picture', "images/recipes/recipe_" + this.props.recipe.id + ".png");
+        this.props.aUpdateValue('picture', "images/recipes/recipe_" + this.props.recipe.id + ".png");
 
         this.setState({editable: false});
-    },
-    afterImageCrop: function(imageUrl) {        
-        this.props.onUpdateValue('picture', imageUrl);        
     },
     render: function() {
         if (this.props.recipe == null) {
             return false;
         }
         return ( <main className="full-recipe">
-                <RecipeHeader data= {{
-                    title: this.props.recipe.title,
-                    creator: this.props.recipe.firstName + " " + this.props.recipe.lastName,
-                    creation: this.props.recipe.dateCreated,
-                    edit: this.edit,
-                    save: this.save,
-                    update: this.props.onUpdateValue,
-                    editable: this.state.editable
-                }}/>
-                <div className="recipe-images">
-                    <Cropper
-                        image={this.props.recipe.picture}
-                        editable={this.state.editable}
-                        onAfterCrop={this.afterImageCrop}
-                    />
-                </div>
-                <RecipeSubHeader data= {this.props.recipe}/>
-                
+                <RecipeHeader
+                    recipe={this.props.recipe}
+                    edit = {this.edit}
+                    save = {this.save}
+                    aUpdateValue = {this.props.aUpdateValue}
+                    editable = {this.state.editable}
+                />
                 <main className="recipe-body">
                         <Ingredients 
                             ingredients = {this.props.recipe.ingredients}
-                            update = {this.props.onUpdateValue}
-                            add = {this.props.onAddIngredient}
-                            delete = {this.props.onDeleteIngredient}
+                            aUpdateValue = {this.props.aUpdateValue}
+                            aAddIngredient = {this.props.aAddIngredient}
+                            aDeleteIngredient = {this.props.aDeleteIngredient}
                             editable = {this.state.editable}
                             aServerRequest = {this.props.aServerRequest}
                         />
                         <Steps 
                             steps = {this.props.recipe.steps}
-                            update = {this.props.onUpdateValue}
-                            add = {this.props.onAddStep}
-                            delete = {this.props.onDeleteStep}
+                            aUpdateValue = {this.props.aUpdateValue}
+                            aAddStep = {this.props.aAddStep}
+                            aDeleteStep = {this.props.aDeleteStep}
                             editable = {this.state.editable}
                         />
                 </main>

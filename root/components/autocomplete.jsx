@@ -40,6 +40,11 @@ var AutoComplete = React.createClass({
       } catch (e) { }
       return returnObj;
     },
+    resize: function() {
+      var results = ReactDOM.findDOMNode(this).querySelector(".results");
+      var pos = results.getBoundingClientRect();
+      results.style.maxHeight = (window.innerHeight - pos.top) + "px";
+    },
     change: function(e) {
       var value = ReactDOM.findDOMNode(this).querySelector("input").value;
       var results = ReactDOM.findDOMNode(this).querySelector(".results");
@@ -65,13 +70,12 @@ var AutoComplete = React.createClass({
       }
 
       this.setState({ filteredList: filteredList, fullList: this.props.source, searchTerms: searchTerms});
+
+      this.resize();
       this.props.change(e);
     },
     focus: function(e) {
       this.change(e);
-      var results = ReactDOM.findDOMNode(this).querySelector(".results");
-      var pos = results.getBoundingClientRect();
-      results.style.maxHeight = (window.innerHeight - pos.top) + "px";
 
       ReactDOM.findDOMNode(this).querySelector(".results").classList.add("show");
     },

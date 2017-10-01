@@ -36,6 +36,9 @@
             border-bottom: 1px solid $theme-color-one;
             &:hover {
                 background-color: $theme-color-two;
+                .title {
+                    color: $theme-text-header;
+                }
             }
             &:last-child .row-content {
                 border-bottom: none;

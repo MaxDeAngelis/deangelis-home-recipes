@@ -1,9 +1,11 @@
 import React from 'react';
+import Cropper from './cropper.jsx';
+
 require("../style/components/recipeHeader.scss");
 
 var RecipeHeader = React.createClass({
     componentDidUpdate: function() {
-        if (this.props.data.editable) {
+        if (this.props.editable) {
             var field = document.querySelector(".recipe-title input.title");
             var parentElement = field.parentNode;
             var tempSpan = document.createElement("SPAN");
@@ -24,39 +26,55 @@ var RecipeHeader = React.createClass({
         }
     },
     updateTitle: function(e) {
-        this.props.data.update("title", e.target.value);
+        this.props.aUpdateValue("title", e.target.value);
+    },
+    afterImageCrop: function(imageUrl) {        
+        this.props.aUpdateValue('picture', imageUrl);        
     },
     render: function() {
-        var created = new Date(this.props.data.creation);
-        var creator = <div className="addition-info">
-                      <span className="author">{this.props.data.creator}</span>
-                      <span className="creation-date">({created.toDateString()})</span>
-                  </div>;
+        var created = new Date(this.props.recipe.dateCreated);
+        
+        var titleClass = this.props.editable?"recipe-title editable":"recipe-title";
 
-        if (this.props.data.editable) {
-            return (<header className="recipe-title">
-                        <div className="recipe-info">
-                            <input className="title" 
-                                value = {this.props.data.title}
-                                placeholder="Please enter a new title ..."
-                                onChange = {this.updateTitle}/>
-                            <span className="ti-save" onClick = {this.props.data.save}></span>
-                        </div>
-                        {creator}
-                    </header>);
-        } else {
-            if (this.props.data.title == "") {
-                this.props.data.title = "Please enter a new title ...";
-            }
-
-            return (<header className="recipe-title">
-                        <div className="recipe-info">
-                            <span className="title">{ this.props.data.title }</span>
-                            <span className="ti-pencil" onClick = {this.props.data.edit}></span>
-                        </div>
-                        {creator}
-                     </header>);
-        }
+        return (<header className="recipe-header">
+                <div className="recipe-info">
+                    <div className={titleClass}>
+                        <input className="title" 
+                            value = {this.props.recipe.title}
+                            placeholder="Please enter a new title ..."
+                            onChange = {this.updateTitle}/>
+                        <span className="ti-save" onClick = {this.props.save}></span>
+                        <span className="title">{ this.props.recipe.title }</span>
+                        <span className="ti-pencil" onClick = {this.props.edit}></span>
+                    </div>
+                    <div className="time-info">
+                        <span className="ti-timer"></span> 
+                        <span className="prep-time">
+                            <label>Prep</label>
+                            <span>{ this.props.recipe.prepTime }</span>
+                        </span>
+                        <span className="cook-time">
+                            <label>Cook</label>
+                            <span>{ this.props.recipe.cookTime }</span>
+                        </span>
+                        <span className="ti-pie-chart"></span> 
+                        <span className="servings">
+                            <span className="text">{ this.props.recipe.servings }</span>
+                            <label>servings</label>
+                        </span>
+                    </div>
+                    <div className="addition-info">
+                        <span className="author">{this.props.recipe.firstName + " " + this.props.recipe.lastName}</span>
+                        <span className="creation-date">({created.toDateString()})</span>
+                    </div>
+                </div>
+                <Cropper
+                    image={this.props.recipe.picture}
+                    editable={this.props.editable}
+                    onAfterCrop={this.afterImageCrop}
+                />
+            </header>
+        );
     }
 });
 

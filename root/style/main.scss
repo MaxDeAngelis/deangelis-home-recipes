@@ -17,38 +17,17 @@ body {
     }
 }
 
-.site-body {
+.app-body {
     display: flex;
-    flex: 1;
-    height: 100vh;
-    >.navigation {
-        order: -1;
-    }
-    >.open-content {
+    .site-body {
         flex: 1;
-        overflow: scroll;
-        padding: 0;
-        margin-bottom: 50px;
-    }
-}
-
-.column {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    >* {
-        padding: 5px;
-        margin: 5px;
-    }
-    &.column-3 {
-        >* {
-            width: 33%;
-        }
-    }
-    &.column-2 {
-        >* {
-            width: 50%;
+        height: 100vh;
+        background-color: #ebebed;
+        >.open-content {
+            overflow: scroll;
+            padding: 0;
+            margin-bottom: 50px;
+            height: calc(100% - 60px);
         }
     }
 }

@@ -1,5 +1,12 @@
 .recipe-ingredients {
-    ul.editable {
-        padding-left: 0;
+    ul {
+        &.editable {
+            padding-left: 0;
+        }
+        li {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+        }
     }
 }

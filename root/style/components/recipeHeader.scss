@@ -1,34 +1,86 @@
 @import "../variables.scss";
-.recipe-title {
-    padding-left: 20px;
-    border-bottom: 2px solid $theme-color-one;
+
+.recipe-header {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    .title,
-    .ti-save,
-    .ti-pencil {
-        color: $theme-color-one;
-        font-size: 40px;
-    }
-    .ti-pencil {
-        margin: 10px 10px 0 0;
-        border: 1px solid transparent
-    }
-    .title {
-        display: inline-block;
-        padding: 5px;
-        margin: 5px 10px 0 0;
-        border: 1px solid transparent;
-        font-family: $theme-text-font-family;
-    }
-    input.title {
-        border: 1px solid $theme-text-label
-    }
-    .addition-info {
-        font-size: 14px;
-        color: $theme-text-label;
-        padding: 0 0 10px 5px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    .recipe-info {
+        display: flex;
+        flex-direction: column;
+        padding: 50px 75px;
+        
+        .ti-save,
+        .ti-pencil {
+            padding-left: 10px;
+        }
+        .title,
+        .ti-save,
+        .ti-pencil {
+            color: $theme-color-one;
+            font-size: 40px;
+        }
+        .title {
+            display: inline-block;
+            padding: 5px;
+            border: 1px solid transparent;
+            font-family: $theme-text-font-family;
+        }
+        input.title {
+            border: 1px solid $theme-text-label;
+            display: none;
+        }
+        .ti-save {
+            display: none;
+        }
+        .editable {
+            .title,
+            .ti-pencil {
+                display: none;
+            }
+            input.title,
+            .ti-save {
+                display: inline-block;
+            }
+        }
+        .addition-info {
+            font-size: 14px;
+            color: $theme-text-label;
+            padding: 5px 0 0 9px;
+        }
+        .time-info {
+            height: 50px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            font-size: 14px;
+            color: $theme-text-label;
+            padding: 0 7px;
+            .prep-time,
+            .cook-time {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding-right: 10px;
+                >span {
+                    display: inline-block;
+                }
+            }
+            .ti-timer,
+            .ti-pie-chart {
+                font-size: 24px;
+                padding-right: 10px;
+            }
+            .servings>label {
+                padding-left: 5px;
+            }
+        }
     }
 }
+
+
+
+
+
+

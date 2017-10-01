@@ -42,12 +42,12 @@ const Steps = React.createClass({
             }
         }
 
-        this.props.update("steps", newSteps);
+        this.props.aUpdateValue("steps", newSteps);
     },
     deleteStep: function(e) {
         var index = e.target.parentNode.dataset.stepIndex;
 
-        this.props.delete(index);
+        this.props.aDeleteStep(index);
     },
     render: function() {
         var list;
@@ -59,7 +59,7 @@ const Steps = React.createClass({
         var addLink;
         if (this.props.editable) {
             list = this.renderForm(steps);
-            addLink = <a className="ti-plus" onClick={this.props.add}>Add step</a>
+            addLink = <a className="ti-plus" onClick={this.props.aAddStep}>Add step</a>
         } else {
             list = this.renderDisplay(steps);
         }

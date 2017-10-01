@@ -9,8 +9,10 @@
     }
     .recipe-body {
         padding: 10px;
+        margin: 0 10px;
         display: flex;
         justify-content: space-around;
+        border-top: 1px solid $theme-text-label;
         >section {
            min-width: 50%; 
         }
