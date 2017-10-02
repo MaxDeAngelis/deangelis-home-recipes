@@ -9,7 +9,6 @@
 [class*="ti-"] {
     display: inline-block;
     cursor: pointer;
-    color: #333334;
     font: normal normal normal 14px/1 themify;
     font-size: inherit;
     text-rendering: auto;

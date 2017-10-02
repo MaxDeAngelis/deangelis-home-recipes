@@ -18,7 +18,9 @@ var Recipe = React.createClass({
     save: function() {
         this.props.aSaveRecipe(this.props.recipe);
 
-        this.props.aUpdateValue('picture', "images/recipes/recipe_" + this.props.recipe.id + ".png");
+        if (this.props.recipe.picture.indexOf("no-image-uploaded") == -1) {
+            this.props.aUpdateValue('picture', "images/recipes/recipe_" + this.props.recipe.id + ".png");
+        }
 
         this.setState({editable: false});
     },

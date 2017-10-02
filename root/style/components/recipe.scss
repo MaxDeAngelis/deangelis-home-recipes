@@ -9,12 +9,19 @@
     }
     .recipe-body {
         padding: 10px;
-        margin: 0 10px;
+        margin: 0;
         display: flex;
-        justify-content: space-around;
-        border-top: 1px solid $theme-text-label;
+        justify-content: space-between;
+        align-items: stretch;
+        background-color: #2c2f5c;
         >section {
-           min-width: 50%; 
+            color: $theme-text-header;
+            background-color: #324177;
+            flex: 1;
+            padding: 10px;
+        }
+        >section:first-child{
+            margin-right: 10px;
         }
     }
 }

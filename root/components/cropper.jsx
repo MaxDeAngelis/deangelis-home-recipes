@@ -191,8 +191,9 @@ var Cropper = React.createClass({
         formData.append('img', e.target.files[0])
         formData.append('action', 'UPLOAD_IMAGE')
 
-        var xhr = new XMLHttpRequest();
+        e.target.value = "";
 
+        var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
             // TODO: Maybe handle other states
             // Success is 4
