@@ -1,12 +1,20 @@
-$theme-color-one: #000d67;
-$theme-color-two: #000d67;
-$theme-color-three: #00cd76;
-$theme-color-four: #ff7333;
-$theme-text-label: #5f5f5f;
-$theme-text-header: #f1f1f1;
-$theme-text-font-family: TensoMedium,
+$text-font-family: TensoMedium,
 TensoLight,
 "Helvetica Neue",
 Helvetica,
 Arial,
 sans-serif;
+
+
+/* THEME ONE - Darks and Lime */
+$color-one: #3a353c;
+$color-two: #2e2c2d;
+$color-accent: #deda1d;
+$color-background: #ebebed;
+$color-background-light: white;
+
+$text-light: #f1f1f1;
+$text-light-secondary: #B3AFAF;
+$text-dark: #2e2c2d;
+$text-dark-secondary: #585658;
+

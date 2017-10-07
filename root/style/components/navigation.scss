@@ -1,7 +1,7 @@
 @import "../variables.scss";
 .navigation {
     width: 50px;
-    background-color: #03102f;
+    background-color: $color-one;
     transition: width 0.5s;
     .navigation-content {
         position: relative;
@@ -18,7 +18,7 @@
             display: flex;
             align-items: center;
             line-height: 35px;
-            color: $theme-text-header;
+            color: $text-light;
             padding: 5px 0 5px 10px;
             &:first-child {
                 display: block;
@@ -44,14 +44,14 @@
                     transition: all 0.5s;
                 }
             }
+            &:first-child,
             &.hover:hover,
             &.active {
-                background-color: #324177;
+                background-color: $color-two;
             }
             &.active {
-                background-color: #324177;
-                border-left: 2px solid green;
-                padding-left: 8px;
+                border-left: 3px solid $color-accent;
+                padding-left: 7px;
             }
             &::before {
                 font-size: 26px;
@@ -68,7 +68,7 @@
             &::after {
                 content: " ";
                 transition: all 0.5s linear;
-                background-color: $theme-text-header;
+                background-color: $text-light;
                 position: absolute;
                 right: 15px;
                 width: 25px;

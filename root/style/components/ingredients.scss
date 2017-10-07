@@ -1,9 +1,29 @@
 .recipe-ingredients {
     ul {
+        padding: 0;
         li {
             display: flex;
-            align-items: center;
+            align-items: stretch;
             padding: 5px;
+            .quantity {
+                width: 5em;
+                text-align: center;
+            }
+            select {
+                width: 8em;
+                margin: 0 5px;
+            }
+            .autocomplete {
+                flex: 1;
+                display: flex;
+                margin-right: 5px;
+                input {
+                    flex: 1;
+                }
+            }
+            .ti-trash {
+                align-self: center;
+            }
         }
     }
 }

@@ -1,3 +1,5 @@
+@import "../variables.scss";
+
 .cropper {
   .display {
     position: relative;
@@ -53,7 +55,7 @@
         margin: 10px;
         text-align: center;
         a {
-          color: white;
+          color: $text-light;
           opacity: 0.75;
           display: inline-block;
           padding: 5px;

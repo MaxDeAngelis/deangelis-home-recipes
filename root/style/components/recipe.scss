@@ -13,10 +13,9 @@
         display: flex;
         justify-content: space-between;
         align-items: stretch;
-        background-color: #2c2f5c;
         >section {
-            color: $theme-text-header;
-            background-color: #324177;
+            color: $text-dark;
+            background-color: $color-background-light;
             flex: 1;
             padding: 10px;
         }

@@ -2,7 +2,8 @@
 .autocomplete {
     position: relative;
     .results {
-        background-color: white;
+        color: $text-dark-secondary;
+        background-color: $color-background-light;
         box-shadow: 5px 5px 10px black;
         position: absolute;
         left: 5px;
@@ -15,18 +16,24 @@
         &.show {
             transform: perspective(0px) rotateX(0deg);
         }
-        .highlight {
-            font-weight: bold;
-            font-size: 20px;
-        }
+        
         .item {
             padding: 5px;
-            border-bottom: 1px solid $theme-color-one;
+            border-bottom: 1px solid $text-dark;
+            .highlight {
+                font-weight: bold;
+                font-size: 20px;
+                color: $text-dark;
+            }
             &:last-child {
                 border-bottom: none;
             }
             &:hover {
-                background-color: $theme-color-two;
+                background-color: $color-two;
+                color: $text-light-secondary;
+                .highlight {
+                    color: $text-light;
+                }
             }
         }
     }

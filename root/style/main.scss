@@ -12,7 +12,7 @@ body {
     textarea,
     select {
         border-radius: 4px;
-        border: 1px solid #565656;
+        border: 1px solid $text-dark;
         padding: 3px;
     }
 }
@@ -22,7 +22,7 @@ body {
     .site-body {
         flex: 1;
         height: 100vh;
-        background-color: #ebebed;
+        background-color: $color-background;
         >.open-content {
             overflow: scroll;
             padding: 0;

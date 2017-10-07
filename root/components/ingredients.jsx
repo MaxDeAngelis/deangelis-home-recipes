@@ -96,7 +96,7 @@ var Ingredients = React.createClass({
         var list = this.props.ingredients.map(function(ing) {
             key++;
             return ( <li key={key} data-ing-key={key} className="ingredient column column-3">
-                    <input value = {ing.quantity} onChange = {me.updateQuantity}/>
+                    <input className="quantity" value = {ing.quantity} onChange = {me.updateQuantity}/>
                     <Dropdown options = {me.state.units}
                                    change = {me.updateUnit}/>
                     <AutoComplete value = {ing.ingredientName}

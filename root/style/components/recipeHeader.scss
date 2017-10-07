@@ -17,17 +17,17 @@
         .title,
         .ti-save,
         .ti-pencil {
-            color: $theme-color-one;
+            color: $text-dark;
             font-size: 40px;
         }
         .title {
             display: inline-block;
             padding: 5px;
             border: 1px solid transparent;
-            font-family: $theme-text-font-family;
+            font-family: $text-font-family;
         }
         input.title {
-            border: 1px solid $theme-text-label;
+            border: 1px solid $text-dark;
             display: none;
         }
         .ti-save {
@@ -45,7 +45,7 @@
         }
         .addition-info {
             font-size: 14px;
-            color: $theme-text-label;
+            color: $text-dark-secondary;
             padding: 5px 0 0 9px;
         }
         .time-info {
@@ -55,7 +55,7 @@
             justify-content: flex-start;
             align-items: center;
             font-size: 14px;
-            color: $theme-text-label;
+            color: $text-dark-secondary;
             padding: 0 7px;
             .prep-time,
             .cook-time {

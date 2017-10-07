@@ -41,9 +41,12 @@ var AutoComplete = React.createClass({
       return returnObj;
     },
     resize: function() {
+      console.log("resize");
       var results = ReactDOM.findDOMNode(this).querySelector(".results");
+      var componentPos = ReactDOM.findDOMNode(this).getBoundingClientRect()
       var pos = results.getBoundingClientRect();
       results.style.maxHeight = (window.innerHeight - pos.top) + "px";
+      results.style.top = componentPos.height + "px";
     },
     change: function(e) {
       var value = ReactDOM.findDOMNode(this).querySelector("input").value;
@@ -77,9 +80,15 @@ var AutoComplete = React.createClass({
     focus: function(e) {
       this.change(e);
 
+      window.addEventListener("scroll", this.resize, true);
+      window.addEventListener("resize", this.resize, false);
+
       ReactDOM.findDOMNode(this).querySelector(".results").classList.add("show");
     },
     blur: function(e) {
+      window.removeEventListener("scroll", this.resize, true);
+      window.removeEventListener("resize", this.resize, false);
+
       ReactDOM.findDOMNode(this).querySelector(".results").classList.remove("show");
     },
     select: function(e) {

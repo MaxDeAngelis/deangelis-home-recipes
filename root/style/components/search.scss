@@ -4,12 +4,13 @@
         font-size: 16px;
         height: 20px;
         width: 540px;
-        color: $theme-text-label;
+        color: $text-dark;
         border-radius: 4px;
         background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAABmJLR0QAqgCqAKohOK4IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AsRBBwx9UVFcgAAASBJREFUOMutlL1KA0EUhb+NVu4rBIQQOzvzEgYtouArnNrtXSTpImh9X0GIFgF9ClstFF0hj6BWCjZ3ZJDsTEBPMz97+Dh37s4URDKzEqiBfaDv20/AHBhLeiejIoIdALOM/1DSVcrQWQK7AQaSCkkFMPA9gJmZjZIJvcw3X1eSLpYZzewYOPdlKemjLWEdkrXBAPxbSHqaKnnP5zV5Bc9RCrjlCe5ytMizmWzKf6oDPPqh7+TMkadJAec+H68QYOLjZQoYQEMzqxLpKmA31+XCzSMg3IBb4CQ0wMucRLAG6Ev6yl29GNqmxju8AHqSPlu7LOkaKIEz4PUXZAps+IOxALrAs5mttyZcVWa2Brw49F7S9p/+Qz+7HvAQvQE/+gYLKV6t6i2B7gAAAABJRU5ErkJggg==');
         background-position: 100% 6px;
         background-repeat: no-repeat;
-        border-color: $theme-text-label;
+        border-color: $text-dark;
+        background-color: $color-background-light;
         padding: 5px;
     }
     >input:focus {
@@ -17,7 +18,7 @@
     }
     .results {
         width: 552px;
-        background-color: white;
+        background-color: $color-background-light;
         box-shadow: 5px 5px 10px black;
         position: absolute;
         display: flex;
@@ -30,24 +31,6 @@
         overflow: scroll;
         &.show {
             transform: perspective(0px) rotateX(0deg);
-        }
-        .row {
-            border-top: 1px solid $theme-color-one;
-            border-bottom: 1px solid $theme-color-one;
-            &:hover {
-                background-color: $theme-color-two;
-                .title {
-                    color: $theme-text-header;
-                }
-            }
-            &:last-child .row-content {
-                border-bottom: none;
-                padding-bottom: 10px;
-            }
-            &:first-child .row-content {
-                border-top: none;
-                padding-top: 10px;
-            }
         }
         .row-content {
             display: flex;
@@ -63,6 +46,7 @@
                 justify-content: center;
                 .title {
                     font-size: 20px;
+                    color: $text-dark;
                     .highlight {
                         font-weight: bold;
                         font-size: 20px;
@@ -70,12 +54,33 @@
                 }
                 .author {
                     font-size: 14px;
-                    color: $theme-text-label;
+                    color: $text-dark-secondary;
                 }
             }
             .image {
                 width: 50px;
                 height: 50px;
+            }
+        }
+        .row {
+            border-top: 1px solid $color-one;
+            border-bottom: 1px solid $color-one;
+            &:hover {
+                background-color: $color-one;
+                .title {
+                    color: $text-light;
+                }
+                .author {
+                    color: $text-light-secondary;
+                }
+            }
+            &:last-child .row-content {
+                border-bottom: none;
+                padding-bottom: 10px;
+            }
+            &:first-child .row-content {
+                border-top: none;
+                padding-top: 10px;
             }
         }
     }
