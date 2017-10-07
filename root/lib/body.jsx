@@ -9,7 +9,10 @@ import Recipe from '../components/recipe.jsx';
 function Body(props) {
   return (<section className="app-body">
             <nav className="navigation">
-                <Navigation onNew={props.newRecipe}/>
+                <Navigation 
+                    onNew={props.newRecipe}
+                    sRecents={props.sRecents}
+                    aOpenContent={props.aOpenContent}/>
             </nav>
             <div className="site-body">
                 <Header 
@@ -18,12 +21,10 @@ function Body(props) {
                 />
                 <main className="open-content">
                     <Recipe 
-                        recipe={props.openRecipe} 
+                        recipe={props.sRecipe} 
                         aSaveRecipe={props.saveRecipe}
                         aAddIngredient={props.addIngredient}
                         aAddStep={props.addStep}
-                        aDeleteStep={props.deleteStep}
-                        aDeleteIngredient={props.deleteIngredient}
                         aUpdateValue={props.updateValue}
                         aServerRequest={props.serverRequest}
                     />

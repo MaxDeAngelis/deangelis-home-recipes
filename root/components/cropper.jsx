@@ -196,7 +196,6 @@ var Cropper = React.createClass({
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
             // TODO: Maybe handle other states
-            // Success is 4
             if (xhr.readyState == 4) {
                 var response = JSON.parse(this.responseText);
                 me.prepareImage(response.url);

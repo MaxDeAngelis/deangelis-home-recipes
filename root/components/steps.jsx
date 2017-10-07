@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 require("../style/components/steps.scss");
 
@@ -15,9 +16,10 @@ const Steps = React.createClass({
     },
     renderForm: function(steps) {
         var me = this;
-        var key = 0;
+        var key = -1;
         return steps.map(function(step) {
-            return <li className="individual-step" key={key++} data-step-index={key - 1}>
+            key += 1;
+            return <li className="individual-step" key={key} data-index={key}>
                 <div className="step-content">
                     <textarea  
                         value={step}
@@ -31,7 +33,7 @@ const Steps = React.createClass({
     },
     updateStep: function(e) {
         var newSteps = "";
-        var list = e.target.parentNode.parentNode.childNodes;
+        var list = ReactDOM.findDOMNode(this).querySelector(".steps-list").childNodes;
 
         for (var i = 0; i < list.length; i++) {
             var value = list[i].querySelector("textarea").value;
@@ -45,9 +47,26 @@ const Steps = React.createClass({
         this.props.aUpdateValue("steps", newSteps);
     },
     deleteStep: function(e) {
-        var index = e.target.parentNode.dataset.stepIndex;
+        var itemToCheck = e.target;
+        while (itemToCheck && !itemToCheck.classList.contains("individual-step")) {
+            itemToCheck = itemToCheck.parentNode;
+        }
 
-        this.props.aDeleteStep(index);
+        var list = ReactDOM.findDOMNode(this).querySelector(".steps-list").childNodes;
+        var itemToRemove = null;
+        for (var i = 0; i < list.length; i++) {
+            if (list[i] === itemToCheck) {
+                itemToRemove = i;
+                break;
+            }
+        }
+
+        if (itemToRemove != null) {
+            var steps = this.props.steps.split("|");  
+            steps.splice(itemToRemove, 1);
+
+            this.props.aUpdateValue("steps", steps.join("|"));
+        }
     },
     render: function() {
         var list;

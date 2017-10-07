@@ -68,8 +68,10 @@ var Ingredients = React.createClass({
     },
     deleteIngredient: function(e) {
         var index = e.target.parentNode.dataset.ingKey;
+        var ingredients = this.props.ingredients;
+        ingredients.splice(index, 1);
 
-        this.props.aDeleteIngredient(index);
+        this.props.aUpdateValue("ingredients", ingredients);
     },
     renderDisplay: function() {
         var key = 0;

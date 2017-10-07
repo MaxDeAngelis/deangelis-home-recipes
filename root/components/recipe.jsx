@@ -41,7 +41,6 @@ var Recipe = React.createClass({
                             ingredients = {this.props.recipe.ingredients}
                             aUpdateValue = {this.props.aUpdateValue}
                             aAddIngredient = {this.props.aAddIngredient}
-                            aDeleteIngredient = {this.props.aDeleteIngredient}
                             editable = {this.state.editable}
                             aServerRequest = {this.props.aServerRequest}
                         />
@@ -49,7 +48,6 @@ var Recipe = React.createClass({
                             steps = {this.props.recipe.steps}
                             aUpdateValue = {this.props.aUpdateValue}
                             aAddStep = {this.props.aAddStep}
-                            aDeleteStep = {this.props.aDeleteStep}
                             editable = {this.state.editable}
                         />
                 </main>

@@ -9,17 +9,26 @@ function getStores() {
 }
 
 function getState() {
-    return {
-        openRecipe: RecipeStore.getState(),
+    var state = RecipeStore.getState();
 
+    var openRecipe = null;
+    for (var i = 0; i < state.open.length; i++) {
+        if (state.open[i].active) {
+            openRecipe = state.open[i].recipe;
+        }
+    }
+
+    return {
+        sRecipe: openRecipe,
+        sRecents: state.recents,
+
+        aOpenContent: Actions.openContent,
         // CALLBACKS
         saveRecipe: Actions.saveRecipe,
         getRecipe: Actions.getRecipe,
         newRecipe: Actions.newRecipe,
         addIngredient: Actions.addIngredient,
         addStep: Actions.addStep,
-        deleteStep: Actions.deleteStep,
-        deleteIngredient: Actions.deleteIngredient,
         updateValue: Actions.updateValue,
         serverRequest: Actions.serverRequest
     }

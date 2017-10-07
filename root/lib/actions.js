@@ -41,6 +41,12 @@ const Actions = {
             index: data
         });
     },
+    openContent(id) {
+        Dispatcher.dispatch({
+            action: ActionTypes.OPEN_CONTENT,
+            key: id
+        });
+    },
     updateValue(key, value) {
         Dispatcher.dispatch({
             action: ActionTypes.UPDATE_VALUE,
