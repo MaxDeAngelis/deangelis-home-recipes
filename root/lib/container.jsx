@@ -10,7 +10,7 @@ function getStores() {
 
 function getState() {
     var state = RecipeStore.getState();
-    
+
     var openContent = null;
     for (var i = 0; i < state.open.length; i++) {
         if (state.open[i].active) {
@@ -19,19 +19,21 @@ function getState() {
     }
 
     return {
+        // STATE
         sOpenContent: openContent,
-        sRecents: state.recents,
+        sOpenList: state.open,
 
-        aOpenContent: Actions.openContent,
+        // RECIPE HELPERS      
+        aNewRecipe: Actions.newRecipe,
+        aSaveRecipe: Actions.saveRecipe,
         aGetRecipe: Actions.getRecipe,
-
-        // CALLBACKS
-        saveRecipe: Actions.saveRecipe,
-        newRecipe: Actions.newRecipe,
-        addIngredient: Actions.addIngredient,
-        addStep: Actions.addStep,
-        updateValue: Actions.updateValue,
-        serverRequest: Actions.serverRequest
+        aAddIngredient: Actions.addIngredient,
+        aAddStep: Actions.addStep,
+        aUpdateValue: Actions.updateValue,  
+        
+        // UTILITIES
+        aOpenContent: Actions.openContent,
+        aServerRequest: Actions.serverRequest
     }
 }
 

@@ -14,7 +14,7 @@ class RecipeStore extends ReduceStore {
             active: true,
             recentFeed: []
         };
-        var newRecipe = {id: "new"}
+        var newRecipe = {id: "new"};
 
         this._processAction({
             action : "GET_DATA_RECENT_FEED"
@@ -24,11 +24,15 @@ class RecipeStore extends ReduceStore {
         }, false);
 
         return {
-            recents : [home, newRecipe],
             open: [home, newRecipe]
         };
     }
-
+    /**
+     * Process a server call by calling server side processAction and passing action
+     * @param {Object} action Object containing the action and any other data
+     * @param {Function} callback Sucess callback for server call
+     * @param {Boolean} async If the call should be asyc then pass true
+     */
     _processAction(action, callback, async) {
         var xhr = new XMLHttpRequest();
 
@@ -79,20 +83,11 @@ class RecipeStore extends ReduceStore {
 
     _updateActiveRecipe(callback) {
         var recipe = {};
-        var currState = {};
-        Object.assign(currState, this.getState());
+        var currState = this.getState();
 
         for(var i = 0; i < currState.open.length; i++) {
             if (currState.open[i].active) {
-                Object.assign(recipe, callback(currState.open[i].recipe));
-                Object.assign(currState.open[i].recipe, recipe);
-                break;
-            }
-        }
-
-        for(var i = 0; i < currState.recents.length; i++) {
-            if (currState.recents[i].active) {
-                Object.assign(currState.recents[i].recipe, recipe);
+                currState.open[i].recipe = callback(currState.open[i].recipe);
                 break;
             }
         }
@@ -104,7 +99,6 @@ class RecipeStore extends ReduceStore {
         switch (action.action) {
             case ActionTypes.OPEN_CONTENT:
                 this._openContent(state.open, action.key);
-                this._openContent(state.recents, action.key);
                 return Immutable.fromJS(state).toJS(); 
             case ActionTypes.SERVER_REQUEST:
                 this._processAction(action.data, action.callback, action.async);
@@ -117,7 +111,6 @@ class RecipeStore extends ReduceStore {
                 //var newState = this.getState();
                 var callback = function (response) {
                     store._processContent(state.open, response);
-                    store._processContent(state.recents, response);
                 }
 
                 this._processAction(action, callback, false);
@@ -126,7 +119,6 @@ class RecipeStore extends ReduceStore {
                 var store = this;
                 var callback = function (response) {
                     store._processContent(state.open, response);
-                    store._processContent(state.recents, response);
                 }
 
                 this._processAction(action, callback, false);

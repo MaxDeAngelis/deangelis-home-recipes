@@ -17,25 +17,26 @@ function Body(props) {
     } else {
         openContent = (<Recipe 
                             recipe={props.sOpenContent.recipe} 
-                            aSaveRecipe={props.saveRecipe}
-                            aAddIngredient={props.addIngredient}
-                            aAddStep={props.addStep}
-                            aUpdateValue={props.updateValue}
-                            aServerRequest={props.serverRequest}
+                            aSaveRecipe={props.aSaveRecipe}
+                            aAddIngredient={props.aAddIngredient}
+                            aAddStep={props.aAddStep}
+                            aUpdateValue={props.aUpdateValue}
+                            aServerRequest={props.aServerRequest}
                         />);
     }
 
     return (<section className="app-body">
             <nav className="navigation">
                 <Navigation 
-                    onNew={props.newRecipe}
-                    sRecents={props.sRecents}
-                    aOpenContent={props.aOpenContent}/>
+                    sOpenList={props.sOpenList}
+                    aOpenContent={props.aOpenContent}
+                    aNewRecipe={props.aNewRecipe}
+                />
             </nav>
             <div className="site-body">
                 <Header 
                     aGetRecipe={props.aGetRecipe}
-                    aServerRequest={props.serverRequest}
+                    aServerRequest={props.aServerRequest}
                 />
                 <main className="open-content">
                     {openContent}

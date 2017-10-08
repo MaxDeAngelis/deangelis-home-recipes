@@ -26,7 +26,7 @@ var Navigation = React.createClass({
     },
     render: function() {
         var nav = this;
-        var list = this.props.sRecents.map(function (item) {
+        var list = this.props.sOpenList.map(function (item) {
             var classes = "link hover"; 
             if (item.active) {
                 classes = "link hover active";
@@ -39,7 +39,7 @@ var Navigation = React.createClass({
                 </li>);
             } else if (item.id == "new") {
                 classes += " ti-plus";
-                return (<li key={item.id} className={classes} data-id="new" onClick={nav.props.onNew}>
+                return (<li key={item.id} className={classes} data-id="new" onClick={nav.props.aNewRecipe}>
                     <span className="text">New</span>
                 </li>);               
             } else {
