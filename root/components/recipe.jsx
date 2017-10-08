@@ -6,7 +6,6 @@ import RecipeHeader from './recipeHeader.jsx';
 require("../style/components/recipe.scss");
 
 var Recipe = React.createClass({
-    cropper: null,
     getInitialState: function() {
         return {
             editable: false

@@ -20,6 +20,7 @@
             line-height: 35px;
             color: $text-light;
             padding: 5px 0 5px 10px;
+            opacity: 0.75;
             &:first-child {
                 display: block;
                 padding: 0;
@@ -48,6 +49,7 @@
             &.hover:hover,
             &.active {
                 background-color: $color-two;
+                opacity: 1;
             }
             &.active {
                 border-left: 3px solid $color-accent;

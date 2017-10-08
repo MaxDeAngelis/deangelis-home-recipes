@@ -1,0 +1,63 @@
+@import "../variables.scss";
+
+.home-content {
+    padding: 25px;
+    .site-title {
+        color: $text-dark;
+        font-size: 40px;
+        padding-left: 10px;
+        margin: 0 0 25px 0;
+    }
+    .recent-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .recent-title {
+            font-size: 20px;
+            color: $text-dark-secondary;
+            margin: 0 0 5px 0;
+        }
+    }
+    .recent-feed {
+        display: flex;
+        border-top: 1px solid $text-dark-secondary;
+        border-bottom: 1px solid $text-dark-secondary;
+        .recipe {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px;
+            max-width: 400px;
+            transition: transform 0.5s;
+            cursor: pointer;
+            &:hover {
+                transform: scale(1.025, 1.025);
+                box-shadow: 5px 5px 5px #888888;
+            }
+            .title,
+            .additional-info {
+                position: absolute;
+                background-color: rgba(0, 0, 0, 0.75);    
+                left: 0;
+                right: 0;
+                text-align: center;
+                padding: 5px;
+            }
+            .title {
+                color: $text-light;
+                font-size: 18px;
+                top: 0;
+            }
+            .additional-info {
+                color: $text-light-secondary;
+                font-size: 14px;
+                bottom: 0;
+            }
+            img {
+                width: 100%;
+            }
+            
+        }
+    }
+}

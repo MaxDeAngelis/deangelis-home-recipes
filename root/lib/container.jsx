@@ -10,22 +10,23 @@ function getStores() {
 
 function getState() {
     var state = RecipeStore.getState();
-
-    var openRecipe = null;
+    
+    var openContent = null;
     for (var i = 0; i < state.open.length; i++) {
         if (state.open[i].active) {
-            openRecipe = state.open[i].recipe;
+            openContent = state.open[i];
         }
     }
 
     return {
-        sRecipe: openRecipe,
+        sOpenContent: openContent,
         sRecents: state.recents,
 
         aOpenContent: Actions.openContent,
+        aGetRecipe: Actions.getRecipe,
+
         // CALLBACKS
         saveRecipe: Actions.saveRecipe,
-        getRecipe: Actions.getRecipe,
         newRecipe: Actions.newRecipe,
         addIngredient: Actions.addIngredient,
         addStep: Actions.addStep,

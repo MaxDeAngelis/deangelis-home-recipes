@@ -98,7 +98,7 @@ const Search = React.createClass({
             element = element.parentElement;
         }
         var id = element.dataset.id;
-        this.props.getRecipe(id);
+        this.props.aGetRecipe(id);
     },
     scroll: function (e) {
 

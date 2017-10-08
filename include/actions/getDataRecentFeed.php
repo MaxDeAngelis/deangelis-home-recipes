@@ -1,0 +1,30 @@
+<?php
+
+class GET_DATA_RECENT_FEED extends Action {
+	function __construct() {
+		parent::__construct(ACTIONS::GET_DATA_RECENT_FEED);
+	}
+
+	public function process() {
+		// First get the body of the recipe
+		$sql = "SELECT * 
+				    FROM recipes.recipes 
+                    INNER JOIN person ON(person.personId = recipes.ownerId)
+                    WHERE name != 'New...' AND name != ''
+				    ORDER BY modDate DESC LIMIT 3";
+								
+		$response = new DatabaseQuery($sql);
+
+		if ($response->sucess) {
+			$list = array();
+			foreach ($response->results as $value) {
+	            $list[] = new Recipe($value);
+	        }
+			return $list;
+		} else {
+			return null;
+		}
+	}
+}
+
+?>

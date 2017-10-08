@@ -31,6 +31,9 @@
 	case ACTIONS::GET_DATA_UNITS:
 		$action = new GetDataUnits();
 		break;
+	case ACTIONS::GET_DATA_RECENT_FEED:
+		$action = new GET_DATA_RECENT_FEED();
+		break;
 	case ACTIONS::SAVE_RECIPE:
 		$action = new SaveRecipe($data['recipe']);
 		break;

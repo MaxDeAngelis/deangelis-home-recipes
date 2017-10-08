@@ -6,7 +6,7 @@ var Header = React.createClass({
     render: function() {
         return (<header className="header-content">
             <Search 
-                getRecipe={this.props.getRecipe}
+                aGetRecipe={this.props.aGetRecipe}
                 aServerRequest={this.props.aServerRequest} />
             <nav>
                 <a><label>Max DeAngelis</label> <div className="ti-angle-down"></div></a>

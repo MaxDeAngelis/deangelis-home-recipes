@@ -35,7 +35,7 @@ var RecipeHeader = React.createClass({
         var created = new Date(this.props.recipe.dateCreated);
         var titleClass = this.props.editable?"recipe-title editable":"recipe-title";
         
-        if (this.props.recipe.title == "") {
+        if (!this.props.editable && (this.props.recipe.title == "" || this.props.recipe.title == "New...")) {
             this.props.recipe.title = "Please enter a new title ...";
         }
 

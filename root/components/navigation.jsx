@@ -31,16 +31,28 @@ var Navigation = React.createClass({
             if (item.active) {
                 classes = "link hover active";
             }
-            return (<li key={item.recipe.id} data-id={item.recipe.id} className={classes} onClick={nav.handleClick}>
-                        <img className="image" src={item.recipe.picture + "?" + new Date().getTime()} />
-                        <span className="text truncate" title={item.recipe.title}>{item.recipe.title}</span>
-                    </li>);
+
+            if (item.id == "home") {
+                classes += " ti-home";
+                return (<li key={item.id} className={classes} data-id="home" onClick={nav.handleClick}>
+                    <span className="text">Home</span>
+                </li>);
+            } else if (item.id == "new") {
+                classes += " ti-plus";
+                return (<li key={item.id} className={classes} data-id="new" onClick={nav.props.onNew}>
+                    <span className="text">New</span>
+                </li>);               
+            } else {
+                return (<li key={item.id} data-id={item.id} className={classes} onClick={nav.handleClick}>
+                    <img className="image" src={item.recipe.picture + "?" + new Date().getTime()} />
+                    <span className="text truncate" title={item.recipe.title}>{item.recipe.title}</span>
+                </li>);
+            }
         });
+        
         return (<ul className="navigation-content">
             <li className="link"><a className="toggle" onClick={this.toggle}></a></li>
-            <li className="link ti-home hover" data-id="home" onClick={this.home}><span className="text">Home</span></li>
-            <li className="link ti-user hover" data-id="user" onClick={this.home}><span className="text">Administrator</span></li>
-            <li className="link ti-plus hover" data-id="new" onClick={this.props.onNew}><span className="text">New</span></li>
+            {/*<li className="link ti-user hover" data-id="user" onClick={this.home}><span className="text">Administrator</span></li>*/}
             {list}
         </ul>
         );

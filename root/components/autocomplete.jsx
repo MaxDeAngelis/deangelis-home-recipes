@@ -41,7 +41,6 @@ var AutoComplete = React.createClass({
       return returnObj;
     },
     resize: function() {
-      console.log("resize");
       var results = ReactDOM.findDOMNode(this).querySelector(".results");
       var componentPos = ReactDOM.findDOMNode(this).getBoundingClientRect()
       var pos = results.getBoundingClientRect();

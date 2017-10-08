@@ -9,9 +9,23 @@ class RecipeStore extends ReduceStore {
     }
 
     getInitialState() {
+        var home = {
+            id: "home",
+            active: true,
+            recentFeed: []
+        };
+        var newRecipe = {id: "new"}
+
+        this._processAction({
+            action : "GET_DATA_RECENT_FEED"
+        }, 
+        function(response) {
+            home.recentFeed = response;
+        }, false);
+
         return {
-            recents : [],
-            open: []
+            recents : [home, newRecipe],
+            open: [home, newRecipe]
         };
     }
 
@@ -35,8 +49,8 @@ class RecipeStore extends ReduceStore {
 
     _processContent(list, item) {
         var newItem = {
-            active: true,
             id: item.id,
+            active: true,
             recipe: item
         }
 
