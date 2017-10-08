@@ -4,6 +4,7 @@ body {
     margin: 0;
     font-family: TensoMedium, TensoLight, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 18px;
+    background-color: $color-one;
     * {
         font-family: inherit;
         font-size: inherit;
@@ -16,18 +17,103 @@ body {
         padding: 3px;
     }
 }
-
-.app-body {
-    display: flex;
-    .site-body {
-        flex: 1;
-        height: 100vh;
-        background-color: $color-background;
-        >.open-content {
-            overflow: scroll;
-            padding: 0;
-            margin-bottom: 50px;
-            height: calc(100% - 60px);
+.app {
+    .app-login {
+        display: flex;
+        position: absolute;
+        justify-content: center;
+        align-items: center;
+        transform: perspective(800px) rotateX(90deg);
+        transition-property: all;
+        transition-duration: 1s;
+        transition-delay: 0.5s;
+        transform-origin: bottom;
+        width: 100%;
+        height: 100%;
+        &.show {
+            transform: perspective(0px) rotateX(0deg);
+        }
+        &.hide {
+            transition-delay: 0s;
+        }
+        .app-login-inner {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            width: 300px;
+            height: 300px;
+            background-color: $color-background-light;
+            box-shadow: 5px 5px 5px $color-two;
+            .app-login-form {
+                align-content: stretch;
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                input {
+                    margin: 10px;
+                }
+            }
+            header,
+            footer {
+                display: flex;
+                width: 100%;
+                background-color: $color-background;
+            }
+            header {
+                justify-content: space-between;
+                padding: 10px 0;
+                border-bottom: 1px solid $text-dark;
+                color: $text-dark;
+                label {
+                    padding-left: 10px;
+                }
+                .ti-close {
+                    padding-right: 10px;
+                    opacity: 0.75;
+                    &:hover {
+                        opacity: 1;
+                    }
+                }
+            }
+            footer {
+                justify-content: center;
+                padding: 10px 0;
+                border-top: 1px solid $text-dark;
+                button {
+                    background-color: $color-one;
+                    border: none;
+                    color: $text-light;
+                    padding: 5px 15px;
+                    &:hover {
+                        background-color: $color-two;
+                    }
+                }
+            }
+        }
+    }
+    .app-body {
+        display: flex;
+        transform: perspective(0px) rotateX(0deg);
+        transition-property: all;
+        transition-duration: 0.5s;
+        transform-origin: bottom;
+        &.hide {
+            transform: perspective(800px) rotateX(90deg);
+        }
+        &.show {
+            transition-delay: 1s;
+        }
+        .site-body {
+            flex: 1;
+            height: 100vh;
+            background-color: $color-background;
+            >.open-content {
+                overflow: scroll;
+                padding: 0;
+                margin-bottom: 50px;
+                height: calc(100% - 60px);
+            }
         }
     }
 }

@@ -25,7 +25,40 @@ function Body(props) {
                         />);
     }
 
-    return (<section className="app-body">
+    function handleShowLogin() {
+        document.querySelector(".app-login").classList.add("show");
+        document.querySelector(".app-body").classList.add("hide");
+    }
+
+    function handleHideLogin() {
+        document.querySelector(".app-login").classList.add("hide");
+        document.querySelector(".app-body").classList.add("show");
+
+        document.querySelector(".app-login").classList.remove("show");
+        document.querySelector(".app-body").classList.remove("hide");
+
+        setTimeout(function() {
+            document.querySelector(".app-login").classList.remove("hide");
+            document.querySelector(".app-body").classList.remove("show");
+        }, 1500) 
+    }
+
+    return (<section className="app">
+        <section className="app-login">
+            <div className="app-login-inner">
+                <header>
+                    <label>Login</label><a className="ti-close" onClick={handleHideLogin}/>
+                </header>
+                <div className="app-login-form">
+                    <input placeholder="Username" className="username" type="text"/>
+                    <input placeholder="Password" className="password" type="password"/>
+                </div>
+                <footer>
+                    <button>Login</button>
+                </footer>
+            </div>
+        </section>
+        <section className="app-body">
             <nav className="navigation">
                 <Navigation 
                     sOpenList={props.sOpenList}
@@ -36,6 +69,7 @@ function Body(props) {
             </nav>
             <div className="site-body">
                 <Header 
+                    aHandleShowLogin={handleShowLogin}
                     aGetRecipe={props.aGetRecipe}
                     aServerRequest={props.aServerRequest}
                 />
@@ -45,7 +79,7 @@ function Body(props) {
                 
             </div>
         </section>
-    );
+    </section>);
 }
 
 export default Body;
