@@ -31,6 +31,7 @@ function Body(props) {
                     sOpenList={props.sOpenList}
                     aOpenContent={props.aOpenContent}
                     aNewRecipe={props.aNewRecipe}
+                    aCloseRecipe={props.aCloseRecipe}
                 />
             </nav>
             <div className="site-body">

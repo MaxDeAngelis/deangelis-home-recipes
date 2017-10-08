@@ -27,6 +27,7 @@ function getState() {
         aNewRecipe: Actions.newRecipe,
         aSaveRecipe: Actions.saveRecipe,
         aGetRecipe: Actions.getRecipe,
+        aCloseRecipe: Actions.closeRecipe,
         aAddIngredient: Actions.addIngredient,
         aAddStep: Actions.addStep,
         aUpdateValue: Actions.updateValue,  

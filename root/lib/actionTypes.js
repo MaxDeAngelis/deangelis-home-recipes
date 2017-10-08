@@ -6,7 +6,8 @@ const ActionTypes = {
     ADD_STEP: 'ADD_STEP',
     UPDATE_VALUE: 'UPDATE_VALUE',
     SERVER_REQUEST: "SERVER_REQUEST",
-    OPEN_CONTENT: "OPEN_CONTENT"
+    OPEN_CONTENT: "OPEN_CONTENT",
+    CLOSE_RECIPE: "CLOSE_RECIPE"
 }
 
 export default ActionTypes;

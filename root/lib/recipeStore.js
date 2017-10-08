@@ -123,6 +123,31 @@ class RecipeStore extends ReduceStore {
 
                 this._processAction(action, callback, false);
                 return Immutable.fromJS(state).toJS();
+            case ActionTypes.CLOSE_RECIPE:
+                var index = null;
+                var isActive = false;
+                for (var i = 0; i < state.open.length; i++) {
+                    if (state.open[i].id == action.id) {
+                        index = i;
+                        if (state.open[i].active) {
+                            isActive = true;
+                        }
+                    }
+                }
+
+                if (isActive) {
+                    for (var i = 0; i < state.open.length; i++) {
+                        if (state.open[i].id == "home") {
+                            state.open[i].active = true;
+                        }
+                    }
+                }
+
+                if (index != null) {
+                    state.open.splice(index, 1);
+                }
+                
+                return Immutable.fromJS(state).toJS();
             case ActionTypes.ADD_INGREDIENT:
                 state = this._updateActiveRecipe(function(recipe) {
                     recipe.ingredients.push({
@@ -150,6 +175,7 @@ class RecipeStore extends ReduceStore {
 
                 return Immutable.fromJS(state).toJS();
             default:
+                console.log("default");
                 return state;
         }
     }

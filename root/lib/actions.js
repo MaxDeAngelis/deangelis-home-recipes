@@ -19,6 +19,12 @@ const Actions = {
             action: ActionTypes.NEW_RECIPE
         });
     },
+    closeRecipe(id) {
+        Dispatcher.dispatch({
+            action: ActionTypes.CLOSE_RECIPE,
+            id: id
+        });
+    },
     addIngredient() {
         Dispatcher.dispatch({
             action: ActionTypes.ADD_INGREDIENT

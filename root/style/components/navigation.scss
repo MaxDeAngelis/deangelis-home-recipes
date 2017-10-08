@@ -16,11 +16,26 @@
         .link {
             height: 35px;
             display: flex;
+            position: relative;
             align-items: center;
             line-height: 35px;
             color: $text-light;
             padding: 5px 0 5px 10px;
             opacity: 0.75;
+            .ti-close {
+                position: absolute;
+                top: 0;
+                right: 0;
+                font-size: 10px;
+                padding: 3px;
+                margin: 1px;
+                border-radius: 10px;
+                background-color: black;
+                color: $text-light-secondary;
+                &:hover {
+                    color: $text-light;
+                }
+            }
             &:first-child {
                 display: block;
                 padding: 0;

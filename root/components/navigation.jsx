@@ -16,13 +16,20 @@ var Navigation = React.createClass({
             nav.className = "navigation";
         }
     },
-    handleClick: function(e) {
-        var element = e.target;
-        while (!element.classList.contains("link")) {
-            element = element.parentElement;
+    _getId: function(element) {
+        var currentElement = element;
+        while (!currentElement.classList.contains("link")) {
+            currentElement = currentElement.parentElement;
         }
-        var id = element.dataset.id;
-        this.props.aOpenContent(id);
+        return currentElement.dataset.id;
+    },
+    handleClick: function(e) {
+        this.props.aOpenContent(this._getId(e.target));
+        e.stopPropagation();
+    },
+    handleClose: function(e) {
+        this.props.aCloseRecipe(this._getId(e.target));
+        e.stopPropagation();
     },
     render: function() {
         var nav = this;
@@ -31,7 +38,7 @@ var Navigation = React.createClass({
             if (item.active) {
                 classes = "link hover active";
             }
-
+            
             if (item.id == "home") {
                 classes += " ti-home";
                 return (<li key={item.id} className={classes} data-id="home" onClick={nav.handleClick}>
@@ -46,6 +53,7 @@ var Navigation = React.createClass({
                 return (<li key={item.id} data-id={item.id} className={classes} onClick={nav.handleClick}>
                     <img className="image" src={item.recipe.picture + "?" + new Date().getTime()} />
                     <span className="text truncate" title={item.recipe.title}>{item.recipe.title}</span>
+                    <a className="ti-close" onClick={nav.handleClose}></a>{close}
                 </li>);
             }
         });
