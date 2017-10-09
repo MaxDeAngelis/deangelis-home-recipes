@@ -45,10 +45,12 @@ var Navigation = React.createClass({
                     <span className="text">Home</span>
                 </li>);
             } else if (item.id == "new") {
-                classes += " ti-plus";
-                return (<li key={item.id} className={classes} data-id="new" onClick={nav.props.aNewRecipe}>
-                    <span className="text">New</span>
-                </li>);               
+                if (nav.props.sUser != null) {
+                    classes += " ti-plus";
+                    return (<li key={item.id} className={classes} data-id="new" onClick={nav.props.aNewRecipe}>
+                        <span className="text">New</span>
+                    </li>);                    
+                }            
             } else {
                 return (<li key={item.id} data-id={item.id} className={classes} onClick={nav.handleClick}>
                     <img className="image" src={item.recipe.picture + "?" + new Date().getTime()} />

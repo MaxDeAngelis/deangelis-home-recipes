@@ -68,11 +68,12 @@ const Actions = {
             callback: callback
         });
     },
-    login(username, password) {
+    login(username, password, callback) {
         Dispatcher.dispatch({
             action: ActionTypes.LOGIN,
             username: username,
-            password: password
+            password: password,
+            callback: callback
         });
     },
     logout() {

@@ -123,6 +123,9 @@ class RecipeStore extends ReduceStore {
                     if (response != null) {
                         state.user = response;
                     }
+                    if (typeof action.callback == "function") {
+                        action.callback(response);
+                    }
                 }
 
                 this._processAction(action, callback, false);
@@ -146,7 +149,6 @@ class RecipeStore extends ReduceStore {
                 return state;
             case ActionTypes.GET_RECIPE:
                 var store = this;
-                //var newState = this.getState();
                 var callback = function (response) {
                     store._processContent(state.open, response);
                 }

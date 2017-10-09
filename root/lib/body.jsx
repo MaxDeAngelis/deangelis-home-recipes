@@ -47,6 +47,11 @@ function Body(props) {
         props.aLogin(username, password);
     }
 
+    function handleLoginResponse(response) {
+        var username = document.querySelector(".app-login .username").value;
+        var password = document.querySelector(".app-login .password").value;
+    }
+
     if (props.sUser != null) {
         handleHideLogin();
     }
@@ -88,6 +93,7 @@ function Body(props) {
             <nav className="navigation">
                 <Navigation 
                     sOpenList={props.sOpenList}
+                    sUser={props.sUser}
                     aOpenContent={props.aOpenContent}
                     aNewRecipe={props.aNewRecipe}
                     aCloseRecipe={props.aCloseRecipe}
@@ -113,9 +119,8 @@ function Body(props) {
 export default Body;
 
 
-
-/**
- TODO: Might be worth investigating why i cant use a normal lass in here and the container
+/*
+// TODO: Might be worth investigating why i cant use a normal lass in here and the container
 var Body = React.createClass({   
     handleShowLogin: function() {
         document.querySelector(".app-login").classList.add("show");
