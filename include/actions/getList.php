@@ -6,8 +6,22 @@ class GetList extends Action {
 	}
 
 	public function process() {
-		$response = new DatabaseQuery("SELECT recipeId, name, picture, firstName, lastName FROM recipes INNER JOIN person ON(person.personId = recipes.ownerId) WHERE recipes.name != '';");
+		if (isset($_SESSION['user'])) {
+			$userId = $_SESSION['user']['userId'];
 
+			$sql = "SELECT recipeId, name, picture, firstName, lastName, public, ownerId 
+						FROM recipes
+						INNER JOIN person ON(person.personId = recipes.ownerId) 
+						WHERE recipes.name != '' AND (public = 1 OR ownerId = {$userId});";
+
+		} else {
+			$sql = "SELECT recipeId, name, picture, firstName, lastName, public, ownerId 
+						FROM recipes 
+						INNER JOIN person ON(person.personId = recipes.ownerId) 
+						WHERE recipes.name != '' AND public = 1;";
+		}
+	
+		$response = new DatabaseQuery($sql);
 		if ($response->sucess) {
 			$list = array();
 

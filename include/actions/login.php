@@ -5,8 +5,12 @@ class Login extends Action {
     public $password = "";
 
 	function __construct($data) {
-        $this->username = htmlspecialchars($data["username"]);
-        $this->password = htmlspecialchars($data["password"]);
+        if (isset($data["username"])) {
+            $this->username = htmlspecialchars($data["username"]);            
+        }
+        if (isset($data["password"])) {
+            $this->password = htmlspecialchars($data["password"]);            
+        }
 		parent::__construct(ACTIONS::LOGIN);
 	}
 

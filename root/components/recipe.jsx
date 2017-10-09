@@ -34,6 +34,7 @@ var Recipe = React.createClass({
                     save = {this.save}
                     aUpdateValue = {this.props.aUpdateValue}
                     editable = {this.state.editable}
+                    sUser={this.props.sUser}
                 />
                 <main className="recipe-body">
                         <Ingredients 

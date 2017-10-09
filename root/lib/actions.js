@@ -74,6 +74,11 @@ const Actions = {
             username: username,
             password: password
         });
+    },
+    logout() {
+        Dispatcher.dispatch({
+            action: ActionTypes.LOGOUT
+        });
     }
 
 };

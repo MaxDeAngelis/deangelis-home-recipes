@@ -8,7 +8,8 @@ const ActionTypes = {
     SERVER_REQUEST: "SERVER_REQUEST",
     OPEN_CONTENT: "OPEN_CONTENT",
     CLOSE_RECIPE: "CLOSE_RECIPE",
-    LOGIN: "LOGIN"
+    LOGIN: "LOGIN",
+    LOGOUT: "LOGOUT"
 }
 
 export default ActionTypes;

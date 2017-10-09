@@ -7,10 +7,50 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        nav {
-            >a {
+        .user-menu {
+            position: relative;
+            color: $text-dark-secondary;  
+            cursor: pointer;
+            .user-label {
                 padding-right: 10px;
-                text-decoration: underline;
+                cursor: pointer;
+                &:hover {
+                    text-decoration: underline;   
+                    color: $text-dark;                          
+                }
+            }   
+            &.show-menu {
+                .menu-options {
+                    transform: perspective(0px) rotateX(0deg);                    
+                }
+            }
+            .menu-options {
+                display: flex;
+                flex-direction: column;
+                background-color: $color-background-light;
+                box-shadow: 5px 5px 10px black;
+                position: absolute;
+                left: 0;
+                right: 0;
+                transform: perspective(800px) rotateX(-90deg);
+                transform-origin: top;
+                transition: all 0.5s linear;
+                z-index: 10;
+                .item {
+                    padding: 5px;
+                    border-bottom: 1px solid $text-dark;
+                    cursor: pointer;
+                    &:last-child {
+                        border-bottom: none;
+                    }
+                    &:hover {
+                        background-color: $color-two;
+                        color: $text-light-secondary;
+                        .highlight {
+                            color: $text-light;
+                        }
+                    }
+                }
             }
         }
     }

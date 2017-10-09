@@ -36,7 +36,8 @@ function getState() {
         // UTILITIES
         aOpenContent: Actions.openContent,
         aServerRequest: Actions.serverRequest,
-        aLogin: Actions.login
+        aLogin: Actions.login,
+        aLogout: Actions.logout
     }
 }
 

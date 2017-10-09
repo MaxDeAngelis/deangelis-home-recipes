@@ -9,7 +9,24 @@
         display: flex;
         flex-direction: column;
         padding: 50px 75px;
-        
+        width: 100%;
+        .recipe-title {
+            display: flex;
+            align-items: center;
+        }
+        &.editable {
+            .title,
+            .ti-pencil,
+            .public-note {
+                display: none;
+            }
+            input.title,
+            .ti-save,
+            .toggle-label,
+            .toggle-switch {
+                display: inline-block;
+            }
+        }
         .ti-save,
         .ti-pencil {
             padding-left: 10px;
@@ -21,7 +38,8 @@
             font-size: 40px;
         }
         .title {
-            display: inline-block;
+            display: flex;
+            flex: 1;
             padding: 5px;
             border: 1px solid transparent;
             font-family: $text-font-family;
@@ -33,20 +51,24 @@
         .ti-save {
             display: none;
         }
-        .editable {
-            .title,
-            .ti-pencil {
-                display: none;
-            }
-            input.title,
-            .ti-save {
-                display: inline-block;
-            }
-        }
-        .addition-info {
+        .addition-info,
+        .public-option {
             font-size: 14px;
             color: $text-dark-secondary;
             padding: 5px 0 0 9px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .public-option {
+            height: 40px;
+        }
+        .toggle-switch {
+            transform: scale(0.5);
+            display: none;
+        }
+        .toggle-label {
+            display: none;
         }
         .time-info {
             height: 50px;
@@ -76,6 +98,7 @@
                 padding-left: 5px;
             }
         }
+        
     }
 }
 

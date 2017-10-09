@@ -21,6 +21,9 @@
 	case ACTIONS::LOGIN:
 		$action = new Login($data);
 		break;
+	case ACTIONS::LOGOUT:
+		$action = new Logout($data);
+		break;
 	case ACTIONS::GET_LIST:
 		$action = new GetList();
 		break;

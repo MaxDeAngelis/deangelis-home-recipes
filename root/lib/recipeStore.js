@@ -45,6 +45,7 @@ class RecipeStore extends ReduceStore {
             open: [home, newRecipe]
         };
     }
+
     /**
      * Process a server call by calling server side processAction and passing action
      * @param {Object} action Object containing the action and any other data
@@ -122,6 +123,14 @@ class RecipeStore extends ReduceStore {
                     if (response != null) {
                         state.user = response;
                     }
+                }
+
+                this._processAction(action, callback, false);
+                return Immutable.fromJS(state).toJS();
+            case ActionTypes.LOGOUT:
+                var store = this;
+                var callback = function() {
+                    state = store.getInitialState();
                 }
 
                 this._processAction(action, callback, false);

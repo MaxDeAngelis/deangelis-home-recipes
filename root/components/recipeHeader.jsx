@@ -31,24 +31,43 @@ var RecipeHeader = React.createClass({
     afterImageCrop: function(imageUrl) {        
         this.props.aUpdateValue('picture', imageUrl);        
     },
+    handlePublicChange: function(e) {
+        this.props.aUpdateValue('public', e.target.checked);  
+    },
     render: function() {
         var created = new Date(this.props.recipe.dateCreated);
-        var titleClass = this.props.editable?"recipe-title editable":"recipe-title";
+        var infoClasses = this.props.editable?"recipe-info editable":"recipe-info";
+        
+        if (this.props.recipe.public) {
+            var publicNote = <label className="public-note">This recipe is public (Everyone can view)</label>;
+        } else {
+            var publicNote = <label className="public-note">This recipe is private (Only you can view)</label>;
+        }
         
         if (!this.props.editable && (this.props.recipe.title == "" || this.props.recipe.title == "New...")) {
             this.props.recipe.title = "Please enter a new title ...";
         }
+        var uniqueId = "id-" + new Date().getTime();
+
+        var controls = "";
+        if (this.props.sUser != null && this.props.sUser.userId == this.props.recipe.creator) {
+            controls = (<div>
+                <span className="ti-save" onClick = {this.props.save}></span>
+                <span className="ti-pencil" onClick = {this.props.edit}></span>
+            </div>);
+        }
 
         return (<header className="recipe-header">
-                <div className="recipe-info">
-                    <div className={titleClass}>
+                <div className={infoClasses}>
+                    <div className="recipe-title">
                         <input className="title" 
                             value = {this.props.recipe.title}
                             placeholder="Please enter a new title ..."
-                            onChange = {this.updateTitle}/>
-                        <span className="ti-save" onClick = {this.props.save}></span>
+                            onChange = {this.updateTitle}
+                        />
+                        
                         <span className="title">{ this.props.recipe.title }</span>
-                        <span className="ti-pencil" onClick = {this.props.edit}></span>
+                        {controls}
                     </div>
                     <div className="time-info">
                         <span className="ti-timer"></span> 
@@ -68,7 +87,18 @@ var RecipeHeader = React.createClass({
                     </div>
                     <div className="addition-info">
                         <span className="author">{this.props.recipe.firstName + " " + this.props.recipe.lastName}</span>
-                        <span className="creation-date">({created.toDateString()})</span>
+                        <span className="creation-date"> ({created.toDateString()})</span>
+                    </div>
+                    <div className="public-option">
+                        {publicNote}
+                        <label className="toggle-label">Make recipe public</label>
+                        <label id={uniqueId} className="toggle-switch">
+                            <input htmlFor={uniqueId} type="checkbox" 
+                                checked={this.props.recipe.public} 
+                                onChange={this.handlePublicChange}
+                            />
+                            <span className="slider"></span>
+                        </label>
                     </div>
                 </div>
                 <Cropper

@@ -13,6 +13,12 @@ class SaveRecipe extends Action {
 		
 		$newPicture = $this->recipe["picture"];
 
+		if ($this->recipe["public"] == false) {
+			$public = 0;
+		} else {
+			$public = 1;
+		}
+
 		// If the image was changed then delete the old one and rename the new one
 		// because of cropper it will have a temp in the name since it was just cropped
 		// TODO: Somehow this sometimes runs when name does not contain temp and image is delete :(
@@ -50,6 +56,7 @@ class SaveRecipe extends Action {
 						category = '{$this->recipe["category"]}', 
 						season = '{$this->recipe["season"]}', 
 						servings = {$this->recipe["servings"]},
+						public = {$public},
 						picture = '{$newPicture}'
 					
 					WHERE recipeId = {$recipeId};");
@@ -64,6 +71,7 @@ class SaveRecipe extends Action {
 												{$recipeId})");
 		}
 
+		error_log(print_r($sqlList, true));
 		$response = new DatabaseTransaction($sqlList);
 		if ($response->sucess) {
 			return "{'status' : 'Updated' }";

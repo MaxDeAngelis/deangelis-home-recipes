@@ -8,28 +8,18 @@ import Recipe from '../components/recipe.jsx';
 import Home from '../components/home.jsx';
 
 function Body(props) {
-    var openContent;
-    if (props.sOpenContent.id == "home") {
-        openContent = (<Home 
-                            sHome={props.sOpenContent}
-                            aGetRecipe={props.aGetRecipe}
-                        />);
-    } else {
-        openContent = (<Recipe 
-                            recipe={props.sOpenContent.recipe} 
-                            aSaveRecipe={props.aSaveRecipe}
-                            aAddIngredient={props.aAddIngredient}
-                            aAddStep={props.aAddStep}
-                            aUpdateValue={props.aUpdateValue}
-                            aServerRequest={props.aServerRequest}
-                        />);
+    function handleKeyUp(e) {
+        if (e.key === 'Enter') {
+            handleLogin();
+        }
     }
-
     function handleShowLogin() {
         document.querySelector(".app-login").classList.add("show");
         document.querySelector(".app-body").classList.add("hide");
-    }
 
+        document.querySelector(".app-login .username").focus();
+        window.addEventListener("keyup", handleKeyUp);
+    }
     function handleHideLogin() {
         var appLogin =document.querySelector(".app-login");
         var appBody = document.querySelector(".app-body");
@@ -49,8 +39,8 @@ function Body(props) {
                 appBody.classList.remove("show");
             }, 1500);
         } 
+        window.removeEventListener("keyup", handleKeyUp);
     }
-
     function handleLogin() {
         var username = document.querySelector(".app-login .username").value;
         var password = document.querySelector(".app-login .password").value;
@@ -59,6 +49,24 @@ function Body(props) {
 
     if (props.sUser != null) {
         handleHideLogin();
+    }
+
+    var openContent;
+    if (props.sOpenContent.id == "home") {
+        openContent = (<Home 
+                            sHome={props.sOpenContent}
+                            aGetRecipe={props.aGetRecipe}
+                        />);
+    } else {
+        openContent = (<Recipe 
+                            recipe={props.sOpenContent.recipe} 
+                            sUser={props.sUser}
+                            aSaveRecipe={props.aSaveRecipe}
+                            aAddIngredient={props.aAddIngredient}
+                            aAddStep={props.aAddStep}
+                            aUpdateValue={props.aUpdateValue}
+                            aServerRequest={props.aServerRequest}
+                        />);
     }
 
     return (<section className="app">
@@ -91,6 +99,7 @@ function Body(props) {
                     aHandleShowLogin={handleShowLogin}
                     aGetRecipe={props.aGetRecipe}
                     aServerRequest={props.aServerRequest}
+                    aLogout={props.aLogout}
                 />
                 <main className="open-content">
                     {openContent}
