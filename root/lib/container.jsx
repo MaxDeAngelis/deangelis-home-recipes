@@ -17,11 +17,12 @@ function getState() {
             openContent = state.open[i];
         }
     }
-
+    //console.log(state);
     return {
         // STATE
         sOpenContent: openContent,
         sOpenList: state.open,
+        sUser: state.user,
 
         // RECIPE HELPERS      
         aNewRecipe: Actions.newRecipe,
@@ -34,7 +35,8 @@ function getState() {
         
         // UTILITIES
         aOpenContent: Actions.openContent,
-        aServerRequest: Actions.serverRequest
+        aServerRequest: Actions.serverRequest,
+        aLogin: Actions.login
     }
 }
 

@@ -13,6 +13,8 @@ class Recipe {
     public $dateCreated = "";
     public $picture = "";
     public $creator = "";
+    public $public = false;
+    public $deleted = false;
     public $ingredients = array();
 
     function __construct($recipe) {
@@ -62,6 +64,12 @@ class Recipe {
                     break;
                 case 'ownerId':
                     $this->creator = $value;
+                    break;
+                case 'public':
+                    $this->public = boolval($value);
+                    break;
+                case 'deleted':
+                    $this->deleted = boolval($value);
                     break;
                 case 'ing':
                     $this->ingredients = $value;

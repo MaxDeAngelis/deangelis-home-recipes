@@ -67,6 +67,13 @@ const Actions = {
             async: async,
             callback: callback
         });
+    },
+    login(username, password) {
+        Dispatcher.dispatch({
+            action: ActionTypes.LOGIN,
+            username: username,
+            password: password
+        });
     }
 
 };

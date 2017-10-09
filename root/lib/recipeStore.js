@@ -2,6 +2,7 @@ import Immutable from 'immutable';
 import { ReduceStore } from 'flux/utils';
 import ActionTypes from './actionTypes.js';
 import Dispatcher from './dispatcher.js';
+import MD5 from 'js-md5';
 
 class RecipeStore extends ReduceStore {
     constructor() {
@@ -9,21 +10,38 @@ class RecipeStore extends ReduceStore {
     }
 
     getInitialState() {
+        var newRecipe = {id: "new"};
+
+        // Get home feed on initial load
         var home = {
             id: "home",
             active: true,
             recentFeed: []
         };
-        var newRecipe = {id: "new"};
+        this._processAction(
+            {
+                action : "GET_DATA_RECENT_FEED"
+            }, 
+            function(response) {
+                home.recentFeed = response;
+            }, false
+        );
 
-        this._processAction({
-            action : "GET_DATA_RECENT_FEED"
-        }, 
-        function(response) {
-            home.recentFeed = response;
-        }, false);
+        // See if the user is already logged in
+        var user = null;
+        this._processAction(
+            {
+                action : "LOGIN"
+            }, 
+            function(response) {
+                if (response != null) {
+                    user = response;
+                }
+            }, false
+        );
 
         return {
+            user: user,
             open: [home, newRecipe]
         };
     }
@@ -97,6 +115,17 @@ class RecipeStore extends ReduceStore {
 
     reduce(state, action) {
         switch (action.action) {
+            case ActionTypes.LOGIN:
+                var store = this;
+                action.password = MD5(action.password);
+                var callback = function (response) {
+                    if (response != null) {
+                        state.user = response;
+                    }
+                }
+
+                this._processAction(action, callback, false);
+                return Immutable.fromJS(state).toJS();
             case ActionTypes.OPEN_CONTENT:
                 this._openContent(state.open, action.key);
                 return Immutable.fromJS(state).toJS(); 

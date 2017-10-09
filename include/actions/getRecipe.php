@@ -11,7 +11,7 @@ class GetRecipe extends Action {
 
 	public function process() {
 		// First get the body of the recipe
-		$sql = "SELECT recipeId, firstName, lastName, name, servings, cookTime, prepTime, category, season, modDate, steps, picture, A.rating AS 'rating', A.total AS 'totRating', ownerId
+		$sql = "SELECT recipeId, firstName, lastName, name, servings, cookTime, prepTime, category, season, modDate, steps, picture, public, deleted, A.rating AS 'rating', A.total AS 'totRating', ownerId
 					FROM recipes INNER JOIN person ON(person.personId = recipes.ownerId), (SELECT AVG(rating) AS rating, COUNT(rating) AS total FROM ratingref WHERE recipeId = {$this->id}) A
 					WHERE recipeId = {$this->id};";
 		$response = new DatabaseQuery($sql);

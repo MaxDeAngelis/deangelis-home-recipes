@@ -8,6 +8,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/actions/getDataRecentFeed.
 require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/actions/saveRecipe.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/actions/uploadImage.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/actions/cropImage.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/actions/login.php';
 
 abstract class ACTIONS {
 	 const GET_LIST = "GET_LIST";
@@ -19,6 +20,7 @@ abstract class ACTIONS {
 	 const SAVE_RECIPE = "SAVE_RECIPE";
 	 const UPLOAD_IMAGE = "UPLOAD_IMAGE";
 	 const CROP_IMAGE = "CROP_IMAGE";
+	 const LOGIN = "LOGIN";
 }
 
 class Action {

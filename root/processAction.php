@@ -6,6 +6,8 @@
 
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/classes/ingredient.php';
 
+	session_start();
+
 	$str_json = file_get_contents('php://input');
 	
 	if (isset($_POST['action'])) {
@@ -16,6 +18,9 @@
 
 	switch ($data['action']) {
 
+	case ACTIONS::LOGIN:
+		$action = new Login($data);
+		break;
 	case ACTIONS::GET_LIST:
 		$action = new GetList();
 		break;

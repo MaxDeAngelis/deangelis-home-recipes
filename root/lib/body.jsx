@@ -31,16 +31,34 @@ function Body(props) {
     }
 
     function handleHideLogin() {
-        document.querySelector(".app-login").classList.add("hide");
-        document.querySelector(".app-body").classList.add("show");
+        var appLogin =document.querySelector(".app-login");
+        var appBody = document.querySelector(".app-body");
 
-        document.querySelector(".app-login").classList.remove("show");
-        document.querySelector(".app-body").classList.remove("hide");
+        if (appLogin && appBody) {
+            // Reverse the animation delay
+            appLogin.classList.add("hide");
+            appBody.classList.add("show");
 
-        setTimeout(function() {
-            document.querySelector(".app-login").classList.remove("hide");
-            document.querySelector(".app-body").classList.remove("show");
-        }, 1500) 
+            // Pull off classes that animate 
+            appLogin.classList.remove("show");
+            appBody.classList.remove("hide");
+
+            // Clean up when animations are finished
+            setTimeout(function() {
+                appLogin.classList.remove("hide");
+                appBody.classList.remove("show");
+            }, 1500);
+        } 
+    }
+
+    function handleLogin() {
+        var username = document.querySelector(".app-login .username").value;
+        var password = document.querySelector(".app-login .password").value;
+        props.aLogin(username, password);
+    }
+
+    if (props.sUser != null) {
+        handleHideLogin();
     }
 
     return (<section className="app">
@@ -54,7 +72,7 @@ function Body(props) {
                     <input placeholder="Password" className="password" type="password"/>
                 </div>
                 <footer>
-                    <button>Login</button>
+                    <button onClick={handleLogin}>Login</button>
                 </footer>
             </div>
         </section>
@@ -69,6 +87,7 @@ function Body(props) {
             </nav>
             <div className="site-body">
                 <Header 
+                    sUser={props.sUser}
                     aHandleShowLogin={handleShowLogin}
                     aGetRecipe={props.aGetRecipe}
                     aServerRequest={props.aServerRequest}
@@ -83,3 +102,90 @@ function Body(props) {
 }
 
 export default Body;
+
+
+
+/**
+ TODO: Might be worth investigating why i cant use a normal lass in here and the container
+var Body = React.createClass({   
+    handleShowLogin: function() {
+        document.querySelector(".app-login").classList.add("show");
+        document.querySelector(".app-body").classList.add("hide");
+    },
+    handleHideLogin: function() {
+        document.querySelector(".app-login").classList.add("hide");
+        document.querySelector(".app-body").classList.add("show");
+
+        document.querySelector(".app-login").classList.remove("show");
+        document.querySelector(".app-body").classList.remove("hide");
+
+        setTimeout(function() {
+            document.querySelector(".app-login").classList.remove("hide");
+            document.querySelector(".app-body").classList.remove("show");
+        }, 1500) 
+    },
+    handleLogin: function() {
+        var username = document.querySelector(".app-login .username").value;
+        var password = document.querySelector(".app-login .password").value;
+        this.props.aLogin(username, password);
+    },
+    render: function() {
+        var openContent;
+        if (this.props.sOpenContent.id == "home") {
+            openContent = (<Home 
+                                sHome={this.props.sOpenContent}
+                                aGetRecipe={this.props.aGetRecipe}
+                            />);
+        } else {
+            openContent = (<Recipe 
+                                recipe={this.props.sOpenContent.recipe} 
+                                aSaveRecipe={this.props.aSaveRecipe}
+                                aAddIngredient={this.props.aAddIngredient}
+                                aAddStep={this.props.aAddStep}
+                                aUpdateValue={this.props.aUpdateValue}
+                                aServerRequest={this.props.aServerRequest}
+                            />);
+        }
+
+        return (<section className="app">
+            <section className="app-login">
+                <div className="app-login-inner">
+                    <header>
+                        <label>Login</label><a className="ti-close" onClick={this.handleHideLogin}/>
+                    </header>
+                    <div className="app-login-form">
+                        <input placeholder="Username" className="username" type="text"/>
+                        <input placeholder="Password" className="password" type="password"/>
+                    </div>
+                    <footer>
+                        <button onClick={this.handleLogin}>Login</button>
+                    </footer>
+                </div>
+            </section>
+            <section className="app-body">
+                <nav className="navigation">
+                    <Navigation 
+                        sOpenList={this.props.sOpenList}
+                        aOpenContent={this.props.aOpenContent}
+                        aNewRecipe={this.props.aNewRecipe}
+                        aCloseRecipe={this.props.aCloseRecipe}
+                    />
+                </nav>
+                <div className="site-body">
+                    <Header 
+                        aHandleShowLogin={this.handleShowLogin}
+                        aGetRecipe={this.props.aGetRecipe}
+                        aServerRequest={this.props.aServerRequest}
+                    />
+                    <main className="open-content">
+                        {openContent}
+                    </main>
+                    
+                </div>
+            </section>
+        </section>);
+    }
+});
+
+export default Body;
+ */
