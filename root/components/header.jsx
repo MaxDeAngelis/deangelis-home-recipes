@@ -5,20 +5,35 @@ import Search from './search.jsx';
 require("../style/components/header.scss");
 
 var Header = React.createClass({
-    handleMenuLeave: function() {
-        var userMenu = ReactDOM.findDOMNode(this).querySelector(".user-menu");
-        userMenu.classList.remove("show-menu");
-        userMenu.removeEventListener("mouseleave", this.handleMenuLeave);
+    userMenu: null,
+    componentDidMount: function() {
+        this.userMenu = ReactDOM.findDOMNode(this).querySelector(".user-menu");
     },
-    handleUserMenuClick: function() {
-        var userMenu = ReactDOM.findDOMNode(this).querySelector(".user-menu");
+    handleDismissOnClick: function(e) {        
+        var currentNode = e.target;
+        var isFromMenu = false;
+        while(currentNode && currentNode != document.body) {
+            if (currentNode == this.userMenu) {
+                isFromMenu = true;
+                break;
+            }
+            currentNode = currentNode.parentNode;
+        }
 
-        if (userMenu.classList.contains("show-menu")) {
-            userMenu.classList.remove("show-menu");
-            userMenu.removeEventListener("mouseleave", this.handleMenuLeave);            
+        if (!isFromMenu) {
+            this.userMenu.classList.remove("show-menu");
+            window.removeEventListener("click", this.handleDismissOnClick);
+        }
+    },
+    handleUserMenuClick: function(e) {
+        e.stopPropagation();
+
+        if (this.userMenu.classList.contains("show-menu")) {
+            this.userMenu.classList.remove("show-menu");
+            window.removeEventListener("click", this.handleDismissOnClick);            
         } else {
-            userMenu.classList.add("show-menu");
-            userMenu.addEventListener("mouseleave", this.handleMenuLeave);
+            this.userMenu.classList.add("show-menu");
+            window.addEventListener("click", this.handleDismissOnClick);
         }
     },
     render: function() {
