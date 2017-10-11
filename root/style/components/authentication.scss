@@ -1,0 +1,73 @@
+@import "../variables.scss";
+
+.app-authenticate-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    transition: height 0.5s;
+    width: 300px;
+    background-color: $color-background-light;
+    box-shadow: 5px 5px 5px $color-two;
+    .app-authenticate-form {
+        align-content: stretch;
+        display: flex;
+        flex-direction: column;
+        padding: 25px 0;
+        width: 100%;
+        input {
+            margin: 5px 10px 5px 10px;
+        }
+    }
+    header,
+    footer {
+        display: flex;
+        width: 100%;
+        background-color: $color-background;
+    }
+    header {
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid $text-dark;
+        color: $text-dark;
+        label {
+            padding-left: 10px;
+        }
+        .ti-close {
+            padding-right: 10px;
+            opacity: 0.75;
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+    footer {
+        align-items: center;
+        flex-direction: column;
+        padding: 10px 0;
+        border-top: 1px solid $text-dark;
+        .footer-note {
+            color: $text-dark-secondary;
+            font-size: .75em;
+            padding-top: 5px;
+            a {
+                color: $text-dark-secondary;
+                cursor: pointer;
+                &:hover {
+                    color: $text-dark;
+                    text-decoration: underline;
+                }
+            }
+        }
+        button {
+            background-color: $color-one;
+            border: none;
+            color: $text-light;
+            padding: 5px 15px;
+            cursor: pointer;
+            &:hover {
+                background-color: $color-two;
+            }
+        }
+    }
+}

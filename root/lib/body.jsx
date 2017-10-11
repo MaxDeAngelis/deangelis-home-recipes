@@ -6,55 +6,49 @@ import Header from '../components/header.jsx';
 import Navigation from '../components/navigation.jsx';
 import Recipe from '../components/recipe.jsx';
 import Home from '../components/home.jsx';
+import Authentication from '../components/authentication.jsx';
 
 var Body = React.createClass({ 
-    appLogin: null,
+    appAuthenticate: null,
     appBody: null,  
+    getInitialState: function() {
+        return {
+            showLogin: false,
+            showRegister: false
+        }
+    },
     componentDidMount: function() {
-        this.appLogin = ReactDOM.findDOMNode(this).querySelector(".app-login");
+        this.appAuthenticate = ReactDOM.findDOMNode(this).querySelector(".app-authenticate");
         this.appBody = ReactDOM.findDOMNode(this).querySelector(".app-body");
-    },
-    handleShowLogin: function() {
-        this.appLogin.classList.add("show");
-        this.appBody.classList.add("hide");
-
-        this.appLogin.querySelector(".username").focus();
-        window.addEventListener("keyup", this.handleKeyUp);
-    },
-    handleHideLogin: function() {
-        if (this.appLogin && this.appBody) {
+    }, 
+    componentDidUpdate: function() {
+        if (this.props.sAuthenticate.active) {
+            this.appAuthenticate.classList.add("show");
+            this.appBody.classList.add("hide");
+        } else {
             // Reverse the animation delay
-            this.appLogin.classList.add("hide");
+            this.appAuthenticate.classList.add("hide");
             this.appBody.classList.add("show");
 
             // Pull off classes that animate 
-            this.appLogin.classList.remove("show");
+            this.appAuthenticate.classList.remove("show");
             this.appBody.classList.remove("hide");
 
             // Clean up when animations are finished
             var self = this;
             setTimeout(function() {
-                self.appLogin.classList.remove("hide");
+                self.appAuthenticate.classList.remove("hide");
                 self.appBody.classList.remove("show");
-            }, 1500);
-        } 
-        window.removeEventListener("keyup", this.handleKeyUp);
-    },
-    handleLogin: function() {
-        var username = this.appLogin.querySelector(".username").value;
-        var password = this.appLogin.querySelector(".password").value;
-        this.props.aLogin(username, password, this.handleLoginCallback);
-    },
-    handleLoginCallback: function(response) {
-        if (response != null) {
-            this.handleHideLogin();
+            }, 1500);           
         }
     },
-    handleKeyUp: function(e) {
-        if (e.key === 'Enter') {
-            this.handleLogin();
-        }
-    },
+
+
+
+
+
+
+
     render: function() {
         var openContent;
         if (this.props.sOpenContent.id == "home") {
@@ -75,19 +69,12 @@ var Body = React.createClass({
         }
     
         return (<section className="app">
-            <section className="app-login">
-                <div className="app-login-inner">
-                    <header>
-                        <label>Login</label><a className="ti-close" onClick={this.handleHideLogin}/>
-                    </header>
-                    <div className="app-login-form">
-                        <input placeholder="Username" className="username" type="text"/>
-                        <input placeholder="Password" className="password" type="password"/>
-                    </div>
-                    <footer>
-                        <button onClick={this.handleLogin}>Login</button>
-                    </footer>
-                </div>
+            <section className="app-authenticate">
+                <Authentication
+                    sAuthenticate={this.props.sAuthenticate}
+                    aAuthenticate={this.props.aAuthenticate}
+                    aLogin={this.props.aLogin}
+                />
             </section>
             <section className="app-body">
                 <nav className="navigation">
@@ -102,7 +89,7 @@ var Body = React.createClass({
                 <div className="site-body">
                     <Header 
                         sUser={this.props.sUser}
-                        aHandleShowLogin={this.handleShowLogin}
+                        aAuthenticate={this.props.aAuthenticate}
                         aGetRecipe={this.props.aGetRecipe}
                         aServerRequest={this.props.aServerRequest}
                         aLogout={this.props.aLogout}

@@ -24,6 +24,7 @@ class SiteContainer extends Component {
             sOpenContent={openContent}
             sOpenList={this.state.open}
             sUser={this.state.user}
+            sAuthenticate={this.state.authenticate}
         
             aNewRecipe={Actions.newRecipe}
             aSaveRecipe={Actions.saveRecipe}
@@ -33,6 +34,7 @@ class SiteContainer extends Component {
             aAddStep={Actions.addStep}
             aUpdateValue={Actions.updateValue}
             
+            aAuthenticate={Actions.authenticate}
             aOpenContent={Actions.openContent}
             aServerRequest={Actions.serverRequest}
             aLogin={Actions.login}

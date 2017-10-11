@@ -40,7 +40,12 @@ class RecipeStore extends ReduceStore {
             }, false
         );
 
+        var authenticate = {
+            active: false,
+            type: "login"
+        }
         return {
+            authenticate: authenticate,
             user: user,
             open: [home, newRecipe]
         };
@@ -116,12 +121,21 @@ class RecipeStore extends ReduceStore {
 
     reduce(state, action) {
         switch (action.action) {
+            case ActionTypes.AUTHENTICATE:
+                if (action.active != null) {
+                    state.authenticate.active = action.active
+                }
+                if (action.type != null) {
+                    state.authenticate.type = action.type
+                }
+                return Immutable.fromJS(state).toJS();
             case ActionTypes.LOGIN:
                 var store = this;
                 action.password = MD5(action.password);
                 var callback = function (response) {
                     if (response != null) {
                         state.user = response;
+                        state.authenticate.active = false;
                     }
                     if (typeof action.callback == "function") {
                         action.callback(response);

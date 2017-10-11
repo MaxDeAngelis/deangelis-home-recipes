@@ -36,9 +36,12 @@ var Header = React.createClass({
             window.addEventListener("click", this.handleDismissOnClick);
         }
     },
+    handleAuthenticate: function(e) {
+        this.props.aAuthenticate(true, "login");
+    },
     render: function() {
         var userMenu = <nav className="user-menu">
-            <a className="user-label" onClick={this.props.aHandleShowLogin}>Log in</a>
+            <a className="user-label" onClick={this.handleAuthenticate}>Log in</a>
         </nav>;
 
         if (this.props.sUser != null) {

@@ -68,6 +68,13 @@ const Actions = {
             callback: callback
         });
     },
+    authenticate(active, type) {
+        Dispatcher.dispatch({
+            action: ActionTypes.AUTHENTICATE,
+            active: active,
+            type: type
+        });
+    },
     login(username, password, callback) {
         Dispatcher.dispatch({
             action: ActionTypes.LOGIN,
