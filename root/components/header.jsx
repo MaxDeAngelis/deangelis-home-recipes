@@ -39,6 +39,11 @@ var Header = React.createClass({
     handleAuthenticate: function(e) {
         this.props.aAuthenticate(true, "login");
     },
+    handleLogout: function(e) {
+        e.stopPropagation();
+        
+        this.props.aLogout();
+    },
     render: function() {
         var userMenu = <nav className="user-menu">
             <a className="user-label" onClick={this.handleAuthenticate}>Log in</a>
@@ -51,7 +56,7 @@ var Header = React.createClass({
                     <div className="ti-angle-down"></div>
                 </a>
                 <div className="menu-options">
-                    <a className="item" onClick={this.props.aLogout}>Log out</a>
+                    <a className="item" onClick={this.handleLogout}>Log out</a>
                 </div>
             </nav>);
         }

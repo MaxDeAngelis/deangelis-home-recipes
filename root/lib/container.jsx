@@ -37,6 +37,7 @@ class SiteContainer extends Component {
             aAuthenticate={Actions.authenticate}
             aOpenContent={Actions.openContent}
             aServerRequest={Actions.serverRequest}
+            aRegister={Actions.register}
             aLogin={Actions.login}
             aLogout={Actions.logout}
         />);

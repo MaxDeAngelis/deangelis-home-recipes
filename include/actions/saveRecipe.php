@@ -23,7 +23,6 @@ class SaveRecipe extends Action {
 		// because of cropper it will have a temp in the name since it was just cropped
 		// TODO: Somehow this sometimes runs when name does not contain temp and image is delete :(
 		if (strpos($this->recipe["picture"], "temp_") !== false) {
-			#error_log($this->recipe["picture"]);
 			$response = new DatabaseQuery("SELECT picture FROM recipes WHERE recipeId = {$recipeId};");
 
 			if ($response->sucess) {
@@ -56,6 +55,7 @@ class SaveRecipe extends Action {
 						category = '{$this->recipe["category"]}', 
 						season = '{$this->recipe["season"]}', 
 						servings = {$this->recipe["servings"]},
+						ownerId = {$this->recipe["creator"]},
 						public = {$public},
 						picture = '{$newPicture}'
 					
@@ -71,7 +71,6 @@ class SaveRecipe extends Action {
 												{$recipeId})");
 		}
 
-		error_log(print_r($sqlList, true));
 		$response = new DatabaseTransaction($sqlList);
 		if ($response->sucess) {
 			return "{'status' : 'Updated' }";

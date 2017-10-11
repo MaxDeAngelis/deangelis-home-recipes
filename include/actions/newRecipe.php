@@ -17,7 +17,10 @@ class NewRecipe extends Action {
 			# Once in the DB query the object and pass to recipe class
 			$response = new DatabaseQuery("SELECT * FROM recipes WHERE recipeId = {$newId};");
 			if ($response->sucess) {
-				return new Recipe($response->results[0]);
+				$recipe = new Recipe($response->results[0]);
+
+				$recipe->creator = $_SESSION['user']['userId'];
+				return $recipe;
 			}
 		}
 		

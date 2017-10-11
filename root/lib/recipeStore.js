@@ -129,6 +129,16 @@ class RecipeStore extends ReduceStore {
                     state.authenticate.type = action.type
                 }
                 return Immutable.fromJS(state).toJS();
+            case ActionTypes.REGISTER:
+                var store = this;
+                var callback = function (response) {
+                    if (typeof action.callback == "function") {
+                        action.callback(response);
+                    }
+                }
+
+                this._processAction(action, callback, false);
+                return Immutable.fromJS(state).toJS();
             case ActionTypes.LOGIN:
                 var store = this;
                 action.password = MD5(action.password);

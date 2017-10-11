@@ -75,6 +75,16 @@ const Actions = {
             type: type
         });
     },
+    register(firstName, lastName, username, email, callback) {
+        Dispatcher.dispatch({
+            action: ActionTypes.REGISTER,
+            firstName: firstName,
+            lastName: lastName,
+            username: username,
+            email: email,
+            callback: callback
+        });
+    },
     login(username, password, callback) {
         Dispatcher.dispatch({
             action: ActionTypes.LOGIN,

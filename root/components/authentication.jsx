@@ -32,6 +32,14 @@ var Authentication = React.createClass({
     },
     handleRegister: function() {
         console.log("register");
+
+        var firstName = this.appAuthenticateForm.querySelector(".first-name").value;
+        var lastName = this.appAuthenticateForm.querySelector(".last-name").value;
+        var userName = this.appAuthenticateForm.querySelector(".username").value;
+        var email = this.appAuthenticateForm.querySelector(".email").value;
+        var emailConfirm = this.appAuthenticateForm.querySelector(".email-confirm").value;
+
+        this.props.aRegister(firstName, lastName, userName, email);
     },
     handleLoginCallback: function(response) {
         if (response == null) {
@@ -50,11 +58,13 @@ var Authentication = React.createClass({
                     <label>Register</label><a className="ti-close" onClick={this.handleHide}/>
                 </header>
                 <div className="app-authenticate-form">
+                    <input placeholder="First name" className="first-name" type="text"/>
+                    <input placeholder="Last name" className="last-name" type="text"/>
                     <input placeholder="Username" className="username" type="text"/>
                     <input placeholder="Email" className="email" type="email"/>
-                    <input placeholder="Confirm Email" className="email" type="email"/>
-                    <input placeholder="Password" className="password" type="password"/>
-                    <input placeholder="Confirm Password" className="password" type="password"/>
+                    <input placeholder="Confirm email" className="email-confirm" type="email"/>
+                    {/*<input placeholder="Password" className="password" type="password"/>
+                    <input placeholder="Confirm password" className="password-confirm" type="password"/>*/}
                 </div>
                 <footer>
                     <button onClick={this.handleRegister}>Register</button>

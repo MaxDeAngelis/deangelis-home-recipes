@@ -17,7 +17,9 @@
 	}
 
 	switch ($data['action']) {
-
+	case ACTIONS::REGISTER:
+		$action = new Register($data);
+		break;
 	case ACTIONS::LOGIN:
 		$action = new Login($data);
 		break;

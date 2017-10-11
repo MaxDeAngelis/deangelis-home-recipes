@@ -10,7 +10,8 @@ const ActionTypes = {
     CLOSE_RECIPE: "CLOSE_RECIPE",
     AUTHENTICATE: "AUTHENTICATE",
     LOGIN: "LOGIN",
-    LOGOUT: "LOGOUT"
+    LOGOUT: "LOGOUT",
+    REGISTER: "REGISTER"
 }
 
 export default ActionTypes;

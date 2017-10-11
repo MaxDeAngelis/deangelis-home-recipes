@@ -39,16 +39,9 @@ var Body = React.createClass({
             setTimeout(function() {
                 self.appAuthenticate.classList.remove("hide");
                 self.appBody.classList.remove("show");
-            }, 1500);           
+            }, 1000);           
         }
     },
-
-
-
-
-
-
-
     render: function() {
         var openContent;
         if (this.props.sOpenContent.id == "home") {
@@ -73,6 +66,7 @@ var Body = React.createClass({
                 <Authentication
                     sAuthenticate={this.props.sAuthenticate}
                     aAuthenticate={this.props.aAuthenticate}
+                    aRegister={this.props.aRegister}
                     aLogin={this.props.aLogin}
                 />
             </section>
