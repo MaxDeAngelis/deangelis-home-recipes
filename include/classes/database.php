@@ -1,11 +1,19 @@
 <?php
+class Database {
+	/** getConnection - Returns a connection to the DB
+	 **/
+	public static function getConnection() {
+		return new mysqli('localhost', 'recipes', 'recipes', 'recipes');
+	}
+}
+
 class DatabaseTransaction {
 	public $sucess = false;
 	public $message = "";
 	public $results = array();
 
 	function __construct($sqlList) {
-		$conn = new mysqli('localhost', 'recipes', 'recipes', 'recipes');
+		$conn = Database::getConnection();
 		if ($conn->connect_error) {
 			die("Connection failed: " . $conn->connect_error);
 			$this->message = "Connection failed: " . $conn->connect_error;
@@ -40,7 +48,7 @@ class DatabaseQuery {
 	public $results = array();
 
 	function __construct($sql) {
-		$conn = new mysqli('localhost', 'recipes', 'recipes', 'recipes');
+		$conn = Database::getConnection();
 		if ($conn->connect_error) {
 			die("Connection failed: " . $conn->connect_error);
 			$this->message = "Connection failed: " . $conn->connect_error;
@@ -72,7 +80,7 @@ class DatabaseUpdate {
 	public $message = "";
 
 	function __construct($sql) {
-		$conn = new mysqli('localhost', 'recipes', 'recipes', 'recipes');
+		$conn = Database::getConnection();
 		if ($conn->connect_error) {
 			die("Connection failed: " . $conn->connect_error);
 			$this->message = "Connection failed: " . $conn->connect_error;

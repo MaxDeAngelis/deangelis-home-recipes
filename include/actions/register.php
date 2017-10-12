@@ -15,8 +15,8 @@ class Register extends Action {
 	}
 
 	public function process() {
-		# INFO: Cant use a transaction because need the return value from new recipe for id
-		# First add a new recipe
+		//Utilities::sendMail($this->email, $this->lastName, "Register from - " . $this->username, "<div style='background-color: blue;'><h1>Hello There Test!</h1></div>");
+
 		$sql = "SELECT RegisterUser('{$this->firstName}','{$this->lastName}','{$this->username}','{$this->email}');";
 		$response = new DatabaseQuery($sql);
 		if ($response->sucess) {

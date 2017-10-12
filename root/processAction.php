@@ -1,4 +1,6 @@
 <?php
+	include_once $_SERVER['DOCUMENT_ROOT'] . '/../include/modules/PHPMailer/PHPMailerAutoload.php';
+	
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/classes/recipe.php';
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/classes/utilities.php';
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/classes/database.php';
@@ -15,6 +17,8 @@
 	} else {
 		$data = json_decode($str_json, true);		
 	}
+	
+	$data = Utilities::encodeArray($data);
 
 	switch ($data['action']) {
 	case ACTIONS::REGISTER:
