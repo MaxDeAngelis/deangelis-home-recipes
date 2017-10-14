@@ -8,6 +8,7 @@ import Recipe from '../components/recipe.jsx';
 import Home from '../components/home.jsx';
 import UserSettings from '../components/userSettings.jsx';
 import Authentication from '../components/authentication.jsx';
+import Notify from '../components/notify.jsx';
 
 var Body = React.createClass({ 
     appAuthenticate: null,
@@ -68,10 +69,15 @@ var Body = React.createClass({
                                 aAddStep={this.props.aAddStep}
                                 aUpdateValue={this.props.aUpdateValue}
                                 aServerRequest={this.props.aServerRequest}
+                                aNotify={this.props.aNotify}
                             />);
         }
     
         return (<section className="app">
+            <Notify
+                sNotify={this.props.sNotify}
+                aNotify={this.props.aNotify}
+            />
             <section className="app-authenticate">
                 <Authentication
                     sAuthenticate={this.props.sAuthenticate}

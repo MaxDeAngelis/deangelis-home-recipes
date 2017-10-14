@@ -1,0 +1,57 @@
+@import "../variables.scss";
+
+.app-notify {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    z-index: 1;
+    top: -100%;
+    color: $text-light;
+    transition: top 1s;
+    &.show {     
+        top: 25px;
+        animation: showNotify 0.5s;
+    }
+    .notify-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 600px;
+        color: $text-dark;  
+        box-shadow: 5px 5px 5px #888888;
+        p {
+            margin: 0;
+        }
+        &.message {
+            background-color: $notify-message;     
+        } 
+        &.error {
+            background-color: $notify-error;
+        }
+        &.success {
+            background-color: $notify-success;
+        }
+        .notify-message {
+            padding: 20px;
+        }
+        .ti-close {
+            float: right;
+            padding: 0 0 10px 10px;
+            opacity: 0.75;
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+@keyframes showNotify {
+    0%   {top: -100%;}
+    70% {top: 25px;}
+    70%   {transform:translateY(0%);}
+    85%  {transform:translateY(15px);}
+    100%  {transform:translateY(0%);}
+}

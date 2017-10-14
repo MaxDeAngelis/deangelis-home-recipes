@@ -22,6 +22,8 @@ var Recipe = React.createClass({
         }
 
         this.setState({editable: false});
+        this.props.aNotify(true, "success", "Recipe successfully saved.", 500);
+        
     },
     render: function() {
         if (this.props.recipe == null) {

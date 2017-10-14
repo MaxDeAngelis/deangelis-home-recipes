@@ -13,7 +13,8 @@ const ActionTypes = {
     LOGIN: "LOGIN",
     LOGOUT: "LOGOUT",
     UPDATE_PASSWORD: "UPDATE_PASSWORD",
-    REGISTER: "REGISTER"
+    REGISTER: "REGISTER",
+    NOTIFY: "NOTIFY"
 }
 
 export default ActionTypes;

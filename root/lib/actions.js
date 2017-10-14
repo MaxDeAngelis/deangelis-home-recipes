@@ -126,6 +126,15 @@ const Actions = {
             oldPassword: oldPassword,
             newPassword: newPassword
         });
+    },
+    notify(active, type, message, timer) {
+        Dispatcher.dispatch({
+            action: ActionTypes.NOTIFY,
+            active: active,
+            type: type,
+            message: message,
+            timer: timer
+        });
     }
 };
 

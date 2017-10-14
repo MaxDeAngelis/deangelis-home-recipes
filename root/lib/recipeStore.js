@@ -12,6 +12,7 @@ class RecipeStore extends ReduceStore {
     getInitialState() {
         var newRecipe = {id: "new"};
         var userSettings = { id: "user", active: false };
+        var notify = { active: false, timer: null, message: "", type: "" };
 
         // Get home feed on initial load
         var home = { id: "home", active: true, recentFeed: [] };
@@ -57,6 +58,7 @@ class RecipeStore extends ReduceStore {
         return {
             authenticate: authenticate,
             user: user,
+            notify: notify,
             open: [home, userSettings, newRecipe]
         };
     }
@@ -125,6 +127,15 @@ class RecipeStore extends ReduceStore {
 
     reduce(state, action) {
         switch (action.action) {
+            case ActionTypes.NOTIFY:
+                state.notify = { 
+                    active: action.active, 
+                    timer: (action.timer?action.timer:state.notify.timer), 
+                    message: (action.message?action.message:state.notify.message), 
+                    type: (action.type?action.type:state.notify.type)
+                };
+
+                return Immutable.fromJS(state).toJS();
             case ActionTypes.AUTHENTICATE:
                 if (action.active != null) {
                     state.authenticate.active = action.active
