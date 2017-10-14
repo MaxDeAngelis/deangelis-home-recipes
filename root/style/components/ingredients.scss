@@ -9,11 +9,15 @@
                 width: 5em;
                 text-align: center;
             }
-            select {
+            .units {
+                display: flex;
                 width: 8em;
                 margin: 0 5px;
+                input {
+                    width: 100%;
+                }
             }
-            .autocomplete {
+            .name {
                 flex: 1;
                 display: flex;
                 margin-right: 5px;

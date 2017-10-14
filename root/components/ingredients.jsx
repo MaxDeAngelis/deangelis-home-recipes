@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import AutoComplete from './autocomplete.jsx';
-import Dropdown from './dropdown.jsx';
 
 require("../style/components/ingredients.scss");
 
@@ -96,11 +95,19 @@ var Ingredients = React.createClass({
         var list = this.props.ingredients.map(function(ing) {
             key++;
             return ( <li key={key} data-ing-key={key} className="ingredient column column-3">
-                    <input className="quantity" value = {ing.quantity} onChange = {me.updateQuantity}/>
-                    <Dropdown options = {me.state.units}
-                                   change = {me.updateUnit}/>
+                    <input value = {ing.quantity} 
+                                placeholder = "Quantity..."
+                                className="quantity" 
+                                onChange = {me.updateQuantity}
+                    />
+                    <AutoComplete value = {ing.units}
+                                 placeholder = "Unit..."
+                                 customClass = "units"
+                                 source = {me.state.units}
+                                 change = {me.updateUnit}/>        
                     <AutoComplete value = {ing.ingredientName}
-                                 placeholder = "Please enter ingredient..."
+                                 placeholder = "Ingredient..."
+                                 customClass = "name"
                                  source = {ingredientList}
                                  change = {me.updateIngredientName}/>
                     <a className="ti-trash" onClick={me.deleteIngredient}/>

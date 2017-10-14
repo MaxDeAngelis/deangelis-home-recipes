@@ -29,7 +29,8 @@
             &:last-child {
                 border-bottom: none;
             }
-            &:hover {
+            &:hover,
+            &.active {
                 background-color: $color-two;
                 color: $text-light-secondary;
                 .highlight {
