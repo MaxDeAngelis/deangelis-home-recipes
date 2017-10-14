@@ -5,7 +5,6 @@
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/classes/utilities.php';
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/classes/database.php';
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/actions/actions.php';
-
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/classes/ingredient.php';
 
 	session_start();
@@ -23,6 +22,12 @@
 	switch ($data['action']) {
 	case ACTIONS::REGISTER:
 		$action = new Register($data);
+		break;
+	case ACTIONS::UPDATE_USER_STATUS:
+		$action = new UpdateUserStatus($data);
+		break;
+	case ACTIONS::UPDATE_PASSWORD:
+		$action = new UpdatePassword($data);
 		break;
 	case ACTIONS::LOGIN:
 		$action = new Login($data);

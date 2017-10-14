@@ -19,7 +19,8 @@ class SiteContainer extends Component {
                 openContent = this.state.open[i];
             }
         }
-
+        //console.log(openContent);
+        //console.log(this.state);
         return (<Body
             sOpenContent={openContent}
             sOpenList={this.state.open}
@@ -37,9 +38,11 @@ class SiteContainer extends Component {
             aAuthenticate={Actions.authenticate}
             aOpenContent={Actions.openContent}
             aServerRequest={Actions.serverRequest}
+            aUpdateUserStatus={Actions.updateUserStatus}
             aRegister={Actions.register}
             aLogin={Actions.login}
             aLogout={Actions.logout}
+            aUpdatePassword={Actions.updatePassword}
         />);
     }
 }

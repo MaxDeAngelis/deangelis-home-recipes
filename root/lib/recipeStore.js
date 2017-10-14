@@ -11,17 +11,12 @@ class RecipeStore extends ReduceStore {
 
     getInitialState() {
         var newRecipe = {id: "new"};
+        var userSettings = { id: "user", active: false };
 
         // Get home feed on initial load
-        var home = {
-            id: "home",
-            active: true,
-            recentFeed: []
-        };
+        var home = { id: "home", active: true, recentFeed: [] };
         this._processAction(
-            {
-                action : "GET_DATA_RECENT_FEED"
-            }, 
+            { action : "GET_DATA_RECENT_FEED" }, 
             function(response) {
                 home.recentFeed = response;
             }, false
@@ -30,33 +25,42 @@ class RecipeStore extends ReduceStore {
         // See if the user is already logged in
         var user = null;
         this._processAction(
-            {
-                action : "LOGIN"
-            }, 
+            { action : "LOGIN" }, 
             function(response) {
                 if (response != null) {
                     user = response;
                 }
             }, false
         );
+        
+        var authenticate = { active: false, type: "login" };
+        if (location.hash && location.hash.indexOf("key") != -1 && location.hash.indexOf("id") != -1&& location.hash.indexOf("name") != -1) {
+            authenticate.active = true;
+            authenticate.type = "reset";
 
-        var authenticate = {
-            active: false,
-            type: "login"
+            // Trim off the first charecter and split on values
+            var pairs = location.hash.slice(1).split("&");
+            for (var i = 0; i < pairs.length; i++) {
+                var key = pairs[i].split("=")[0];
+                var value = pairs[i].split("=")[1];
+                if (key == "name") {
+                    authenticate.user = value;
+                } else if (key == "id") {
+                    authenticate.userId = value;
+                } else if (key == "key") {
+                    authenticate.key = value;
+                }
+            }
+
+            location.hash = "";
         }
         return {
             authenticate: authenticate,
             user: user,
-            open: [home, newRecipe]
+            open: [home, userSettings, newRecipe]
         };
     }
 
-    /**
-     * Process a server call by calling server side processAction and passing action
-     * @param {Object} action Object containing the action and any other data
-     * @param {Function} callback Sucess callback for server call
-     * @param {Boolean} async If the call should be asyc then pass true
-     */
     _processAction(action, callback, async) {
         var xhr = new XMLHttpRequest();
 
@@ -128,6 +132,22 @@ class RecipeStore extends ReduceStore {
                 if (action.type != null) {
                     state.authenticate.type = action.type
                 }
+                return Immutable.fromJS(state).toJS();
+            case ActionTypes.UPDATE_USER_STATUS:
+                action.url = location.origin;
+                this._processAction(action, null, true);
+                return state;
+            case ActionTypes.UPDATE_PASSWORD:
+                var store = this;
+                action.newPassword = MD5(action.newPassword);
+                var callback = function (response) {
+                    if (response != null) {
+                        state.user = response;
+                        state.authenticate.active = false;
+                    }
+                }
+
+                this._processAction(action, callback, false);
                 return Immutable.fromJS(state).toJS();
             case ActionTypes.REGISTER:
                 var store = this;

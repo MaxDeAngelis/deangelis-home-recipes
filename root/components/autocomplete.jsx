@@ -91,7 +91,13 @@ var AutoComplete = React.createClass({
       ReactDOM.findDOMNode(this).querySelector(".results").classList.remove("show");
     },
     select: function(e) {
-      ReactDOM.findDOMNode(this).querySelector("input").value = e.target.innerText;
+      var currentElement = e.target;
+      while (currentElement != null) {
+        if (currentElement.classList.contains("item")) {
+            break;
+        }
+      }
+      ReactDOM.findDOMNode(this).querySelector("input").value = currentElement.innerText;
       e.target = ReactDOM.findDOMNode(this).querySelector("input");
       this.change(e);
     },

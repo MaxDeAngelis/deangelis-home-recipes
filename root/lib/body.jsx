@@ -6,6 +6,7 @@ import Header from '../components/header.jsx';
 import Navigation from '../components/navigation.jsx';
 import Recipe from '../components/recipe.jsx';
 import Home from '../components/home.jsx';
+import UserSettings from '../components/userSettings.jsx';
 import Authentication from '../components/authentication.jsx';
 
 var Body = React.createClass({ 
@@ -20,8 +21,12 @@ var Body = React.createClass({
     componentDidMount: function() {
         this.appAuthenticate = ReactDOM.findDOMNode(this).querySelector(".app-authenticate");
         this.appBody = ReactDOM.findDOMNode(this).querySelector(".app-body");
+        this.handleLoad();
     }, 
     componentDidUpdate: function() {
+        this.handleLoad();
+    },
+    handleLoad: function() {
         if (this.props.sAuthenticate.active) {
             this.appAuthenticate.classList.add("show");
             this.appBody.classList.add("hide");
@@ -49,6 +54,11 @@ var Body = React.createClass({
                                 sHome={this.props.sOpenContent}
                                 aGetRecipe={this.props.aGetRecipe}
                             />);
+        } else if(this.props.sOpenContent.id == "user") {
+            openContent = (<UserSettings 
+                                sUser={this.props.sUser}
+                                aUpdateUserStatus={this.props.aUpdateUserStatus}
+                            />);
         } else {
             openContent = (<Recipe 
                                 recipe={this.props.sOpenContent.recipe} 
@@ -68,6 +78,7 @@ var Body = React.createClass({
                     aAuthenticate={this.props.aAuthenticate}
                     aRegister={this.props.aRegister}
                     aLogin={this.props.aLogin}
+                    aUpdatePassword={this.props.aUpdatePassword}
                 />
             </section>
             <section className="app-body">

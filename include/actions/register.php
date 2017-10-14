@@ -15,9 +15,7 @@ class Register extends Action {
 	}
 
 	public function process() {
-		//Utilities::sendMail($this->email, $this->lastName, "Register from - " . $this->username, "<div style='background-color: blue;'><h1>Hello There Test!</h1></div>");
-
-		$sql = "SELECT RegisterUser('{$this->firstName}','{$this->lastName}','{$this->username}','{$this->email}');";
+		$sql = "SELECT RegisterUser('{$this->firstName}','{$this->lastName}','{$this->username}','{$this->email}', 'user');";
 		$response = new DatabaseQuery($sql);
 		if ($response->sucess) {
 			return "{'status' : 'Registered' }";

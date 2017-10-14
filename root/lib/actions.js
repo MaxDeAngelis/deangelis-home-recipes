@@ -47,17 +47,31 @@ const Actions = {
             index: data
         });
     },
-    openContent(id) {
-        Dispatcher.dispatch({
-            action: ActionTypes.OPEN_CONTENT,
-            key: id
-        });
-    },
     updateValue(key, value) {
         Dispatcher.dispatch({
             action: ActionTypes.UPDATE_VALUE,
             key: key,
             value: value
+        });
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    openContent(id) {
+        Dispatcher.dispatch({
+            action: ActionTypes.OPEN_CONTENT,
+            key: id
         });
     },
     serverRequest(data, callback, async) {
@@ -85,6 +99,13 @@ const Actions = {
             callback: callback
         });
     },
+    updateUserStatus(userId, status) {
+        Dispatcher.dispatch({
+            action: ActionTypes.UPDATE_USER_STATUS,
+            userId: userId,
+            status: status
+        });
+    },
     login(username, password, callback) {
         Dispatcher.dispatch({
             action: ActionTypes.LOGIN,
@@ -97,8 +118,15 @@ const Actions = {
         Dispatcher.dispatch({
             action: ActionTypes.LOGOUT
         });
+    },
+    updatePassword(userId, oldPassword, newPassword) {
+        Dispatcher.dispatch({
+            action: ActionTypes.UPDATE_PASSWORD,
+            userId: userId,
+            oldPassword: oldPassword,
+            newPassword: newPassword
+        });
     }
-
 };
 
 export default Actions;

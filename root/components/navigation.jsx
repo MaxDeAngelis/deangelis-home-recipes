@@ -3,11 +3,6 @@ import ReactDOM from 'react-dom';
 require("../style/components/navigation.scss");
 
 var Navigation = React.createClass({
-    home: function() {
-        var openContent = document.querySelector(".open-content");
-        ReactDOM.unmountComponentAtNode(openContent);
-        //ReactDOM.render(<Recipe data={response} />, openContent);
-    },
     toggle: function() {
         var nav = document.querySelector(".navigation");
         if (nav.className == "navigation") {
@@ -51,6 +46,13 @@ var Navigation = React.createClass({
                         <span className="text">New</span>
                     </li>);                    
                 }            
+            } else if(item.id == "user") {
+                if (nav.props.sUser != null) {
+                    classes += " ti-user";
+                    return (<li key={item.id} className={classes} data-id="user" onClick={nav.handleClick}>
+                        <span className="text">User settings</span>
+                    </li>);
+                }
             } else {
                 return (<li key={item.id} data-id={item.id} className={classes} onClick={nav.handleClick}>
                     <img className="image" src={item.recipe.picture + "?" + new Date().getTime()} />
