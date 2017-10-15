@@ -1,15 +1,34 @@
 @import "../variables.scss";
 .time-picker {
     position: relative;
+    width: 58px;
+    height:24px;
     input {
         width: 40px;
+        transition: width 0.5s;
+        margin: 0;
+    }
+    &.show {
+        input {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            z-index: 1;
+            width: 107px;
+            border-radius: 5px 5px 0 0;
+            border-bottom: none;
+            box-shadow: 5px 5px 10px black;
+        }
+        .results {
+            transform: perspective(0px) rotateX(0deg);            
+        }
     }
     .results {
         color: $text-dark-secondary;
         background-color: $color-background-light;
         box-shadow: 5px 5px 10px black;
         position: absolute;
-        left: 5px;
+        top: 100%;
         transform: perspective(800px) rotateX(-90deg);
         transform-origin: top;
         transition: all 0.5s linear;
@@ -19,9 +38,7 @@
         display: flex;
         flex-direction: row;
         align-items: stretch;
-        &.show {
-            transform: perspective(0px) rotateX(0deg);
-        }
+        border: 1px solid $text-dark-secondary;
         .hours {
             border-right: 1px solid $text-dark-secondary;
         }

@@ -96,6 +96,7 @@ var Ingredients = React.createClass({
             key++;
             return ( <li key={key} data-ing-key={key} className="ingredient column column-3">
                     <input value = {ing.quantity} 
+                                type="number"
                                 placeholder = "Quantity..."
                                 className="quantity" 
                                 onChange = {me.updateQuantity}

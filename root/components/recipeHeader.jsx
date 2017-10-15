@@ -35,6 +35,9 @@ var RecipeHeader = React.createClass({
     updateCookTime: function(time) {
         this.props.aUpdateValue('cookTime', time); 
     },
+    updateServings: function(e) {
+        this.props.aUpdateValue('servings', e.target.value); 
+    },
     afterImageCrop: function(imageUrl) {        
         this.props.aUpdateValue('picture', imageUrl);        
     },
@@ -64,6 +67,15 @@ var RecipeHeader = React.createClass({
             </div>);
         }
 
+        var servings = <span className="text">{ this.props.recipe.servings }</span>;
+        if (this.props.editable) {
+            servings = <input type="number" 
+                            className="serving-value"
+                            value={this.props.recipe.servings}
+                            onChange={this.updateServings}
+                        />;
+        }
+
         return (<header className="recipe-header">
                 <div className={infoClasses}>
                     <div className="recipe-title">
@@ -82,6 +94,7 @@ var RecipeHeader = React.createClass({
                             <label>Prep</label>
                             <Time
                                 value={this.props.recipe.prepTime}
+                                customClass="prep-time"
                                 editable={this.props.editable}
                                 update={this.updatePrepTime}
                             />
@@ -90,13 +103,14 @@ var RecipeHeader = React.createClass({
                             <label>Cook</label>
                             <Time
                                 value={this.props.recipe.cookTime}
+                                customClass="cook-time"
                                 editable={this.props.editable}
                                 update={this.updateCookTime}
                             />
                         </span>
                         <span className="ti-pie-chart"></span> 
                         <span className="servings">
-                            <span className="text">{ this.props.recipe.servings }</span>
+                            {servings}
                             <label>servings</label>
                         </span>
                     </div>

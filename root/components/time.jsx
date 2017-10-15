@@ -24,28 +24,53 @@ var Time = React.createClass({
         }
         return state;
     },
-    dismiss: function(e, skip) {
-       //if (skip === true) {
-            var current = e.target;
-            while (current != null) {
-                if (current == ReactDOM.findDOMNode(this)) {
-                    return false;
-                }
-                current = current.parentNode;
+    scrollIntoView: function(selector) {
+        var time = this;        
+        var results = ReactDOM.findDOMNode(this).querySelector(".results");
+        results.querySelector(selector).scrollTop = 0;
+        setTimeout(function() {
+            var resultsPos = results.getBoundingClientRect();
+            
+            var active = results.querySelector(selector + " .item.active").getBoundingClientRect();
+            if (active.top > resultsPos.bottom) {
+                var scrollDiff = active.top - resultsPos.top;
+                time.scrollTo(results.querySelector(selector), scrollDiff, 1000);
             }
-        //}
+        }, 500)
+    },
+    scrollTo: function(element, to, duration) {
+        if (duration <= 0) return;
+        var difference = to - element.scrollTop;
+        var perTick = difference / duration * 10;
+        var me = this;
+    
+        setTimeout(function() {
+            element.scrollTop = element.scrollTop + perTick;
+            if (element.scrollTop === to) return;
+            me.scrollTo(element, to, duration - 10);
+        }, 10);
+    },
+    dismiss: function(e, skip) {
+        var current = e.target;
+        while (current != null) {
+            if (current == ReactDOM.findDOMNode(this).querySelector(".results")) {
+                return false;
+            }
+            current = current.parentNode;
+        }
 
         window.removeEventListener("click", this.dismiss, true);        
-        ReactDOM.findDOMNode(this).querySelector(".results").classList.remove("show");        
+        ReactDOM.findDOMNode(this).classList.remove("show");        
     },
     focus: function (e) {
+        var time = this;
+        setTimeout(function() {
+            window.addEventListener("click", time.dismiss, true);            
+        }, 500)
+        ReactDOM.findDOMNode(this).classList.add("show");
 
-        ReactDOM.findDOMNode(this).querySelector(".results .hours .item.active").scrollIntoView({block: 'center', behavior: 'smooth'});
-        ReactDOM.findDOMNode(this).querySelector(".results .minutes .item.active").scrollIntoView({block: 'center', behavior: 'smooth'});
-        
-
-        window.addEventListener("click", this.dismiss, true);
-        ReactDOM.findDOMNode(this).querySelector(".results").classList.add("show");
+        this.scrollIntoView(".hours");
+        this.scrollIntoView(".minutes");        
     },
     select: function (e, state) {
         var input = ReactDOM.findDOMNode(this).querySelector("input")
@@ -56,11 +81,8 @@ var Time = React.createClass({
         if (state.selectedMinute != null) {
             value[1] = state.selectedMinute;
         }
-        input.value = value.join(":");
-        if (state.selectedHour != null && state.selectedMinute != null) {
-            this.props.update(value.join(":"));
-            this.dismiss(e, true);
-        }
+    
+        this.props.update(value.join(":"));                
         this.setState(state);
     },
     selectMinute: function(e) {
