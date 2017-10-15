@@ -1,5 +1,6 @@
 import React from 'react';
 import Cropper from './cropper.jsx';
+import Time from './time.jsx';
 
 require("../style/components/recipeHeader.scss");
 
@@ -27,6 +28,12 @@ var RecipeHeader = React.createClass({
     },
     updateTitle: function(e) {
         this.props.aUpdateValue("title", e.target.value);
+    },
+    updatePrepTime: function(time) {
+        this.props.aUpdateValue('prepTime', time); 
+    },
+    updateCookTime: function(time) {
+        this.props.aUpdateValue('cookTime', time); 
     },
     afterImageCrop: function(imageUrl) {        
         this.props.aUpdateValue('picture', imageUrl);        
@@ -73,11 +80,19 @@ var RecipeHeader = React.createClass({
                         <span className="ti-timer"></span> 
                         <span className="prep-time">
                             <label>Prep</label>
-                            <span>{ this.props.recipe.prepTime }</span>
+                            <Time
+                                value={this.props.recipe.prepTime}
+                                editable={this.props.editable}
+                                update={this.updatePrepTime}
+                            />
                         </span>
                         <span className="cook-time">
                             <label>Cook</label>
-                            <span>{ this.props.recipe.cookTime }</span>
+                            <Time
+                                value={this.props.recipe.cookTime}
+                                editable={this.props.editable}
+                                update={this.updateCookTime}
+                            />
                         </span>
                         <span className="ti-pie-chart"></span> 
                         <span className="servings">
