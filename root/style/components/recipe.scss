@@ -1,5 +1,14 @@
 @import "../variables.scss";
 .full-recipe {
+    .autocomplete.required {
+        input {
+            background-color: $notify-error;
+        }
+    }
+    input.required,
+    textarea.required {
+        background-color: $notify-error;
+    }
     .recipe-images {
         display: flex;
         flex-direction: column;
@@ -22,5 +31,16 @@
         >section:first-child{
             margin-right: 10px;
         }
+    }
+}
+.recipe-validation {
+    display: flex;
+    flex-direction: column;
+    h3 {
+        margin: 0;
+    }
+    ul {
+        margin: 10px 0;
+        padding-left: 20px;
     }
 }

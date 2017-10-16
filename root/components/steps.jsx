@@ -19,11 +19,18 @@ const Steps = React.createClass({
         var key = -1;
         return steps.map(function(step) {
             key += 1;
+            var stepClasses;
+            if (me.props.validate) {
+                if (step == null || step == "") {
+                    stepClasses = "required";
+                }
+            }
             return <li className="individual-step" key={key} data-index={key}>
                 <div className="step-content">
                     <textarea  
                         value={step}
                         placeholder="Please enter a step description..."
+                        className = {stepClasses}
                         onChange={me.updateStep}>
                     </textarea>
                     <a className="ti-trash" onClick={me.deleteStep}/>

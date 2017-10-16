@@ -30,13 +30,17 @@ var Notify = React.createClass({
         if (this.props.sNotify.timer == null) {
             close = <a className="ti-close" onClick={this.handleHide}/>;
         }
+        var message = <p>{this.props.sNotify.message}</p>
+        if (typeof this.props.sNotify.message == "object") {
+            message = this.props.sNotify.message
+        }
 
         var contentClasses = "notify-content " + this.props.sNotify.type;
         return (<div className={outerClasses}>
             <div className={contentClasses}>
                 <div className="notify-message">
                     {close}
-                    <p>{this.props.sNotify.message}</p>
+                    {message}
                 </div>
             </div>
         </div>);

@@ -53,9 +53,13 @@ var RecipeHeader = React.createClass({
         } else {
             var publicNote = <label className="public-note">This recipe is private (Only you can view)</label>;
         }
-        
-        if (!this.props.editable && (this.props.recipe.title == "" || this.props.recipe.title == "New...")) {
-            this.props.recipe.title = "Please enter a new title ...";
+        var title = this.props.recipe.title;
+        if (!this.props.editable && (title == "" || title == "New...")) {
+            title = "Please enter a new title ...";
+        }
+        var titleClasses = "title";
+        if (this.props.validate && (this.props.recipe.title == null || this.props.recipe.title == "")) {
+            titleClasses += " required";
         }
         var uniqueId = "id-" + new Date().getTime();
 
@@ -69,8 +73,13 @@ var RecipeHeader = React.createClass({
 
         var servings = <span className="text">{ this.props.recipe.servings }</span>;
         if (this.props.editable) {
+            var servingsClasses = "serving-value";
+            if (this.props.validate && (this.props.recipe.servings == null || this.props.recipe.servings == "")) {
+                servingsClasses += " required";
+            }
+
             servings = <input type="number" 
-                            className="serving-value"
+                            className={servingsClasses}
                             value={this.props.recipe.servings}
                             onChange={this.updateServings}
                         />;
@@ -79,13 +88,13 @@ var RecipeHeader = React.createClass({
         return (<header className="recipe-header">
                 <div className={infoClasses}>
                     <div className="recipe-title">
-                        <input className="title" 
+                        <input className={titleClasses}
                             value = {this.props.recipe.title}
                             placeholder="Please enter a new title ..."
                             onChange = {this.updateTitle}
                         />
                         
-                        <span className="title">{ this.props.recipe.title }</span>
+                        <span className={titleClasses}>{title}</span>
                         {controls}
                     </div>
                     <div className="time-info">

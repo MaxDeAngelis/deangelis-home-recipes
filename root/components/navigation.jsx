@@ -54,9 +54,13 @@ var Navigation = React.createClass({
                     </li>);
                 }
             } else {
+                var title = item.recipe.title;
+                if (title == "") {
+                    title = "New...";
+                }
                 return (<li key={item.id} data-id={item.id} className={classes} onClick={nav.handleClick}>
                     <img className="image" src={item.recipe.picture + "?" + new Date().getTime()} />
-                    <span className="text truncate" title={item.recipe.title}>{item.recipe.title}</span>
+                    <span className="text truncate" title={title}>{title}</span>
                     <a className="ti-close" onClick={nav.handleClose}></a>{close}
                 </li>);
             }

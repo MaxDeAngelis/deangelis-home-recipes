@@ -93,22 +93,37 @@ var Ingredients = React.createClass({
         }
 
         var list = this.props.ingredients.map(function(ing) {
+            var quantityClasses = "quantity";
+            var unitsClasses = "units";
+            var ingredientClasses = "name";
+
+            if (me.props.validate) {
+                if (ing.quantity == null || ing.quantity == "") {
+                    quantityClasses += " required";
+                }
+                if (ing.units == null || ing.units == "") {
+                    unitsClasses += " required";
+                }
+                if (ing.ingredientName == null || ing.ingredientName == "") {
+                    ingredientClasses += " required";
+                }
+            }
             key++;
             return ( <li key={key} data-ing-key={key} className="ingredient column column-3">
                     <input value = {ing.quantity} 
                                 type="number"
                                 placeholder = "Quantity..."
-                                className="quantity" 
+                                className = {quantityClasses}
                                 onChange = {me.updateQuantity}
                     />
                     <AutoComplete value = {ing.units}
                                  placeholder = "Unit..."
-                                 customClass = "units"
+                                 customClass = {unitsClasses}
                                  source = {me.state.units}
                                  change = {me.updateUnit}/>        
                     <AutoComplete value = {ing.ingredientName}
                                  placeholder = "Ingredient..."
-                                 customClass = "name"
+                                 customClass = {ingredientClasses}
                                  source = {ingredientList}
                                  change = {me.updateIngredientName}/>
                     <a className="ti-trash" onClick={me.deleteIngredient}/>
