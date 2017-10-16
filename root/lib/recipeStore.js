@@ -130,7 +130,7 @@ class RecipeStore extends ReduceStore {
             case ActionTypes.NOTIFY:
                 state.notify = { 
                     active: action.active, 
-                    timer: (action.timer?action.timer:state.notify.timer), 
+                    timer: action.timer, 
                     message: (action.message?action.message:state.notify.message), 
                     type: (action.type?action.type:state.notify.type)
                 };

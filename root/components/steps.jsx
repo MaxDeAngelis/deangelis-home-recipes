@@ -85,7 +85,10 @@ const Steps = React.createClass({
         var addLink;
         if (this.props.editable) {
             list = this.renderForm(steps);
-            addLink = <a className="ti-plus" onClick={this.props.aAddStep}>Add step</a>
+            addLink = <div className="add-new" onClick={this.props.aAddStep}>
+                    <a className="ti-plus"></a>
+                    <label>Add step</label>
+                </div>
         } else {
             list = this.renderDisplay(steps);
         }

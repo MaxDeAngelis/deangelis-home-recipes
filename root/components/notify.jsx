@@ -18,7 +18,7 @@ var Notify = React.createClass({
         }
     },
     handleHide: function() {
-        this.props.aNotify(false);
+        this.props.aNotify(false, null, null, this.props.sNotify.timer);
     },
     render: function() {
         var outerClasses = "app-notify";

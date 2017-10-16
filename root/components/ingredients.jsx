@@ -68,7 +68,14 @@ var Ingredients = React.createClass({
     deleteIngredient: function(e) {
         var index = e.target.parentNode.dataset.ingKey;
         var ingredients = this.props.ingredients;
-        ingredients.splice(index, 1);
+
+        if (index == 0 && ingredients.length == 1) {
+            ingredients[0].quantity = "";
+            ingredients[0].units = "";
+            ingredients[0].ingredientName = "";
+        } else {
+            ingredients.splice(index, 1);
+        }
 
         this.props.aUpdateValue("ingredients", ingredients);
     },
@@ -133,7 +140,7 @@ var Ingredients = React.createClass({
 
         return (<ul className="editable">
             {list}
-            <li><a className="ti-plus" onClick={this.props.aAddIngredient}>Add ingredient</a></li>
+            <li onClick={this.props.aAddIngredient} className="add-new"><a className="ti-plus"></a><label>Add ingredient</label></li>
         </ul>);
     },
     render: function() {

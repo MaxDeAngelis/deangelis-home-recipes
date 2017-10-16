@@ -61,7 +61,7 @@
             align-items: center;
         }
         .public-option {
-            height: 40px;
+            height: 30px;
         }
         .toggle-switch {
             transform: scale(0.5);
@@ -69,6 +69,9 @@
         }
         .toggle-label {
             display: none;
+        }
+        .author {
+            padding-right: 5px;
         }
         .time-info {
             height: 50px;

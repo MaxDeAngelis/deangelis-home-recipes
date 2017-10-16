@@ -5,7 +5,7 @@
         padding: 0;
         li {
             display: flex;
-            align-items: stretch;
+            align-items: center;
             padding: 5px;
             input.required {
                 background-color: $notify-error;
@@ -30,9 +30,9 @@
                     flex: 1;
                 }
             }
-            .ti-trash {
-                align-self: center;
-            }
+        }
+        .ti-trash {
+            align-self: center;
         }
     }
 }

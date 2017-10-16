@@ -32,6 +32,24 @@
             margin-right: 10px;
         }
     }
+    .add-new {
+        color: $text-dark-secondary;
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+        &:hover {
+            color: $text-dark;
+            label {
+                text-decoration: underline;
+            }
+        }
+        .ti-plus {
+            padding-right: 5px;
+        }
+        label {
+            cursor: pointer;
+        }
+    } 
 }
 .recipe-validation {
     display: flex;
