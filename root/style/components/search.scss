@@ -71,7 +71,8 @@
         .row {
             border-top: 1px solid $color-one;
             border-bottom: 1px solid $color-one;
-            &:hover {
+            &:hover,
+            &.active {
                 background-color: $color-one;
                 .title {
                     color: $text-light;

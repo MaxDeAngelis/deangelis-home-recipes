@@ -10,7 +10,8 @@ const Search = React.createClass({
         return {
             fullList: [],
             filteredList: [],
-            searchTerms: []
+            searchTerms: [],
+            activeIndex: 0
         };
     },
     getRegExObj: function(searchRegEx) {
@@ -38,9 +39,13 @@ const Search = React.createClass({
         }
         return { __html: titleHTML };
     },
-    getRecipeHTML: function (recipe) {
-        return (<div className="row" key={recipe.id} data-id={recipe.id}>
-            <div className="row-content" onClick={this.select}>
+    getRecipeHTML: function (recipe, index) {
+        var rowClasses = "row";
+        if (this.state.activeIndex == index) {
+            rowClasses += " active";
+        }
+        return (<div className={rowClasses} key={recipe.id} data-id={recipe.id} onClick={this.select}>
+            <div className="row-content">
                 <img className="image" src={recipe.picture + "?" + new Date().getTime()} />
                 <div className="details">
                     <div className="title" dangerouslySetInnerHTML={this.getHighlightedTitle(recipe.title)}></div>
@@ -70,7 +75,7 @@ const Search = React.createClass({
             filteredList = this.state.fullList.slice(0);
         }
 
-        this.setState({ filteredList: filteredList , searchTerms: searchTerms});
+        this.setState({ filteredList: filteredList , searchTerms: searchTerms, activeIndex: 0});
     },
     focus: function () {
         var me = this;
@@ -84,30 +89,50 @@ const Search = React.createClass({
                 var pos = results.getBoundingClientRect();
                 results.style.maxHeight = (window.innerHeight - pos.top) + "px";
 
+                window.addEventListener("keyup", me.keyup, false);
                 ReactDOM.findDOMNode(me).classList.add("show");
             },
             true
         );
     },
     blur: function () {
+        this.setState({ activeIndex: 0 });
+        window.removeEventListener("keyup", this.keyup, false);
         ReactDOM.findDOMNode(this).classList.remove("show");
     },
     select: function (e) {
         var element = e.target;
-        while (element.className != "row") {
+        while (!element.classList.contains("row")) {
             element = element.parentElement;
         }
         var id = element.dataset.id;
         this.props.aGetRecipe(id);
     },
-    scroll: function (e) {
-
+    keyup: function (e) {
+        if (e.key == "ArrowDown") {
+            var newIndex = this.state.activeIndex + 1;
+            if (newIndex < this.state.filteredList.length) {
+                this.setState({
+                    activeIndex: newIndex
+                });
+            }
+        } else if (e.key == "ArrowUp") {
+            var newIndex = this.state.activeIndex - 1;
+            if (newIndex >= 0) {
+                this.setState({
+                    activeIndex: newIndex
+                });
+            }
+        } else if (e.key == "Enter") {
+            ReactDOM.findDOMNode(this).querySelector(".results .active").click();
+            ReactDOM.findDOMNode(this).querySelector("input").blur();
+        }
     },
     render: function () {
         var key = 0;
         var me = this;
-        var list = this.state.filteredList.map(function (recipe) {
-            return me.getRecipeHTML(recipe);
+        var list = this.state.filteredList.map(function (recipe, index) {
+            return me.getRecipeHTML(recipe, index);
         });
 
         return (<div className="search">
