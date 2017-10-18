@@ -29,6 +29,10 @@ var Recipe = React.createClass({
             this.props.aNotify(true, "success", "Recipe successfully saved.", 500);
         }
     },
+    cancel: function() {
+        this.setState({editable: false, validate: false});
+        this.props.aGetRecipe(this.props.recipe.id);
+    },
     validate: function(recipe) {
         var errors = [];
         if (recipe.title == "") {
@@ -105,6 +109,7 @@ var Recipe = React.createClass({
                     recipe={this.props.recipe}
                     edit = {this.edit}
                     save = {this.save}
+                    cancel = {this.cancel}
                     aUpdateValue = {this.props.aUpdateValue}
                     editable = {this.state.editable}
                     validate = {this.state.validate}

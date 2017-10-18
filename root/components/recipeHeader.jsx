@@ -5,27 +5,6 @@ import Time from './time.jsx';
 require("../style/components/recipeHeader.scss");
 
 var RecipeHeader = React.createClass({
-    componentDidUpdate: function() {
-        if (this.props.editable) {
-            var field = document.querySelector(".recipe-title input.title");
-            var parentElement = field.parentNode;
-            var tempSpan = document.createElement("SPAN");
-            tempSpan.style.overflow = "hidden";
-            tempSpan.style.display = "inline-block";
-            tempSpan.className = "title";
-            if (field.value != "") {
-                tempSpan.innerText = field.value;
-            } else {
-                tempSpan.innerText = field.placeholder;
-            }
-            
-            parentElement.appendChild(tempSpan);
-
-            field.style.width = tempSpan.scrollWidth + "px";
-            parentElement.removeChild(tempSpan)
-            tempSpan = null;
-        }
-    },
     updateTitle: function(e) {
         this.props.aUpdateValue("title", e.target.value);
     },
@@ -67,6 +46,7 @@ var RecipeHeader = React.createClass({
         if (this.props.sUser != null && this.props.sUser.userId == this.props.recipe.creator) {
             controls = (<div>
                 <span className="ti-save" onClick = {this.props.save}></span>
+                <span className="ti-close" onClick = {this.props.cancel}></span>
                 <span className="ti-pencil" onClick = {this.props.edit}></span>
             </div>);
         }

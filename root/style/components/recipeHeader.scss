@@ -8,7 +8,7 @@
     .recipe-info {
         display: flex;
         flex-direction: column;
-        padding: 50px 75px;
+        padding: 50px 25px 50px 75px;
         width: 100%;
         .recipe-title {
             display: flex;
@@ -22,6 +22,7 @@
             }
             input.title,
             .ti-save,
+            .ti-close,
             .toggle-label,
             .toggle-switch {
                 display: inline-block;
@@ -31,24 +32,33 @@
         .ti-pencil {
             padding-left: 10px;
         }
-        .title,
         .ti-save,
+        .ti-close,
         .ti-pencil {
-            color: $text-dark;
+            color: $text-dark-secondary;
             font-size: 40px;
+            &:hover {
+                color: $text-dark;
+            }
         }
         .title {
+            color: $text-dark;
+            font-size: 40px;
             display: flex;
-            flex: 1;
             padding: 5px;
             border: 1px solid transparent;
             font-family: $text-font-family;
         }
         input.title {
             border: 1px solid $text-dark;
+            flex: 1;            
             display: none;
         }
         .ti-save {
+            padding-right: 10px; 
+        }
+        .ti-save,
+        .ti-close {
             display: none;
         }
         .addition-info,

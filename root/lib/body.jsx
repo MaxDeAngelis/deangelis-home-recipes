@@ -69,6 +69,7 @@ var Body = React.createClass({
                                 aAddStep={this.props.aAddStep}
                                 aUpdateValue={this.props.aUpdateValue}
                                 aServerRequest={this.props.aServerRequest}
+                                aGetRecipe={this.props.aGetRecipe}
                                 aNotify={this.props.aNotify}
                             />);
         }
