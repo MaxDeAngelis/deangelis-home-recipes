@@ -105,7 +105,7 @@ var Ingredients = React.createClass({
             var ingredientClasses = "name";
 
             if (me.props.validate) {
-                if (ing.quantity == null || ing.quantity == "") {
+                if (ing.quantity == null || ing.quantity == "" || ing.quantity < 0) {
                     quantityClasses += " required";
                 }
                 if (ing.units == null || ing.units == "") {

@@ -95,10 +95,14 @@
                     display: inline-block;
                 }
             }
+            .time-picker.prep-time {
+                z-index: 3;
+            }
             .ti-timer,
             .ti-pie-chart {
                 font-size: 24px;
                 padding-right: 10px;
+                cursor: default;
             }
             .servings>label {
                 padding-left: 5px;

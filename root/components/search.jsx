@@ -84,13 +84,13 @@ const Search = React.createClass({
                 var pos = results.getBoundingClientRect();
                 results.style.maxHeight = (window.innerHeight - pos.top) + "px";
 
-                results.classList.add("show");
+                ReactDOM.findDOMNode(me).classList.add("show");
             },
             true
         );
     },
     blur: function () {
-        ReactDOM.findDOMNode(this).querySelector(".results").classList.remove("show");
+        ReactDOM.findDOMNode(this).classList.remove("show");
     },
     select: function (e) {
         var element = e.target;

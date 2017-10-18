@@ -1,22 +1,26 @@
 @import "../variables.scss";
 .autocomplete {
     position: relative;
+    &.show {
+        input {
+            border-radius: 5px 5px 0 0;
+        }
+        .results {
+            transform: perspective(0px) rotateX(0deg);            
+        }
+    }
     .results {
         color: $text-dark-secondary;
         background-color: $color-background-light;
         box-shadow: 5px 5px 10px black;
         position: absolute;
-        left: 5px;
-        right: 5px;
+        left: 0;
+        right: 0;
         transform: perspective(800px) rotateX(-90deg);
         transform-origin: top;
         transition: all 0.5s linear;
         z-index: 10;
         overflow: scroll;
-        &.show {
-            transform: perspective(0px) rotateX(0deg);
-        }
-        
         .item {
             padding: 5px;
             border-bottom: 1px solid $text-dark;

@@ -16,6 +16,14 @@
     >input:focus {
         outline: none;
     }
+    &.show {
+        input {
+            border-radius: 5px 5px 0 0;
+        }
+        .results {
+            transform: perspective(0px) rotateX(0deg);            
+        }
+    }
     .results {
         width: 552px;
         background-color: $color-background-light;
@@ -29,9 +37,6 @@
         transition: all 0.5s linear;
         z-index: 10;
         overflow: scroll;
-        &.show {
-            transform: perspective(0px) rotateX(0deg);
-        }
         .row-content {
             display: flex;
             flex-direction: row;

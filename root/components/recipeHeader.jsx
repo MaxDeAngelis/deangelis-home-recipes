@@ -74,7 +74,7 @@ var RecipeHeader = React.createClass({
         var servings = <span className="text">{ this.props.recipe.servings }</span>;
         if (this.props.editable) {
             var servingsClasses = "serving-value";
-            if (this.props.validate && (this.props.recipe.servings == null || this.props.recipe.servings == "")) {
+            if (this.props.validate && (this.props.recipe.servings == null || this.props.recipe.servings == "" || this.props.recipe.servings < 0)) {
                 servingsClasses += " required";
             }
 

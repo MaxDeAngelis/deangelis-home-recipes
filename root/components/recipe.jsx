@@ -37,6 +37,8 @@ var Recipe = React.createClass({
 
         if (recipe.servings == "") {
             errors.push("Recipe servings are required");
+        } else if (recipe.servings < 0) {
+            errors.push("Recipe servings must be positive");
         }
 
         if (recipe.ingredients.length == 0) {
@@ -49,6 +51,9 @@ var Recipe = React.createClass({
             var ingredient = recipe.ingredients[i];
             if (ingredient.quantity == "" && !quantityFlagged) {
                 errors.push("Ingredient quantity is required");
+                quantityFlagged = true;
+            } else if (ingredient.quantity < 0 && !quantityFlagged) {
+                errors.push("Ingredient quantity must be positive");
                 quantityFlagged = true;
             }
 
@@ -82,7 +87,7 @@ var Recipe = React.createClass({
                 return <li key={key}>{msg}</li>
             })
 
-            var message = <div className="recipe-validation">
+            var message = <div className="validation">
                 <h3>Please correct flagged fields</h3>
                 <ul>{messageInner}</ul>
             </div>;

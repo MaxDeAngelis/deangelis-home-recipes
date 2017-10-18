@@ -85,6 +85,7 @@ var Body = React.createClass({
                     aRegister={this.props.aRegister}
                     aLogin={this.props.aLogin}
                     aUpdatePassword={this.props.aUpdatePassword}
+                    aNotify={this.props.aNotify}
                 />
             </section>
             <section className="app-body">

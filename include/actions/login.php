@@ -17,7 +17,7 @@ class Login extends Action {
 	public function process() {
         if (isset($_SESSION['user'])) {
             return $_SESSION['user'];
-        } else {
+        } else if ($this->username != "") {
             //Checks the username and password
             $sql = "SELECT password, userId, firstName, lastName, roleType 
                         FROM users RIGHT JOIN person ON(personId = userId) NATURAL JOIN userRole

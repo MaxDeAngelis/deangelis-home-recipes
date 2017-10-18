@@ -6,8 +6,9 @@ class Logout extends Action {
 	}
 
 	public function process() {
+		unset($_SESSION);
         session_unset();
-        session_destroy();
+		session_destroy();
 		return null;
 	}
 }

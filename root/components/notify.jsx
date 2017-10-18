@@ -19,11 +19,14 @@ var Notify = React.createClass({
     },
     handleHide: function() {
         this.props.aNotify(false, null, null, this.props.sNotify.timer);
+        window.removeEventListener("click", this.handleHide, true);
+        
     },
     render: function() {
         var outerClasses = "app-notify";
         if (this.props.sNotify.active){
             outerClasses += " show";
+            window.addEventListener("click", this.handleHide, true);
         }
 
         var close = "";

@@ -111,7 +111,7 @@ var AutoComplete = React.createClass({
         window.addEventListener("resize", this.resize, false);
         window.addEventListener("keyup", this.keyup, false);
 
-        ReactDOM.findDOMNode(this).querySelector(".results").classList.add("show");
+        ReactDOM.findDOMNode(this).classList.add("show");
         this.setState({
             activeIndex: 0
         });
@@ -121,7 +121,7 @@ var AutoComplete = React.createClass({
         window.removeEventListener("resize", this.resize, false);
         window.removeEventListener("keyup", this.keyup, false);
 
-        ReactDOM.findDOMNode(this).querySelector(".results").classList.remove("show");
+        ReactDOM.findDOMNode(this).classList.remove("show");
     },
     select: function (e) {
         var currentElement = e.target;

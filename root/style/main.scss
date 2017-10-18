@@ -64,6 +64,21 @@ body {
     }
 }
 
+input.error {
+    background-color: $notify-error;
+}
+
+.validation {
+    display: flex;
+    flex-direction: column;
+    h3 {
+        margin: 0;
+    }
+    ul {
+        margin: 10px 0;
+        padding-left: 20px;
+    }
+}
 
 /* The switch - the box around the slider */
 .toggle-switch {
