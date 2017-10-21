@@ -20,7 +20,7 @@ class Login extends Action {
         } else if ($this->username != "") {
             //Checks the username and password
             $sql = "SELECT password, userId, firstName, lastName, roleType 
-                        FROM users RIGHT JOIN person ON(personId = userId) NATURAL JOIN userRole
+                        FROM users RIGHT JOIN person ON(personId = userId)
                         WHERE username = '{$this->username}';";
 
             $response = new DatabaseQuery($sql);
