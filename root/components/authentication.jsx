@@ -110,6 +110,7 @@ var Authentication = React.createClass({
             newState.newPassword = "error ";
         }
 
+        this.setState(newState);
         if (errors.length > 0) {
             var key = 0;
             var messageInner = errors.map(function(msg) {
@@ -122,7 +123,6 @@ var Authentication = React.createClass({
                 <ul>{messageInner}</ul>
             </div>;
 
-            this.setState(newState);
             this.props.aNotify(true, "error", message, null);
             return false;
         } else {
@@ -131,7 +131,7 @@ var Authentication = React.createClass({
 
     },
     handleHide: function() {
-        var fields = [".first-name", ".last-name", ".username", ".email", ".email-confirm", ".old-password", ".new-password", ".confirm-password"];
+        var fields = [".first-name", ".last-name", ".username", ".email", ".email-confirm", ".password", ".old-password", ".new-password", ".confirm-password"];
 
         for (var i = 0; i < fields.length; i++) {
             var field = this.appAuthenticateForm.querySelector(fields[i]);
@@ -160,12 +160,27 @@ var Authentication = React.createClass({
         this.props.aAuthenticate(true, "login");
     },
     handleLogin: function() {
+        var auth = this;
         var username = this.appAuthenticateForm.querySelector(".username").value;
         var password = this.appAuthenticateForm.querySelector(".password").value;
 
+        var callback = function(response) {
+            if (response.status == "fail") {
+                auth.setState({username : "error ", oldPassword: "error " });
+                var message = <div className="validation">
+                    <h3>An error occured durring login</h3>
+                    <p>{response.message}</p>
+                </div>;
+
+                auth.props.aNotify(true, "error", message, null);
+            } else {
+                auth.handleHide();
+            }
+        }
+
         var isValid = this.validate(null, null, username, null, null, password, null, null);
         if (isValid) {
-            this.props.aLogin(username, password, this.handleLoginCallback);
+            this.props.aLogin(username, password, callback);
         }
     },
     handleReset: function() {
@@ -187,18 +202,37 @@ var Authentication = React.createClass({
         var email = this.appAuthenticateForm.querySelector(".email").value;
         var emailConfirm = this.appAuthenticateForm.querySelector(".email-confirm").value;
 
-        var callback = function() {
-            auth.handleHide();
+        var callback = function(response) {
+            if (response.status == "fail") {
+                if (response.field == "username") {
+                    auth.setState({username : "error " });
+                } else if (response.field == "email") {
+                    auth.setState({email : "error " });
+                }
+                var message = <div className="validation">
+                    <h3>An error occured durring registration</h3>
+                    <p>{response.message}</p>
+                </div>;
+
+                auth.props.aNotify(true, "error", message, null);
+            } else {
+                auth.handleHide();
+                
+                var message = <div className="validation">
+                    <h3>Thank you for registering</h3>
+                    <p>An administrator will review you registration as soon as possible. 
+                        Once reviewed you will receive an email with a link to complete registration.
+                    <br/><br/>
+                    Thank you for your patience!</p>
+                </div>;
+    
+                auth.props.aNotify(true, "message", message, null);
+            }
         }
 
         var isValid = this.validate(firstName, lastName, username, email, emailConfirm, null, null, null) 
         if (isValid) {
             this.props.aRegister(firstName, lastName, username, email, callback);            
-        }
-    },
-    handleLoginCallback: function(response) {
-        if (response == null) {
-            // TODO: Login failed need to inform the user
         }
     },
     handleKeyUp: function(e) {

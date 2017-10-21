@@ -28,8 +28,8 @@ class RecipeStore extends ReduceStore {
         this._processAction(
             { action : "LOGIN" }, 
             function(response) {
-                if (response != null) {
-                    user = response;
+                if (response.status == "success") {
+                    user = response.user;
                 }
             }, false
         );
@@ -164,7 +164,9 @@ class RecipeStore extends ReduceStore {
                 var store = this;
                 var callback = function (response) {
                     if (typeof action.callback == "function") {
-                        action.callback(response);
+                        setTimeout(function() {
+                            action.callback(response);
+                        }, 0)
                     }
                 }
 
@@ -174,12 +176,13 @@ class RecipeStore extends ReduceStore {
                 var store = this;
                 action.password = MD5(action.password);
                 var callback = function (response) {
-                    if (response != null) {
-                        state.user = response;
-                        state.authenticate.active = false;
+                    if (response.status == "success") {
+                        state.user = response.user;
                     }
                     if (typeof action.callback == "function") {
-                        action.callback(response);
+                        setTimeout(function() {
+                            action.callback(response);
+                        }, 0)
                     }
                 }
 

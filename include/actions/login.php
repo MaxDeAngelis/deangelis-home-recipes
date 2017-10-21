@@ -16,8 +16,12 @@ class Login extends Action {
 
 	public function process() {
         if (isset($_SESSION['user'])) {
-            return $_SESSION['user'];
+            return Array(
+                "status" => "success",
+                "user" => $_SESSION['user']
+            );
         } else if ($this->username != "") {
+
             //Checks the username and password
             $sql = "SELECT password, userId, firstName, lastName, roleType 
                         FROM users RIGHT JOIN person ON(personId = userId)
@@ -30,7 +34,7 @@ class Login extends Action {
                 if ($response->results[0]["password"] == $this->password) {
                     $requests = [];
                     if ($result["roleType"] == "admin") {
-                        $requestsSql ="SELECT firstName, lastName, email, userId, userName, status
+                        $requestsSql = "SELECT firstName, lastName, email, userId, userName, status
                                     FROM person RIGHT JOIN users ON(userId = personId)
                                     WHERE status = 'request';";
 
@@ -50,11 +54,18 @@ class Login extends Action {
                     );
 
                     $_SESSION['user'] = $user;
-                    return $user;
-                }   
+
+                    return Array(
+                        "status" => "success",
+                        "user" => $user
+                    );
+                }
             }
         }
-		return null;
+		return Array(
+            "status" => "fail",
+            "message" => "The password or username you have entered is incorrect, please try again"
+        );
 	}
 }
 
