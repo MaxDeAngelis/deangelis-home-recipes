@@ -27,13 +27,13 @@ var Authentication = React.createClass({
     handleLoad: function() {
         if (this.props.sAuthenticate.active) {
             this.appAuthenticateForm.querySelector("input").focus();
-            window.addEventListener("keyup", this.handleKeyUp);
+            window.addEventListener("keyup", this.handleKeyUp, true);
             if (this.props.sAuthenticate.type == "reset") {
                 this.appAuthenticateForm.querySelector(".username").value = this.props.sAuthenticate.user;
                 this.appAuthenticateForm.querySelector(".old-password").value = this.props.sAuthenticate.key;
             }
         } else {
-            window.removeEventListener("keyup", this.handleKeyUp);            
+            window.removeEventListener("keyup", this.handleKeyUp, true);            
         }
     },
     validateEmail: function(email) {
@@ -202,7 +202,7 @@ var Authentication = React.createClass({
         }
     },
     handleKeyUp: function(e) {
-        if (e.key === 'Enter') {
+        if (e.keyCode == 13) {
             ReactDOM.findDOMNode(this).querySelector(".submit-button").click();
         }
     },

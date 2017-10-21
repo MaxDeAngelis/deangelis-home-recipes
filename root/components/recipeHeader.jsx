@@ -24,7 +24,12 @@ var RecipeHeader = React.createClass({
         this.props.aUpdateValue('public', e.target.checked);  
     },
     render: function() {
-        var created = new Date(this.props.recipe.dateCreated);
+        // Split timestamp into [ Y, M, D, h, m, s ]
+        var time = this.props.recipe.dateCreated.split(/[- :]/);
+
+        // Apply each element to the Date function
+        var created = new Date(Date.UTC(time[0], time[1]-1, time[2], time[3], time[4], time[5]));
+
         var infoClasses = this.props.editable?"recipe-info editable":"recipe-info";
         
         if (this.props.recipe.public) {

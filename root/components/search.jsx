@@ -109,21 +109,21 @@ const Search = React.createClass({
         this.props.aGetRecipe(id);
     },
     keyup: function (e) {
-        if (e.key == "ArrowDown") {
+        if (e.keyCode == 40) {
             var newIndex = this.state.activeIndex + 1;
             if (newIndex < this.state.filteredList.length) {
                 this.setState({
                     activeIndex: newIndex
                 });
             }
-        } else if (e.key == "ArrowUp") {
+        } else if (e.keyCode == 38) {
             var newIndex = this.state.activeIndex - 1;
             if (newIndex >= 0) {
                 this.setState({
                     activeIndex: newIndex
                 });
             }
-        } else if (e.key == "Enter") {
+        } else if (e.keyCode == 13) {
             ReactDOM.findDOMNode(this).querySelector(".results .active").click();
             ReactDOM.findDOMNode(this).querySelector("input").blur();
         }
