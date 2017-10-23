@@ -19,7 +19,9 @@ class RecipeStore extends ReduceStore {
         this._processAction(
             { action : "GET_DATA_RECENT_FEED" }, 
             function(response) {
-                home.recentFeed = response;
+                if (response != null) {
+                    home.recentFeed = response;
+                }
             }, false
         );
 
@@ -28,7 +30,7 @@ class RecipeStore extends ReduceStore {
         this._processAction(
             { action : "LOGIN" }, 
             function(response) {
-                if (response.status == "success") {
+                if (response != null && response.status == "success") {
                     user = response.user;
                 }
             }, false

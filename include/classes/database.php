@@ -3,7 +3,8 @@ class Database {
 	/** getConnection - Returns a connection to the DB
 	 **/
 	public static function getConnection() {
-		return new mysqli('localhost', 'recipes', 'recipes', 'recipes');
+		//return new mysqli('localhost', 'recipes', 'recipes', 'recipes');
+		return new mysqli('localhost', 'deangel3_recipes', 'TrustNo1!', 'deangel3_recipes');
 	}
 }
 
