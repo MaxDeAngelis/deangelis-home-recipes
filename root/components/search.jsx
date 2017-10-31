@@ -46,7 +46,7 @@ const Search = React.createClass({
         }
         return (<div className={rowClasses} key={recipe.id} data-id={recipe.id} onClick={this.select}>
             <div className="row-content">
-                <img className="image" src={recipe.picture + "?" + new Date().getTime()} />
+                <img className="image" src={recipe.picture + "?" + recipe.dateModified} />
                 <div className="details">
                     <div className="title" dangerouslySetInnerHTML={this.getHighlightedTitle(recipe.title)}></div>
                     <div className="author">{recipe.firstName + " " + recipe.lastName}</div>

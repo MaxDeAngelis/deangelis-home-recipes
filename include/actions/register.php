@@ -47,6 +47,12 @@ class Register extends Action {
 		$sql = "SELECT RegisterUser('{$this->firstName}','{$this->lastName}','{$this->username}','{$this->email}', 'user');";
 		$response = new DatabaseQuery($sql);
 		if ($response->sucess) {
+			$message = 	"The user <b>{$this->firstName} {$this->lastName}</b> has requested an account with DeAngelisHome.com!<br><br>" . 
+			"Please login to review the request.<br><br>" . 
+			"<a href='www.DeAngelisHome.com' >DeAngelis Home</a><br><br>" . 
+			"<br><br>Thank You!";
+			Utilities::sendMail('Maxwell.DeAngelis@gmail.com', 'Max', "DeAngelisHome.com - Account Request", $message);
+
 			return Array(
 				"status" => "success"
 			);

@@ -9,13 +9,13 @@ class GetList extends Action {
 		if (isset($_SESSION['user'])) {
 			$userId = $_SESSION['user']['userId'];
 
-			$sql = "SELECT recipeId, name, picture, firstName, lastName, public, ownerId 
+			$sql = "SELECT recipeId, name, picture, firstName, lastName, public, ownerId, modDate 
 						FROM recipes
 						INNER JOIN person ON(person.personId = recipes.ownerId) 
 						WHERE recipes.name != '' AND (public = 1 OR ownerId = {$userId});";
 
 		} else {
-			$sql = "SELECT recipeId, name, picture, firstName, lastName, public, ownerId 
+			$sql = "SELECT recipeId, name, picture, firstName, lastName, public, ownerId, modDate
 						FROM recipes 
 						INNER JOIN person ON(person.personId = recipes.ownerId) 
 						WHERE recipes.name != '' AND public = 1;";

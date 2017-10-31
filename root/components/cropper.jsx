@@ -47,7 +47,7 @@ var Cropper = React.createClass({
     
         return { width: scaledWidth, height: scaledHeight };
     },
-    prepareImage: function(imageUri) {
+    prepareImage: function(imageUri, callback) {
         var me = this;
         var img = new Image();
         if (!this.isDataURL(imageUri)) img.crossOrigin = 'anonymous';
@@ -57,6 +57,7 @@ var Cropper = React.createClass({
           scaledImage.x = 0;
           scaledImage.y = 0;
           me.setState({dragging: false, image: scaledImage, preview: me.toDataURL()});
+          callback();
         };
         img.src = imageUri;
     },
@@ -198,17 +199,24 @@ var Cropper = React.createClass({
             // TODO: Maybe handle other states
             if (xhr.readyState == 4) {
                 var response = JSON.parse(this.responseText);
-                me.prepareImage(response.url);
-                me.setState({currentUrl: response.url, zoom: 1});
+                var loading = setTimeout(function() {
+                    ReactDOM.findDOMNode(me).classList.add("loading"); 
+                }, 100)
+                
+                var callback = function() {
+                    var canvas = ReactDOM.findDOMNode(me).querySelector(".canvas");
+                    window.addEventListener("mousemove", me.handleMouseMove, false);
+                    window.addEventListener("mouseup", me.handleMouseUp, false);
+                    canvas.addEventListener("mousedown", me.handleMouseDown, false);
+    
+                    ReactDOM.findDOMNode(me).classList.add("show"); 
 
-                var canvas = ReactDOM.findDOMNode(me).querySelector(".canvas");
-                me.prepareImage(me.props.image);
+                    clearTimeout(loading);
+                    ReactDOM.findDOMNode(me).classList.remove("loading"); 
+                };
 
-                window.addEventListener("mousemove", me.handleMouseMove, false);
-                window.addEventListener("mouseup", me.handleMouseUp, false);
-                canvas.addEventListener("mousedown", me.handleMouseDown, false);
-
-                ReactDOM.findDOMNode(me).classList.add("show");                
+                me.prepareImage(response.url, callback);
+                me.setState({currentUrl: response.url, zoom: 1});          
             }
         }
 
@@ -292,7 +300,7 @@ var Cropper = React.createClass({
                             <input id={fileId} type="file" accept="image/*" onChange={this.handleUpload}/>
                         </div>
                     }
-                    <img className="display" src={this.props.image + "?" + new Date().getTime()}/>
+                    <img className="display" src={this.props.image}/>
                 </div>
                 <div className="container">
                     <div className="mask"></div>

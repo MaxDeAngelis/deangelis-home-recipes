@@ -17,13 +17,13 @@ var Home = React.createClass({
         var home = this;
         var recentFeed = this.props.sHome.recentFeed.map(function(recipe) {
             // Split timestamp into [ Y, M, D, h, m, s ]
-            var time = recipe.dateCreated.split(/[- :]/);
+            var time = recipe.dateModified.split(/[- :]/);
             // Apply each element to the Date function
             var created = new Date(Date.UTC(time[0], time[1]-1, time[2], time[3], time[4], time[5]));
 
             return (<div className="recipe" key={recipe.id} data-id={recipe.id} onClick={home.handleClick}>
                 <div className="title">{recipe.title}</div>
-                <img src={recipe.picture}/>
+                <img src={recipe.picture + "?" + recipe.dateModified}/>
                 <div className="additional-info">
                     <span className="author">{recipe.firstName + " " + recipe.lastName}</span>
                     <span className="creation-date">({created.toDateString()})</span>

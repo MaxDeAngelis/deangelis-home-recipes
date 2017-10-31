@@ -9,6 +9,29 @@
 		 public static function sendMail($address, $name, $subject, $message) {
 			$mail = new PHPMailer(); // create a new object
 			$mail->isSMTP();                                      // Set mailer to use SMTP
+			$mail->Host = 'deangelishome.com';                       // Specify main and backup server
+			$mail->SMTPAuth = true;                               // Enable SMTP authentication
+			$mail->Username = "admin@deangelishome.com";
+			$mail->Password = "TrustNo1!";
+			$mail->SMTPSecure = 'ssl';                            // Enable encryption, 'ssl' also accepted
+			$mail->Port = 465; 
+
+			$mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
+			$mail->IsHTML(true);
+			$mail->SetFrom("DoNotReply@DeAngelisHome.com", "DeAngelisHome.com");
+			$mail->Subject = $subject;
+			$mail->Body = $message;
+			$mail->addAddress($address, $name);
+
+		 	if(!$mail->Send()) {
+		 		return false;
+		    } else {
+		    	return true;
+			}
+		}
+		public static function sendMailOld($address, $name, $subject, $message) {
+			$mail = new PHPMailer(); // create a new object
+			$mail->isSMTP();                                      // Set mailer to use SMTP
 			$mail->Host = 'smtp.gmail.com';                       // Specify main and backup server
 			$mail->SMTPAuth = true;                               // Enable SMTP authentication
 			$mail->Username = "recipes.deangelishome@gmail.com";

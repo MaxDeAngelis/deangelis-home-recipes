@@ -57,7 +57,8 @@ class SaveRecipe extends Action {
 						servings = {$this->recipe["servings"]},
 						ownerId = {$this->recipe["creator"]},
 						public = {$public},
-						picture = '{$newPicture}'
+						picture = '{$newPicture}',
+						modDate = NULL
 					
 					WHERE recipeId = {$recipeId};");
 

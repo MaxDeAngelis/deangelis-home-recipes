@@ -21,11 +21,12 @@ var Recipe = React.createClass({
         if (isValid) {
             this.props.aSaveRecipe(this.props.recipe);
 
-            if (this.props.recipe.picture.indexOf("no-image-uploaded") == -1) {
+           /* if (this.props.recipe.picture.indexOf("no-image-uploaded") == -1) {
                 this.props.aUpdateValue('picture', "images/recipes/recipe_" + this.props.recipe.id + ".png");
-            }
+            }*/
 
             this.setState({editable: false, validate: false});
+            this.props.aGetRecipe(this.props.recipe.id);
             this.props.aNotify(true, "success", "Recipe successfully saved.", 500);
         }
     },

@@ -10,7 +10,7 @@ class Recipe {
     public $category = "";
     public $season = "";
     public $steps = "";
-    public $dateCreated = "";
+    public $dateModified = "";
     public $picture = "";
     public $creator = "";
     public $public = false;
@@ -57,7 +57,7 @@ class Recipe {
                     $this->steps = $value;
                     break;
                 case 'modDate':
-                    $this->dateCreated = $value;
+                    $this->dateModified = $value;
                     break;
                 case 'picture':
                     $this->picture = $value;

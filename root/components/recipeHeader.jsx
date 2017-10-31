@@ -25,7 +25,7 @@ var RecipeHeader = React.createClass({
     },
     render: function() {
         // Split timestamp into [ Y, M, D, h, m, s ]
-        var time = this.props.recipe.dateCreated.split(/[- :]/);
+        var time = this.props.recipe.dateModified.split(/[- :]/);
 
         // Apply each element to the Date function
         var created = new Date(Date.UTC(time[0], time[1]-1, time[2], time[3], time[4], time[5]));
@@ -125,7 +125,7 @@ var RecipeHeader = React.createClass({
                     </div>
                 </div>
                 <Cropper
-                    image={this.props.recipe.picture}
+                    image={this.props.recipe.picture + "?" + this.props.recipe.dateModified}
                     editable={this.props.editable}
                     onAfterCrop={this.afterImageCrop}
                 />
