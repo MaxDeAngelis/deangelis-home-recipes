@@ -51,3 +51,14 @@
         }
     } 
 }
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {    
+    .full-recipe {
+        .recipe-body {
+            flex-direction: column;     
+            >section:first-child{
+                margin-right: 0;
+            }
+        }
+    }
+}

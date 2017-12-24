@@ -36,14 +36,14 @@
         .ti-close,
         .ti-pencil {
             color: $text-dark-secondary;
-            font-size: 40px;
+            font-size: 2.25em;
             &:hover {
                 color: $text-dark;
             }
         }
         .title {
             color: $text-dark;
-            font-size: 40px;
+            font-size: 2.25em;
             display: flex;
             padding: 5px;
             border: 1px solid transparent;
@@ -63,7 +63,7 @@
         }
         .addition-info,
         .public-option {
-            font-size: 14px;
+            font-size: 0.75em;
             color: $text-dark-secondary;
             padding: 5px 0 0 9px;
             display: flex;
@@ -89,7 +89,7 @@
             flex-direction: row;
             justify-content: flex-start;
             align-items: center;
-            font-size: 14px;
+            font-size: 0.75em;
             color: $text-dark-secondary;
             padding: 0 7px;
             .serving-value {
@@ -110,7 +110,7 @@
             }
             .ti-timer,
             .ti-pie-chart {
-                font-size: 24px;
+                font-size: 1.3em;
                 padding-right: 10px;
                 cursor: default;
             }
@@ -122,8 +122,30 @@
     }
 }
 
-
-
-
-
-
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .recipe-header {
+        display: block;
+        position: relative;
+        margin: 0 10px;
+        height: 300px;
+        .recipe-info,
+        .cropper {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+        .recipe-info {
+            padding: 25px;
+            z-index: 2;
+        }
+        .cropper {
+            z-index: 1;
+            overflow: hidden;
+            .display {
+                width: 100%;
+            }
+        }
+    }
+}

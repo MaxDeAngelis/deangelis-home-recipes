@@ -4,12 +4,16 @@ require("../style/components/navigation.scss");
 
 var Navigation = React.createClass({
     toggle: function() {
-        var nav = document.querySelector(".navigation");
-        if (nav.className == "navigation") {
-            nav.className += " show";
+        if (ReactDOM.findDOMNode(this).classList.contains("show")) {
+            ReactDOM.findDOMNode(this).classList.remove("show");
+            ReactDOM.findDOMNode(this).removeEventListener("click", this._hide);
         } else {
-            nav.className = "navigation";
+            ReactDOM.findDOMNode(this).classList.add("show");
+            ReactDOM.findDOMNode(this).addEventListener("click", this._hide);
         }
+    },
+    _hide: function() {
+        ReactDOM.findDOMNode(this).classList.remove("show");
     },
     _getId: function(element) {
         var currentElement = element;
@@ -66,12 +70,12 @@ var Navigation = React.createClass({
             }
         });
         
-        return (<ul className="navigation-content">
-            <li className="link"><a className="toggle" onClick={this.toggle}></a></li>
-            {/*<li className="link ti-user hover" data-id="user" onClick={this.home}><span className="text">Administrator</span></li>*/}
-            {list}
-        </ul>
-        );
+        return (<nav className="navigation">
+            <ul className="navigation-content">
+                <li className="link"><a className="toggle" onClick={this.toggle}></a></li>
+                {list}
+            </ul>
+        </nav>);
     }
 });
 

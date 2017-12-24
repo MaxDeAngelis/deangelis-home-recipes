@@ -4,7 +4,7 @@
     padding: 25px;
     .site-title {
         color: $text-dark;
-        font-size: 40px;
+        font-size: 2.25em;
         padding-left: 10px;
         margin: 0 0 25px 0;
     }
@@ -13,7 +13,7 @@
         flex-direction: column;
         align-items: center;
         .recent-title {
-            font-size: 20px;
+            font-size: 1.2em;
             color: $text-dark-secondary;
             margin: 0 0 5px 0;
         }
@@ -49,18 +49,33 @@
             }
             .title {
                 color: $text-light;
-                font-size: 18px;
                 top: 0;
             }
             .additional-info {
                 color: $text-light-secondary;
-                font-size: 14px;
+                font-size: 0.75em;
                 bottom: 0;
             }
             img {
                 width: 100%;
             }
             
+        }
+    }
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .home-content {
+        .recent-feed {
+            width: 100%;
+            flex-direction: column;
+            .recipe {
+                max-width: 100%;
+                &:hover {
+                    transform: none;
+                    box-shadow: none;
+                }
+            }
         }
     }
 }

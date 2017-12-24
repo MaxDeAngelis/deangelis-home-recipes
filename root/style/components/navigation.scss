@@ -27,7 +27,7 @@
                 position: absolute;
                 top: 0;
                 right: 0;
-                font-size: 10px;
+                font-size: 0.55em;
                 padding: 3px;
                 margin: 1px;
                 border-radius: 10px;
@@ -123,5 +123,81 @@
                 opacity: 1;
             }
         }
+    }
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {    
+    .navigation {
+        z-index: 10;
+        height: 80px;
+        transition: height 0.5s;
+        .navigation-content {
+            .link {
+                height: 80px;
+                line-height: 80px;
+                .ti-close {
+                    margin: 10px;
+                    font-size: 0.75em;
+                }
+                >.image {
+                    width: 60px;
+                    height: 60px;
+                }
+                >.text {
+                    &.truncate {
+                        width: auto;
+                    }
+                }
+            }
+            .toggle {
+                width: 90px;
+                height: 80px;
+                &::before,
+                &::after {
+                    right: 15px;
+                    width: 50px;
+                    height: 4px;
+                }
+                &::before {
+                    top: 30px;
+                }
+                &::after {
+                    top: 50px;
+                }
+            }
+        }
+        &.show {
+            height: 100%;
+            .toggle {
+                width: 110px;
+                &::before,
+                &::after {
+                    top: 35px;
+                    width: 40px;
+                }
+                &::before {
+                    transform: rotate(45deg);
+                    right: 50px;
+                }
+                &::after {
+                    transform: rotate(-45deg);
+                    right: 22px;
+                }
+            }
+        }
+        .ti-close {
+                position: absolute;
+                top: 0;
+                right: 0;
+                font-size: 10px;
+                padding: 3px;
+                margin: 1px;
+                border-radius: 10px;
+                background-color: black;
+                color: $text-light-secondary;
+                &:hover {
+                    color: $text-light;
+                }
+            }
     }
 }

@@ -90,15 +90,13 @@ var Body = React.createClass({
                 />
             </section>
             <section className="app-body">
-                <nav className="navigation">
-                    <Navigation 
-                        sOpenList={this.props.sOpenList}
-                        sUser={this.props.sUser}
-                        aOpenContent={this.props.aOpenContent}
-                        aNewRecipe={this.props.aNewRecipe}
-                        aCloseRecipe={this.props.aCloseRecipe}
-                    />
-                </nav>
+                <Navigation 
+                    sOpenList={this.props.sOpenList}
+                    sUser={this.props.sUser}
+                    aOpenContent={this.props.aOpenContent}
+                    aNewRecipe={this.props.aNewRecipe}
+                    aCloseRecipe={this.props.aCloseRecipe}
+                />
                 <div className="site-body">
                     <Header 
                         sUser={this.props.sUser}
