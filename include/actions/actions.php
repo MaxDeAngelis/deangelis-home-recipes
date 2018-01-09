@@ -30,6 +30,7 @@ abstract class ACTIONS {
 	 const REGISTER = "REGISTER"; 
 	 const UPDATE_USER_STATUS = "UPDATE_USER_STATUS";
 	 const UPDATE_PASSWORD = "UPDATE_PASSWORD";
+	 const SEARCH_EXTERNAL = "SEARCH_EXTERNAL";
 }
 
 class Action {
