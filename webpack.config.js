@@ -15,7 +15,7 @@ module.exports = { 
         contentBase: "./root",
         port: 8080,
         proxy: [{
-            path: /./,
+            path: '/',
             target: "http://localhost:8888/"
         }]
     },
@@ -35,14 +35,7 @@ module.exports = { 
             {
                 test: /\.css$/,
                 loader: "style!css"
-            }/*,
-            {
-                test: /\.(jpe?g|png|gif|svg)$/i,
-                loaders: [
-                    'file?hash=sha512&digest=hex&name=images/[hash].[ext]',
-                    'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
-                ]
-            }*/
+            }
         ] 
     }
 };

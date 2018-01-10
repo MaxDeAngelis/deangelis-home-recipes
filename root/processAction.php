@@ -10,20 +10,20 @@
 	session_start();
 
 	$str_json = file_get_contents('php://input');
-	
 	if (isset($_POST['action'])) {
 		$data = $_POST;
 	} else {
 		$data = json_decode($str_json, true);		
 	}
-	
-	$data = Utilities::encodeArray($data);
 
+	$data = Utilities::encodeArray($data);
+	
 	switch ($data['action']) {
-	case ACTIONS::SEARCH_EXTERNAL:
-		error_log("IN HERE");
-		$response = file_get_contents("https://food2fork.com/api/search?key=1132f2389852e19d629e0b7d9d7b784f&q=Salad");
-		echo json_encode($response);
+	case ACTIONS::EXTERNAL_SEARCH:
+		$action = new ExternalSearch($data);
+		break;
+	case ACTIONS::EXTERNAL_OPEN:
+		$action = new ExternalOpen($data);
 		break;
 	case ACTIONS::REGISTER:
 		$action = new Register($data);

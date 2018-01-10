@@ -14,6 +14,8 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/actions/register.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/actions/updateUserStatus.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/actions/updatePassword.php';
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/actions/externalSearch.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/actions/externalOpen.php';
 
 abstract class ACTIONS {
 	 const GET_LIST = "GET_LIST";
@@ -30,7 +32,8 @@ abstract class ACTIONS {
 	 const REGISTER = "REGISTER"; 
 	 const UPDATE_USER_STATUS = "UPDATE_USER_STATUS";
 	 const UPDATE_PASSWORD = "UPDATE_PASSWORD";
-	 const SEARCH_EXTERNAL = "SEARCH_EXTERNAL";
+	 const EXTERNAL_SEARCH = "EXTERNAL_SEARCH";
+	 const EXTERNAL_OPEN = "EXTERNAL_OPEN";
 }
 
 class Action {
