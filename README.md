@@ -1,7 +1,7 @@
 DeAngelisHome.com
 ======
 
-**DeAngelisHome** is a side project web side starting when I attended UNH. The basic idea is that it is a recipe sharing site that is administrated by a common admin. This admin is required to approve new users and give them access to the site. 
+**DeAngelisHome** is a side project website which started as a senior project when I attended UNH. The basic idea is that it is a recipe sharing site that is administrated by a common admin. This admin is required to approve new users and give them access to the site. 
 
 Once given access a user can:
 
