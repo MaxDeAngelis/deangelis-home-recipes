@@ -3,16 +3,22 @@ import ReactDOM from 'react-dom';
 require("../style/components/navigation.scss");
 
 var Navigation = React.createClass({
-    toggle: function() {
+    toggle: function(e) {
+        var links = ReactDOM.findDOMNode(this).querySelectorAll(".link.hover");
+
         if (ReactDOM.findDOMNode(this).classList.contains("show")) {
             ReactDOM.findDOMNode(this).classList.remove("show");
-            ReactDOM.findDOMNode(this).removeEventListener("click", this._hide);
+            for (var i = 0; i < links.length; i++) {
+                links[i].removeEventListener("click", this._hide);
+            }
         } else {
             ReactDOM.findDOMNode(this).classList.add("show");
-            ReactDOM.findDOMNode(this).addEventListener("click", this._hide);
+            for (var i = 0; i < links.length; i++) {
+                links[i].addEventListener("click", this._hide);
+            }
         }
     },
-    _hide: function() {
+    _hide: function(e) {
         ReactDOM.findDOMNode(this).classList.remove("show");
     },
     _getId: function(element) {

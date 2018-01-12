@@ -27,7 +27,7 @@ class UploadImage extends Action {
 			if ($this->image["error"] > 0) {
 				$response = array(
 					"status" => 'error',
-					"message" => 'ERROR Return Code: '. ["error"]
+					"message" => 'ERROR Return Code: '. $this->image["error"]
 				);			
 			} else {
 				$filename = $this->image["tmp_name"];
