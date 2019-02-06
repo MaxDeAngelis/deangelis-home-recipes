@@ -15,7 +15,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 // ICONS
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import HomeOutlined from '@material-ui/icons/HomeOutlined'
+import HomeOutlined from '@material-ui/icons/HomeOutlined';
+import SearchIcon from '@material-ui/icons/Search';
 import Add from '@material-ui/icons/Add'
 
 const styles = theme => ({
@@ -51,16 +52,23 @@ const styles = theme => ({
 class Sidebar extends Component {
     render() {
         const { classes } = this.props;
+        let homeSelected = false;
+        for (let i = 0; i < this.props.nav.items.length; i++) {
+            if (this.props.nav.items[i].id === "home") {
+                homeSelected = true;
+                break;
+            }
+        }
         return (
-            <Drawer variant="permanent" open={this.props.open}
+            <Drawer variant="permanent" open={this.props.nav.open}
                 className={classNames(classes.drawer, {
-                    [classes.drawerOpen]: this.props.open,
-                    [classes.drawerClose]: !this.props.open,
+                    [classes.drawerOpen]: this.props.nav.open,
+                    [classes.drawerClose]: !this.props.nav.open,
                 })}
                 classes={{
                     paper: classNames({
-                    [classes.drawerOpen]: this.props.open,
-                    [classes.drawerClose]: !this.props.open,
+                    [classes.drawerOpen]: this.props.nav.open,
+                    [classes.drawerClose]: !this.props.nav.open,
                     }),
                 }}
             >
@@ -71,9 +79,13 @@ class Sidebar extends Component {
                 </div>
                 <Divider />
                 <List>
-                    <ListItem button>
+                    <ListItem button selected={homeSelected}>
                         <ListItemIcon><HomeOutlined/></ListItemIcon>
                         <ListItemText primary="Home" />
+                    </ListItem>
+                    <ListItem button >
+                        <ListItemIcon><SearchIcon/></ListItemIcon>
+                        <ListItemText primary="Search results" />
                     </ListItem>
                     <ListItem button>
                         <ListItemIcon><Add/></ListItemIcon>

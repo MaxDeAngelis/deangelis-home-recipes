@@ -2,12 +2,13 @@
   "name": "recipes",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8888",
+  "proxy": "http://localhost:8888/api/",
   "dependencies": {
     "@material-ui/core": "^3.8.3",
     "@material-ui/icons": "^3.0.2",
     "classnames": "^2.2.6",
     "cross-fetch": "^3.0.0",
+    "immutable": "^4.0.0-rc.12",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-redux": "^6.0.0",
@@ -20,9 +21,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": [
     ">0.2%",

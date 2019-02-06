@@ -10,10 +10,19 @@ import siteReducer from './lib/reducers';
 
 const store = createStore(siteReducer, {
         site : {
-            showNav : false
+            nav : {
+                open : false,
+                items : [
+                    {
+                        id : "home",
+                        selected : true
+                    }
+                ]
+            }
         },
         recipe : {
-            recents : []
+            recents : [],
+            searchResults : []
         }
     },
     applyMiddleware(

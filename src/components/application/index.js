@@ -18,18 +18,23 @@ class Application extends Component {
     constructor(props) {
         super(props);
 
-        this.props.dispatch(RecipeActions.getDataRecentFeed());
+        this.props.dispatch(RecipeActions.getRecents());
         this.toggleNav = this.toggleNav.bind(this);
+        this.search = this.search.bind(this);
     }
     toggleNav()  {
         this.props.dispatch(SiteActions.toggleSidebar());
-    };
+    }
+    search() {
+        this.props.dispatch(RecipeActions.search());
+    }
     render() {
         const { classes } = this.props;
+        console.log(this.props)
         return (
             <div  className={classes.root}>
-                <Header open={this.props.site.showNav} toggleNav={this.toggleNav}/>
-                <Sidebar open={this.props.site.showNav} toggleNav={this.toggleNav}/>
+                <Header open={this.props.site.nav.open} toggleNav={this.toggleNav} search={this.search}/>
+                <Sidebar nav={this.props.site.nav} toggleNav={this.toggleNav}/>
                 <Home recipe={this.props.recipe}/>
             </div>
         );

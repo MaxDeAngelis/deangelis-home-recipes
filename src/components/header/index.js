@@ -105,7 +105,7 @@ class Header extends Component {
                         <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
-                        <InputBase placeholder="Search…" classes={{root: classes.inputRoot, input: classes.inputInput}}/>
+                        <InputBase placeholder="Search…" classes={{root: classes.inputRoot, input: classes.inputInput}} onChange={this.props.search}/>
                     </div>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
