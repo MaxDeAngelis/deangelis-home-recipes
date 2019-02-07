@@ -1,5 +1,9 @@
-function _processAction(key, callback){
-    fetch('/processAction.php?action=' + key)
+function _processAction(key, params, callback){
+    let url = '/processAction.php?action=' + key
+    for (var paramKey in params) {
+        url += "&" + paramKey + "=" + params[paramKey];
+    }
+    fetch(url)
     .then(
         response => response.json(),
         error => console.log('An error occurred.', error)
@@ -20,23 +24,40 @@ export const SiteActions = {
 };
 
 export const RecipeActionTypes = {
+    OPEN_RECIPE : "OPEN_RECIPE",
     UPDATE_RECENTS : "UPDATE_RECENTS",
     UPDATE_SEARCH : "UPDATE_SEARCH"
 }
 
 export const RecipeActions = {
+    open : function(id) {
+        return function(dispatch) {
+            _processAction("GET_RECIPE", {id : id}, function(json) {
+                dispatch(PrivateRecipeActions.openRecipe(json))
+            })
+        }
+    },
     search : function() {
         return function(dispatch) {
-            _processAction("GET_LIST", function(json) {
-                dispatch(RecipeActions.updateSearchResults(json))
+            _processAction("GET_LIST", {}, function(json) {
+                dispatch(PrivateRecipeActions.updateSearchResults(json))
             })
         }
     },
     getRecents : function() {
         return function(dispatch) {
-            _processAction("GET_DATA_RECENT_FEED", function(json) {
-                dispatch(RecipeActions.updateRecents(json))
+            _processAction("GET_DATA_RECENT_FEED", {}, function(json) {
+                dispatch(PrivateRecipeActions.updateRecents(json))
             })
+        }
+    }, 
+};
+
+const PrivateRecipeActions = {
+    openRecipe : function(recipe) {
+        return {
+            type : RecipeActionTypes.OPEN_RECIPE,
+            recipe : recipe
         }
     },
     updateSearchResults : function(recipes) {
@@ -51,23 +72,4 @@ export const RecipeActions = {
             recents : recipes
         }
     }
-};
-
-
-/*
-axios.get('/processAction.php', {
-    params: {
-        action: action.type
-    }
-})
-.then(function (response) {
-    console.log(response);
-    newState = {
-        recentRecipes: response
-    }
-})
-.catch(function (error) {
-    console.log(error);
-});
-
-*/
+}

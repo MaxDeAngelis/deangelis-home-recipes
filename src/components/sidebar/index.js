@@ -14,7 +14,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 // ICONS
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import HomeOutlined from '@material-ui/icons/HomeOutlined';
 import SearchIcon from '@material-ui/icons/Search';
 import Add from '@material-ui/icons/Add'
@@ -46,6 +45,10 @@ const styles = theme => ({
         justifyContent: 'flex-end',
         padding: '0 8px',
         ...theme.mixins.toolbar,
+    },
+    recipeIcon: {
+        width: 24,
+        height: 24
     }
 });
 
@@ -94,10 +97,10 @@ class Sidebar extends Component {
                 </List>
                 <Divider />
                 <List>
-                    {['All mail'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon><InboxIcon /></ListItemIcon>
-                        <ListItemText primary={text} />
+                    {this.props.openRecipes.map((item, index) => (
+                    <ListItem button key={item.recipe.id} selected={item.selected}>
+                        <ListItemIcon><img src={item.recipe.picture} className={classes.recipeIcon} alt={item.recipe.title}/></ListItemIcon>
+                        <ListItemText primary={item.recipe.title} />
                     </ListItem>
                     ))}
                 </List>

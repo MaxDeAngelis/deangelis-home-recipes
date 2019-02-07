@@ -28,40 +28,41 @@ class RecipeReviewCard extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { 
-            expanded: false 
-        };
+        this.handleOpenRecipe = this.handleOpenRecipe.bind(this);
     }
 
-    handleExpandClick = () => {
-        this.setState({ 
-            expanded: !this.state.expanded 
-        });
-    };
+    handleOpenRecipe(id) {
+        this.props.openRecipe(id);
+    }
 
     render() {
+        var _this = this;
         const { classes } = this.props;
-
         return (
             <div className={classes.root}>
                 <GridList className={classes.gridList} cols={3} cellHeight={400} spacing={8}>
                     <GridListTile key="Subheader" cols={3} style={{ height: 'auto' }} >
                         <ListSubheader component="header"><Typography variant="h6" color="primary" noWrap>Recent recipes</Typography></ListSubheader>
                     </GridListTile>
-                    {this.props.recipes.map(recipe => (
-                        <GridListTile key={recipe.id}>
-                            <img src={recipe.picture} alt={recipe.title} />
-                            <GridListTileBar
-                                title={recipe.title}
-                                subtitle={<span>by: {recipe.firstName + " " + recipe.lastName}</span>}
-                                actionIcon={
-                                    <IconButton className={classes.icon}>
-                                        <InfoIcon/>
-                                    </IconButton>
-                                }
-                            />
-                        </GridListTile>
-                    ))}
+                    {this.props.recipes.map(recipe => {
+                        var open = () => {
+                            _this.handleOpenRecipe(recipe.id)
+                        }
+                        return ( 
+                            <GridListTile key={recipe.id}>
+                                <img src={recipe.picture} alt={recipe.title} />
+                                <GridListTileBar
+                                    title={recipe.title}
+                                    subtitle={<span>by: {recipe.firstName + " " + recipe.lastName}</span>}
+                                    actionIcon={
+                                        <IconButton className={classes.icon} onClick={open}>
+                                            <InfoIcon/>
+                                        </IconButton>
+                                    }
+                                />
+                            </GridListTile>
+                        )
+                    })}
                 </GridList>
             </div>
         );

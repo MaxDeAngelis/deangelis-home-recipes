@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { SiteActions, RecipeActions } from '../../lib/actions';
 import Recents from '../recents';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -12,15 +14,26 @@ const styles = theme => ({
 });
 
 class Home extends Component {
+    constructor(props) {
+        super(props);
+
+        this.openRecipe = this.openRecipe.bind(this);
+    }
+    openRecipe(id) {
+        this.props.dispatch(RecipeActions.open(id))
+    }
     render() {
         const { classes } = this.props;
         return (
             <main className={classes.content}>
                 <div className={classes.toolbar} />
-                <Recents recipes={this.props.recipe.recents}/>
+                <Recents recipes={this.props.recipe.recents} openRecipe={this.openRecipe}/>
             </main>
         );
     }
 }
 
-export default withStyles(styles)(Home);
+function mapStateToProps(state) {
+    return state;
+}
+export default connect(mapStateToProps)(withStyles(styles)(Home));

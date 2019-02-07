@@ -36,7 +36,7 @@ const styles = theme => ({
         }),
     },
     menuButton: {
-        marginLeft: 12,
+        marginLeft: 4,
         marginRight: 36,
     },
     hide: {

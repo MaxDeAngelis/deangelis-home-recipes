@@ -30,12 +30,11 @@ class Application extends Component {
     }
     render() {
         const { classes } = this.props;
-        console.log(this.props)
         return (
             <div  className={classes.root}>
                 <Header open={this.props.site.nav.open} toggleNav={this.toggleNav} search={this.search}/>
-                <Sidebar nav={this.props.site.nav} toggleNav={this.toggleNav}/>
-                <Home recipe={this.props.recipe}/>
+                <Sidebar nav={this.props.site.nav} toggleNav={this.toggleNav} openRecipes={this.props.recipe.open}/>
+                <Home/>
             </div>
         );
     }
