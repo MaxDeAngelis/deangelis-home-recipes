@@ -12,10 +12,16 @@ function _processAction(key, params, callback){
 }
 
 export const SiteActionTypes = {
+        HOME : "HOME",
         TOGGLE_SIDEBAR : "TOGGLE_SIDEBAR"
 }
 
 export const SiteActions = {
+    home : function() {
+        return { 
+            type: SiteActionTypes.HOME
+        }
+    },
     toggleSidebar : function() {
         return { 
             type: SiteActionTypes.TOGGLE_SIDEBAR

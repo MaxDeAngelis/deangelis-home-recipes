@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Header from '../header';
 import Sidebar from '../sidebar';
 import Home from '../home';
+import Recipe from '../recipe';
 
 const styles = theme => ({
     root: {
@@ -30,11 +31,17 @@ class Application extends Component {
     }
     render() {
         const { classes } = this.props;
+        let content = <Home/>;
+        this.props.recipe.open.forEach((item) => {
+            if (item.selected) {
+                content = <Recipe data={item.recipe}/>;
+            }
+        })
         return (
             <div  className={classes.root}>
                 <Header open={this.props.site.nav.open} toggleNav={this.toggleNav} search={this.search}/>
                 <Sidebar nav={this.props.site.nav} toggleNav={this.toggleNav} openRecipes={this.props.recipe.open}/>
-                <Home/>
+                {content}
             </div>
         );
     }
