@@ -53,15 +53,32 @@ const styles = theme => ({
 });
 
 class Sidebar extends Component {
-    render() {
-        const { classes } = this.props;
-        let homeSelected = false;
-        for (let i = 0; i < this.props.nav.items.length; i++) {
-            if (this.props.nav.items[i].id === "home") {
-                homeSelected = true;
+    constructor(props) {
+        super(props);
+
+        this.getRecipeItem = this.getRecipeItem.bind(this);
+    }
+    getRecipeItem(item, classes) {
+        var recipe;
+        for (var i = 0; i < this.props.openRecipes.length; i++) {
+            recipe = this.props.openRecipes[i];
+            if (recipe.id === item.id) {
                 break;
             }
         }
+
+        return (
+            <ListItem button key={recipe.title} selected={item.selected}>
+                <ListItemIcon><img src={recipe.picture} className={classes.recipeIcon} alt={recipe.title}/></ListItemIcon>
+                <ListItemText primary={recipe.title} />
+            </ListItem>
+        )
+    }
+    render() {
+        const { classes } = this.props;
+        let _this = this;
+        let siteIcons = this.props.nav.items.filter(item => item.category === "SITE");
+        let recipeIcons = this.props.nav.items.filter(item => item.category === "RECIPE");
         return (
             <Drawer variant="permanent" open={this.props.nav.open}
                 className={classNames(classes.drawer, {
@@ -82,27 +99,28 @@ class Sidebar extends Component {
                 </div>
                 <Divider />
                 <List>
-                    <ListItem button selected={homeSelected}>
-                        <ListItemIcon><HomeOutlined/></ListItemIcon>
-                        <ListItemText primary="Home" />
-                    </ListItem>
-                    <ListItem button >
-                        <ListItemIcon><SearchIcon/></ListItemIcon>
-                        <ListItemText primary="Search results" />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon><Add/></ListItemIcon>
-                        <ListItemText primary="New recipe" />
-                    </ListItem>
+                    {siteIcons.map((item) => {
+                        let icon;
+                        if (item.id === "home") {
+                            icon = <HomeOutlined/>;
+                        } else if (item.id === "search") {
+                            icon = <SearchIcon/>;
+                        } else if (item.id === "new") {
+                            icon = <Add/>;
+                        }
+                        return (
+                            <ListItem button key={item.title} selected={item.selected}>
+                                <ListItemIcon>{icon}</ListItemIcon>
+                                <ListItemText primary={item.title} />
+                            </ListItem>
+                        )
+                    })}
                 </List>
                 <Divider />
                 <List>
-                    {this.props.openRecipes.map((item, index) => (
-                    <ListItem button key={item.recipe.id} selected={item.selected}>
-                        <ListItemIcon><img src={item.recipe.picture} className={classes.recipeIcon} alt={item.recipe.title}/></ListItemIcon>
-                        <ListItemText primary={item.recipe.title} />
-                    </ListItem>
-                    ))}
+                    {recipeIcons.map((item) => {
+                        return _this.getRecipeItem(item, classes);
+                    })}
                 </List>
             </Drawer>
         );

@@ -12,14 +12,16 @@ function _processAction(key, params, callback){
 }
 
 export const SiteActionTypes = {
-        HOME : "HOME",
+        OPEN_CONTENT : "OPEN_CONTENT",
         TOGGLE_SIDEBAR : "TOGGLE_SIDEBAR"
 }
 
 export const SiteActions = {
-    home : function() {
+    openContent : function(id, type) {
         return { 
-            type: SiteActionTypes.HOME
+            type : SiteActionTypes.OPEN_CONTENT,
+            id : id,
+            category : type
         }
     },
     toggleSidebar : function() {
@@ -40,20 +42,21 @@ export const RecipeActions = {
         return function(dispatch) {
             _processAction("GET_RECIPE", {id : id}, function(json) {
                 dispatch(PrivateRecipeActions.openRecipe(json))
+                dispatch(SiteActions.openContent(json.id, "RECIPE"));
             })
         }
     },
     search : function() {
         return function(dispatch) {
             _processAction("GET_LIST", {}, function(json) {
-                dispatch(PrivateRecipeActions.updateSearchResults(json))
+                dispatch(PrivateRecipeActions.updateSearchResults(json));
             })
         }
     },
     getRecents : function() {
         return function(dispatch) {
             _processAction("GET_DATA_RECENT_FEED", {}, function(json) {
-                dispatch(PrivateRecipeActions.updateRecents(json))
+                dispatch(PrivateRecipeActions.updateRecents(json));
             })
         }
     }, 

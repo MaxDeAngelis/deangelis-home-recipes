@@ -16,7 +16,19 @@ const store = createStore(siteReducer, {
                 items : [
                     {
                         id : "home",
+                        title : "Home",
+                        category : "SITE",
                         selected : true
+                    },{
+                        id : "search",
+                        title : "Search results",
+                        category : "SITE",
+                        selected : false
+                    },{
+                        id : "new",
+                        title : "New recipe",
+                        category : "SITE",
+                        selected : false
                     }
                 ]
             }

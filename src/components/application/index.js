@@ -32,9 +32,10 @@ class Application extends Component {
     render() {
         const { classes } = this.props;
         let content = <Home/>;
-        this.props.recipe.open.forEach((item) => {
-            if (item.selected) {
-                content = <Recipe data={item.recipe}/>;
+        this.props.site.nav.items.forEach((item) => {
+            if (item.selected && item.category === "RECIPE") {
+                let recipes = this.props.recipe.open.filter((recipe) => recipe.id === item.id)
+                content = <Recipe data={recipes[0]}/>;
             }
         })
         return (

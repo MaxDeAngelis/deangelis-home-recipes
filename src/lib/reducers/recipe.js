@@ -7,21 +7,15 @@ export default function(state = {}, action) {
             let alreadyOpen = false;
             state.open.forEach((content) => {
                 // If it is already open then reset data
-                if (content.recipe.id == action.recipe.id) {
-                    content.recipe = action.recipe;
-                    content.selected = true;
+                if (content.id === action.recipe.id) {
+                    content = action.recipe;
                     alreadyOpen = true;
-                } else {
-                    content.selected = false;
                 }
             })
 
             // If not found then push new
             if (!alreadyOpen) {
-                state.open.push( {
-                    selected : true,
-                    recipe : action.recipe
-                });
+                state.open.push(action.recipe);
             }
             return Immutable.fromJS(state).toJS();
         case RecipeActionTypes.UPDATE_RECENTS:  
