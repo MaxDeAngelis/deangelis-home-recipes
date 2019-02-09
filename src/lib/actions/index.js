@@ -17,11 +17,11 @@ export const SiteActionTypes = {
 }
 
 export const SiteActions = {
-    openContent : function(id, type) {
+    openContent : function(id, category) {
         return { 
             type : SiteActionTypes.OPEN_CONTENT,
             id : id,
-            category : type
+            category : category
         }
     },
     toggleSidebar : function() {

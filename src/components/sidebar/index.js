@@ -46,6 +46,13 @@ const styles = theme => ({
         padding: '0 8px',
         ...theme.mixins.toolbar,
     },
+    itemText: {
+        padding: 0
+    },
+    itemTextOverflow: {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis'
+    },
     recipeIcon: {
         width: 24,
         height: 24
@@ -68,9 +75,13 @@ class Sidebar extends Component {
         }
 
         return (
-            <ListItem button key={recipe.title} selected={item.selected}>
+            <ListItem button key={recipe.title} selected={item.selected} onClick={() => this.props.openContent(item.id, "RECIPE")}>
                 <ListItemIcon><img src={recipe.picture} className={classes.recipeIcon} alt={recipe.title}/></ListItemIcon>
-                <ListItemText primary={recipe.title} />
+                <ListItemText 
+                    primary={recipe.title} 
+                    className={classes.itemText} 
+                    primaryTypographyProps={{className: classes.itemTextOverflow}}
+                    title={recipe.title}/>
             </ListItem>
         )
     }
@@ -109,9 +120,9 @@ class Sidebar extends Component {
                             icon = <Add/>;
                         }
                         return (
-                            <ListItem button key={item.title} selected={item.selected}>
+                            <ListItem button key={item.title} selected={item.selected} onClick={() => _this.props.openContent(item.id, "SITE")}>
                                 <ListItemIcon>{icon}</ListItemIcon>
-                                <ListItemText primary={item.title} />
+                                <ListItemText primary={item.title} className={classes.itemText}/>
                             </ListItem>
                         )
                     })}

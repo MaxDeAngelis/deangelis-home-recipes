@@ -20,7 +20,7 @@ class Home extends Component {
         this.openRecipe = this.openRecipe.bind(this);
     }
     openRecipe(id) {
-        this.props.dispatch(RecipeActions.open(id))
+        this.props.dispatch(RecipeActions.open(id));
     }
     render() {
         const { classes } = this.props;

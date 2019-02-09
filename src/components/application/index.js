@@ -22,12 +22,16 @@ class Application extends Component {
         this.props.dispatch(RecipeActions.getRecents());
         this.toggleNav = this.toggleNav.bind(this);
         this.search = this.search.bind(this);
+        this.openContent = this.openContent.bind(this);
     }
     toggleNav()  {
         this.props.dispatch(SiteActions.toggleSidebar());
     }
     search() {
         this.props.dispatch(RecipeActions.search());
+    }
+    openContent(id, category) {
+        this.props.dispatch(SiteActions.openContent(id, category));
     }
     render() {
         const { classes } = this.props;
@@ -41,7 +45,7 @@ class Application extends Component {
         return (
             <div  className={classes.root}>
                 <Header open={this.props.site.nav.open} toggleNav={this.toggleNav} search={this.search}/>
-                <Sidebar nav={this.props.site.nav} toggleNav={this.toggleNav} openRecipes={this.props.recipe.open}/>
+                <Sidebar nav={this.props.site.nav} toggleNav={this.toggleNav} openRecipes={this.props.recipe.open} openContent={this.openContent}/>
                 {content}
             </div>
         );
