@@ -21,6 +21,10 @@ const styles = theme => ({
     },
     icon: {
         color: 'rgba(255, 255, 255, 0.54)',
+        marginRight: 10,
+        '&:hover' : {
+            backgroundColor: 'rgba(255, 255, 255, 0.2)'
+        }
     }
 });
 
