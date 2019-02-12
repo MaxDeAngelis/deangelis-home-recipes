@@ -24,6 +24,21 @@ export default function(state = {}, action) {
         case SiteActionTypes.TOGGLE_SIDEBAR:
             state.nav.open = !state.nav.open;
             return Immutable.fromJS(state).toJS();
+        case SiteActionTypes.LOGIN:
+            if (action.status === "success") {
+                state.loginOpen = false;
+                state.user = action.user;
+            } else {
+                state.loginEerror = action.message;
+            }
+            return Immutable.fromJS(state).toJS();
+        case SiteActionTypes.LOGOUT:
+            state.loginOpen = false;
+            state.user = null;
+            return Immutable.fromJS(state).toJS();
+        case SiteActionTypes.TOGGLE_LOGIN:
+            state.loginOpen = !state.loginOpen;
+            return Immutable.fromJS(state).toJS();
         default:
             return state
     }

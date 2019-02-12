@@ -1,3 +1,5 @@
+import md5 from 'md5';
+
 function _processAction(key, params, callback){
     let url = '/processAction.php?action=' + key
     for (var paramKey in params) {
@@ -13,10 +15,34 @@ function _processAction(key, params, callback){
 
 export const SiteActionTypes = {
         OPEN_CONTENT : "OPEN_CONTENT",
-        TOGGLE_SIDEBAR : "TOGGLE_SIDEBAR"
+        TOGGLE_SIDEBAR : "TOGGLE_SIDEBAR",
+        TOGGLE_LOGIN : "TOGGLE_LOGIN",
+        LOGIN : "LOGIN",
+        LOGOUT : "LOGOUT"
 }
 
 export const SiteActions = {
+    login : function(username, password) {
+        return function(dispatch) {
+            _processAction("LOGIN", {username : username, password : md5(password)}, function(json) {
+                dispatch(PrivateSiteActions.login(json.status, json.user, json.message));
+                dispatch(RecipeActions.getRecents());
+            })
+        }
+    },
+    logout : function() {
+        return function(dispatch) {
+            _processAction("LOGOUT", {}, function(json) {
+                dispatch(PrivateSiteActions.logout());
+                dispatch(RecipeActions.getRecents());
+            })
+        }
+    },
+    toggleLogin : function() {
+        return { 
+            type : SiteActionTypes.TOGGLE_LOGIN
+        }
+    },
     openContent : function(id, category) {
         return { 
             type : SiteActionTypes.OPEN_CONTENT,
@@ -30,6 +56,23 @@ export const SiteActions = {
         }
     }
 };
+
+
+const PrivateSiteActions = {
+    login : function(status, user, message) {
+        return {
+            type : SiteActionTypes.LOGIN,
+            status : status,
+            user: user,
+            message: message
+        }
+    },
+    logout : function() {
+        return {
+            type : SiteActionTypes.LOGOUT
+        }
+    }
+}
 
 export const RecipeActionTypes = {
     OPEN_RECIPE : "OPEN_RECIPE",

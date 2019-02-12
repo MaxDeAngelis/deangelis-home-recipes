@@ -11,6 +11,8 @@ import siteReducer from './lib/reducers';
 
 const store = createStore(siteReducer, {
         site : {
+            loginOpen: false,
+            user: null,
             nav : {
                 open : false,
                 items : [

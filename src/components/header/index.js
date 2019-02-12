@@ -89,6 +89,10 @@ const styles = theme => ({
 class Header extends Component {
     render() {
         const { classes } = this.props;
+        let loginOrOut = <Button color="inherit" onClick={this.props.toggleLogin}>Login</Button>;
+        if (this.props.user) {
+            loginOrOut = <Button color="inherit" onClick={this.props.logout}>Logout</Button>;
+        }
         return (
             <AppBar position="fixed" className={classNames(classes.appBar, { [classes.appBarShift]: this.props.open, })}>
                 <Toolbar disableGutters={!this.props.open}>
@@ -107,7 +111,7 @@ class Header extends Component {
                         </div>
                         <InputBase placeholder="Search…" classes={{root: classes.inputRoot, input: classes.inputInput}} onChange={this.props.search}/>
                     </div>
-                    <Button color="inherit">Login</Button>
+                    {loginOrOut}
                 </Toolbar>
             </AppBar>      
         );
