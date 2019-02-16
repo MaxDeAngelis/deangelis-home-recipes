@@ -27,6 +27,9 @@ const styles = theme => ({
             duration: theme.transitions.duration.leavingScreen,
         }),
     },
+    toolbar: {
+        paddingRight: 24
+    },
     appBarShift: {
         marginLeft: theme.overrides.drawerWidth,
         width: `calc(100% - ${theme.overrides.drawerWidth}px)`,
@@ -87,6 +90,25 @@ const styles = theme => ({
 });
 
 class Header extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            search : ""
+        }
+
+        this.handleUpdate = this.handleUpdate.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
+    }
+    handleUpdate(e) {
+        this.setState({ search: e.target.value });
+        this.props.search(e.target.value);
+    }
+    handleKeyPress(e) {
+        if (e.key === "Enter") {
+            this.props.search(this.state.search);
+        }
+    }
     render() {
         const { classes } = this.props;
         let loginOrOut = <Button color="inherit" onClick={this.props.toggleLogin}>Login</Button>;
@@ -95,7 +117,7 @@ class Header extends Component {
         }
         return (
             <AppBar position="fixed" className={classNames(classes.appBar, { [classes.appBarShift]: this.props.open, })}>
-                <Toolbar disableGutters={!this.props.open}>
+                <Toolbar className={classes.toolbar} disableGutters={!this.props.open}>
                     <IconButton color="inherit" aria-label="Open drawer" onClick={this.props.toggleNav}
                         className={classNames(classes.menuButton, {
                             [classes.hide]: this.props.open,
@@ -107,9 +129,15 @@ class Header extends Component {
                     <div className={classes.grow} />
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
-                            <SearchIcon />
+                            <SearchIcon/>
                         </div>
-                        <InputBase placeholder="Search…" classes={{root: classes.inputRoot, input: classes.inputInput}} onChange={this.props.search}/>
+                        <InputBase 
+                            placeholder="Search…" 
+                            classes={{root: classes.inputRoot, input: classes.inputInput}} 
+                            value={this.state.search}
+                            onChange={this.handleUpdate}
+                            onKeyPress={this.handleKeyPress}
+                        />
                     </div>
                     {loginOrOut}
                 </Toolbar>

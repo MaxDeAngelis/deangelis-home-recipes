@@ -6,7 +6,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import thunkMiddleware from 'redux-thunk'
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Application from './components/application';
+import Application from './components/pages/application';
 import siteReducer from './lib/reducers';
 
 const store = createStore(siteReducer, {

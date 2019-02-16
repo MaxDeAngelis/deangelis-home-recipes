@@ -42,6 +42,9 @@
 	case ACTIONS::LOGOUT:
 		$action = new Logout($data);
 		break;
+	case ACTIONS::SEARCH:
+		$action = new Search($data);
+		break;
 	case ACTIONS::GET_LIST:
 		$action = new GetList();
 		break;

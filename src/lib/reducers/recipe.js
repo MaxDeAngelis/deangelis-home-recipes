@@ -22,7 +22,7 @@ export default function(state = {}, action) {
             state.recents = action.recents;
             return Immutable.fromJS(state).toJS();
         case RecipeActionTypes.UPDATE_SEARCH:
-            state.searchResults = action.results;
+            state.searchResults = action.results || [];
             return Immutable.fromJS(state).toJS();
         default:
             return state

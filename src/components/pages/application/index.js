@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SiteActions, RecipeActions } from '../../lib/actions';
+import { SiteActions, RecipeActions } from '../../../lib/actions';
 import { withStyles } from '@material-ui/core/styles';
 
 // COMPONENTS
-import Header from '../header';
-import Sidebar from '../sidebar';
+import Header from '../../header';
+import Sidebar from '../../sidebar';
+import Login from '../../login';
+
 import Home from '../home';
 import Recipe from '../recipe';
-import Login from '../login';
+import Search from '../search';
 
 const styles = theme => ({
     root: {
@@ -22,6 +24,7 @@ class Application extends Component {
 
         this.props.dispatch(RecipeActions.getRecents());
         this.props.dispatch(SiteActions.login("", ""));
+        this.props.dispatch(RecipeActions.search(""));
         
         this.toggleNav = this.toggleNav.bind(this);
         this.search = this.search.bind(this);
@@ -29,12 +32,14 @@ class Application extends Component {
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
         this.toggleLogin = this.toggleLogin.bind(this);
+        this.openRecipe = this.openRecipe.bind(this);
     }
     toggleNav()  {
         this.props.dispatch(SiteActions.toggleSidebar());
     }
-    search() {
-        this.props.dispatch(RecipeActions.search());
+    search(text) {
+        this.props.dispatch(RecipeActions.search(text));
+        this.props.dispatch(SiteActions.openContent('search', 'SITE'));
     }
     openContent(id, category) {
         this.props.dispatch(SiteActions.openContent(id, category));
@@ -48,13 +53,20 @@ class Application extends Component {
     toggleLogin() {
         this.props.dispatch(SiteActions.toggleLogin());
     }
+    openRecipe(id) {
+        this.props.dispatch(RecipeActions.open(id));
+    }
     render() {
         const { classes } = this.props;
-        let content = <Home/>;
+        let content = <Home openRecipe={this.openRecipe} site={this.props.site} recipe={this.props.recipe}/>;
         this.props.site.nav.items.forEach((item) => {
-            if (item.selected && item.category === "RECIPE") {
-                let recipes = this.props.recipe.open.filter((recipe) => recipe.id === item.id)
-                content = <Recipe data={recipes[0]}/>;
+            if (item.selected) {
+                if (item.category === "RECIPE") {
+                    let recipes = this.props.recipe.open.filter((recipe) => recipe.id === item.id)
+                    content = <Recipe data={recipes[0]}/>;
+                } else if (item.id === "search") {
+                    content = <Search results={this.props.recipe.searchResults} openRecipe={this.openRecipe}/>
+                }
             }
         })
         return (

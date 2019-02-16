@@ -89,9 +89,9 @@ export const RecipeActions = {
             })
         }
     },
-    search : function() {
+    search : function(text) {
         return function(dispatch) {
-            _processAction("GET_LIST", {}, function(json) {
+            _processAction("SEARCH", { searchText : text}, function(json) {
                 dispatch(PrivateRecipeActions.updateSearchResults(json));
             })
         }
