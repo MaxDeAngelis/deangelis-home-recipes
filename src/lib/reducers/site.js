@@ -3,6 +3,9 @@ import {SiteActionTypes} from '../actions';
 
 export default function(state = {}, action) {
     switch (action.type) {
+        case SiteActionTypes.CLOSE_CONTENT:
+            state.nav.items = state.nav.items.filter(item => (item.id !== action.id));
+            return Immutable.fromJS(state).toJS();
         case SiteActionTypes.OPEN_CONTENT:
             let alreadyOpen = false;
             state.nav.items.forEach(item => {

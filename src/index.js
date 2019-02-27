@@ -3,6 +3,8 @@ import {render} from 'react-dom';
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { persistStore } from 'redux-persist'
+import { PersistGate } from 'redux-persist/integration/react'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import thunkMiddleware from 'redux-thunk'
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -69,11 +71,15 @@ const theme = createMuiTheme({
     }
 });
 
+let persistor = persistStore(store)
+
 render(
     <MuiThemeProvider theme={theme}>
         <Provider store={store}>
-            <CssBaseline />
-            <Application/>
+            <PersistGate loading={null} persistor={persistor}>
+                <CssBaseline />
+                <Application/>
+            </PersistGate>
         </Provider>
     </MuiThemeProvider>, 
     document.getElementById('root')

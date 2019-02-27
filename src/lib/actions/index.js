@@ -15,6 +15,7 @@ function _processAction(key, params, callback){
 
 export const SiteActionTypes = {
         OPEN_CONTENT : "OPEN_CONTENT",
+        CLOSE_CONTENT : "CLOSE_CONTENT",
         TOGGLE_SIDEBAR : "TOGGLE_SIDEBAR",
         TOGGLE_LOGIN : "TOGGLE_LOGIN",
         LOGIN : "LOGIN",
@@ -50,6 +51,12 @@ export const SiteActions = {
             category : category
         }
     },
+    closeContent : function(id) {
+        return { 
+            type : SiteActionTypes.CLOSE_CONTENT,
+            id : id
+        }
+    },
     toggleSidebar : function() {
         return { 
             type: SiteActionTypes.TOGGLE_SIDEBAR
@@ -75,12 +82,19 @@ const PrivateSiteActions = {
 }
 
 export const RecipeActionTypes = {
+    CLOSE_RECIPE : "CLOSE_RECIPE",
     OPEN_RECIPE : "OPEN_RECIPE",
     UPDATE_RECENTS : "UPDATE_RECENTS",
     UPDATE_SEARCH : "UPDATE_SEARCH"
 }
 
 export const RecipeActions = {
+    close : function(id) {
+        return function(dispatch) {
+            dispatch(PrivateRecipeActions.close(id))
+            dispatch(SiteActions.closeContent(id));
+        }
+    },
     open : function(id) {
         return function(dispatch) {
             _processAction("GET_RECIPE", {id : id}, function(json) {
@@ -106,6 +120,12 @@ export const RecipeActions = {
 };
 
 const PrivateRecipeActions = {
+    close : function(id) {
+        return {
+            type : RecipeActionTypes.CLOSE_RECIPE,
+            id : id
+        }
+    },
     openRecipe : function(recipe) {
         return {
             type : RecipeActionTypes.OPEN_RECIPE,

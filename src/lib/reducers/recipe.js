@@ -3,6 +3,9 @@ import {RecipeActionTypes} from '../actions';
 
 export default function(state = {}, action) {
     switch (action.type) {
+        case RecipeActionTypes.CLOSE_RECIPE:
+            state.open = state.open.filter(recipe => recipe.id !== action.id);
+            return Immutable.fromJS(state).toJS();
         case RecipeActionTypes.OPEN_RECIPE:
             let alreadyOpen = false;
             state.open.forEach((content) => {
