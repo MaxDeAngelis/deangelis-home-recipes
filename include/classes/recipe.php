@@ -20,6 +20,7 @@ class Recipe {
     public $public = true;
     public $deleted = false;
     public $ingredients = array();
+    public $edit = true;
 
     function __construct($recipe) {
         $this->ingredients[0] = new Ingredient(null);
@@ -85,6 +86,7 @@ class Recipe {
                     }
 
                     $this->ingredients = $list;
+                    $this->edit = false;
                     break;
             }
         }

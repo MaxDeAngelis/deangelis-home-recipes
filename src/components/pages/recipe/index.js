@@ -1,6 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
@@ -11,6 +12,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import Fab from '@material-ui/core/Fab';
 import Close from '@material-ui/icons/Close';
+import Edit from '@material-ui/icons/EditOutlined';
+import Save from '@material-ui/icons/SaveOutlined';
 
 const styles = theme => ({
     content: {
@@ -21,6 +24,12 @@ const styles = theme => ({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '0 12px'
+    },
+    titleInput: {
+        flexGrow: 1,
+        '& input': {
+            fontSize: '2rem'
+        }
     },
     recipeImage: {
         width: '100%',
@@ -51,6 +60,9 @@ const styles = theme => ({
         width: 25,
         height: 25
     },
+    headerIcon: {
+        marginLeft: 10
+    },
     toolbar: theme.mixins.toolbar
 });
 
@@ -61,8 +73,21 @@ class Recipe extends React.Component {
             <Grid container className={classes.content} spacing={24}>
                 <Grid item xs={12} className={classes.toolbar} ></Grid>
                 <Grid container direction="row" className={classes.titleBar}>
-                    <Typography variant="h4">{this.props.data.title}</Typography>
-                    <Fab size="medium" color="secondary" onClick={() => this.props.close(this.props.data.id)}><Close/></Fab>
+                    {this.props.data.edit === true ? <TextField
+                        value={this.props.data.title}
+                        margin="dense"
+                        variant="outlined"
+                        className={classes.titleInput}
+                        onChange={(e) => this.props.updateValue(this.props.data.id, "title", e.target.value)}
+                    /> : <Typography variant="h4">{this.props.data.title}</Typography> }
+                    
+                    <div>
+                        {this.props.data.edit === true ?
+                            <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => this.props.updateValue(this.props.data.id, "edit", false)}><Save/></Fab> : 
+                            <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => this.props.updateValue(this.props.data.id, "edit", true)}><Edit/></Fab> 
+                        }
+                        <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => this.props.close(this.props.data.id)}><Close/></Fab>
+                    </div>
                 </Grid>      
                 <Grid item xs={12} sm={4} className={classes.imageColumn}>
                     <img src={this.props.data.picture} className={classes.recipeImage} alt={this.props.data.title}/>

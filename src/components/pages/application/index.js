@@ -33,6 +33,7 @@ class Application extends Component {
         this.logout = this.logout.bind(this);
         this.toggleLogin = this.toggleLogin.bind(this);
         this.newRecipe = this.newRecipe.bind(this);
+        this.updateValue = this.updateValue.bind(this);
         this.openRecipe = this.openRecipe.bind(this);
         this.closeRecipe = this.closeRecipe.bind(this);
     }
@@ -58,6 +59,9 @@ class Application extends Component {
     newRecipe() {
         this.props.dispatch(RecipeActions.new());
     }
+    updateValue(id, key, value) {
+        this.props.dispatch(RecipeActions.updateValue(id, key, value));
+    }
     openRecipe(id) {
         this.props.dispatch(RecipeActions.open(id));
     }
@@ -71,7 +75,7 @@ class Application extends Component {
             if (item.selected) {
                 if (item.category === "RECIPE" /*|| item.id === "new"*/) {
                     let recipes = this.props.recipe.open.filter((recipe) => recipe.id === item.id)
-                    content = <Recipe data={recipes[0]} close={this.closeRecipe}/>;
+                    content = <Recipe data={recipes[0]} close={this.closeRecipe} updateValue={this.updateValue}/>;
                 } else if (item.id === "search") {
                     content = <Search results={this.props.recipe.searchResults} openRecipe={this.openRecipe}/>
                 }

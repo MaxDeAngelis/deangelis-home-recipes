@@ -82,6 +82,7 @@ const PrivateSiteActions = {
 }
 
 export const RecipeActionTypes = {
+    UPDATE_VALUE : "UPDATE_VALUE",
     CLOSE_RECIPE : "CLOSE_RECIPE",
     OPEN_RECIPE : "OPEN_RECIPE",
     UPDATE_RECENTS : "UPDATE_RECENTS",
@@ -109,6 +110,14 @@ export const RecipeActions = {
                 dispatch(PrivateRecipeActions.openRecipe(json))
                 dispatch(SiteActions.openContent(json.id, "RECIPE"));
             })
+        }
+    },
+    updateValue : function(id, key, value) {
+        return {
+            type : RecipeActionTypes.UPDATE_VALUE,
+            id : id,
+            key : key,
+            value : value
         }
     },
     search : function(text) {
