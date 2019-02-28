@@ -6,8 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
 
 const styles = theme => ({
     content: {
@@ -25,6 +23,17 @@ const styles = theme => ({
         // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
         transform: 'translateZ(0)',
         paddingTop: 20
+    },
+    gridTile: {
+        transition: 'all 0.2s',
+        transform: 'scale(0.99)',
+        cursor: 'pointer',
+        '&:hover': {
+            transform: 'scale(1)',
+            '&>div' : {
+                boxShadow: '2px 2px 2px #888'
+            }
+        }
     },
     icon: {
         color: 'rgba(255, 255, 255, 0.54)',
@@ -45,20 +54,11 @@ class Search extends React.Component {
                 <Typography variant="h4" align="center">Search results</Typography>
                 <GridList className={classes.gridList} cellHeight={200} cols={5} spacing={8}>
                     {this.props.results.map(recipe => {
-                        var open = () => {
-                            this.props.openRecipe(recipe.id)
-                        }
                         return (
-                            <GridListTile key={recipe.id}>
+                            <GridListTile key={recipe.id} onClick={() => this.props.openRecipe(recipe.id)} className={classes.gridTile}>
                                 <img src={recipe.picture} alt={recipe.title} />
                                 <GridListTileBar
                                     title={recipe.title}
-                                    subtitle={<span>by: {recipe.firstName + " " + recipe.lastName}</span>}
-                                    actionIcon={
-                                        <IconButton className={classes.icon} onClick={open}>
-                                            <InfoIcon />
-                                        </IconButton>
-                                    }
                                 />
                             </GridListTile>
                         )

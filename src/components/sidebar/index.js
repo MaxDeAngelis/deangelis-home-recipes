@@ -112,15 +112,17 @@ class Sidebar extends Component {
                 <List>
                     {siteIcons.map((item) => {
                         let icon;
+                        let action = () => _this.props.openContent(item.id, "SITE")
                         if (item.id === "home") {
                             icon = <HomeOutlined/>;
                         } else if (item.id === "search") {
                             icon = <SearchIcon/>;
                         } else if (item.id === "new") {
                             icon = <Add/>;
+                            action = _this.props.newRecipe
                         }
                         return (
-                            <ListItem button key={item.title} selected={item.selected} onClick={() => _this.props.openContent(item.id, "SITE")}>
+                            <ListItem button key={item.title} selected={item.selected} onClick={action}>
                                 <ListItemIcon>{icon}</ListItemIcon>
                                 <ListItemText primary={item.title} className={classes.itemText}/>
                             </ListItem>

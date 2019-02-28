@@ -89,6 +89,14 @@ export const RecipeActionTypes = {
 }
 
 export const RecipeActions = {
+    new: function() {
+        return function(dispatch) {
+            _processAction("NEW_RECIPE", {}, function(json) {
+                dispatch(PrivateRecipeActions.openRecipe(json))
+                dispatch(SiteActions.openContent(json.id, "RECIPE"));
+            })
+        }
+    },
     close : function(id) {
         return function(dispatch) {
             dispatch(PrivateRecipeActions.close(id))

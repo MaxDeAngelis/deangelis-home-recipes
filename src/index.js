@@ -56,14 +56,14 @@ const theme = createMuiTheme({
     },
     palette: {
         primary: {
-            main : "#0E563B"
+            main : "#162856"
         },
         secondary: {
             main : "#0E563B"
         },
         background: {
             default : "#e2e2e2",
-            paper: "#A3AF8D"
+            paper: "#1226593d"
         }
     },
     overrides : {

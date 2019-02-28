@@ -32,6 +32,7 @@ class Application extends Component {
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
         this.toggleLogin = this.toggleLogin.bind(this);
+        this.newRecipe = this.newRecipe.bind(this);
         this.openRecipe = this.openRecipe.bind(this);
         this.closeRecipe = this.closeRecipe.bind(this);
     }
@@ -54,6 +55,9 @@ class Application extends Component {
     toggleLogin() {
         this.props.dispatch(SiteActions.toggleLogin());
     }
+    newRecipe() {
+        this.props.dispatch(RecipeActions.new());
+    }
     openRecipe(id) {
         this.props.dispatch(RecipeActions.open(id));
     }
@@ -65,7 +69,7 @@ class Application extends Component {
         let content = <Home openRecipe={this.openRecipe} site={this.props.site} recipe={this.props.recipe}/>;
         this.props.site.nav.items.forEach((item) => {
             if (item.selected) {
-                if (item.category === "RECIPE") {
+                if (item.category === "RECIPE" /*|| item.id === "new"*/) {
                     let recipes = this.props.recipe.open.filter((recipe) => recipe.id === item.id)
                     content = <Recipe data={recipes[0]} close={this.closeRecipe}/>;
                 } else if (item.id === "search") {
@@ -83,7 +87,12 @@ class Application extends Component {
                     toggleLogin={this.toggleLogin}
                     logout={this.logout}
                 />
-                <Sidebar nav={this.props.site.nav} toggleNav={this.toggleNav} openRecipes={this.props.recipe.open} openContent={this.openContent}/>
+                <Sidebar nav={this.props.site.nav} 
+                    toggleNav={this.toggleNav} 
+                    newRecipe={this.newRecipe}
+                    openRecipes={this.props.recipe.open} 
+                    openContent={this.openContent}
+                />
                 {content}
                 <Login open={this.props.site.loginOpen} login={this.login} toggleLogin={this.toggleLogin}/>
             </div>

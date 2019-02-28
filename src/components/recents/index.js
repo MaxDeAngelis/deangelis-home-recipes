@@ -5,19 +5,28 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
 
 const styles = theme => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'space-around',
-        overflow: 'hidden',
+        overflow: 'hidden'
     },
     gridList: {
         // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-        transform: 'translateZ(0)'
+        transform: 'translateZ(0)'        
+    },
+    gridTile: {
+        transition: 'all 0.2s',
+        transform: 'scale(0.99)',
+        cursor: 'pointer',
+        '&:hover': {
+            transform: 'scale(1)',
+            '&>div' : {
+                boxShadow: '2px 2px 2px #888'
+            }
+        }
     },
     icon: {
         color: 'rgba(255, 255, 255, 0.54)',
@@ -38,20 +47,12 @@ class RecentRecipes extends React.Component {
                         <ListSubheader component="header"><Typography variant="h6" color="primary" noWrap>Recent recipes</Typography></ListSubheader>
                     </GridListTile>
                     {this.props.recipes.map(recipe => {
-                        var open = () => {
-                            this.props.openRecipe(recipe.id)
-                        }
                         return ( 
-                            <GridListTile key={recipe.id}>
+                            <GridListTile key={recipe.id} onClick={() => this.props.openRecipe(recipe.id)} className={classes.gridTile}>
                                 <img src={recipe.picture} alt={recipe.title} />
                                 <GridListTileBar
                                     title={recipe.title}
                                     subtitle={<span>by: {recipe.firstName + " " + recipe.lastName}</span>}
-                                    actionIcon={
-                                        <IconButton className={classes.icon} onClick={open}>
-                                            <InfoIcon/>
-                                        </IconButton>
-                                    }
                                 />
                             </GridListTile>
                         )

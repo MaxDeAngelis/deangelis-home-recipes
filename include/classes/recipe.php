@@ -3,21 +3,21 @@ class Recipe {
     private $rawCookTime = "";
     private $rawPrepTime = "";
 
-    public $id = "";
-    public $title = "";
+    public $id = -1;
+    public $title = "New recipe";
     public $firstName = "";
     public $lastName = "";
     public $servings = "";
-    public $cookTime = "";
-    public $prepTime = "";
+    public $cookTime = "00:00";
+    public $prepTime = "00:00";
     public $totalTime = "";
     public $category = "";
     public $season = "";
-    public $steps = "";
+    public $steps = array();
     public $dateModified = "";
-    public $picture = "";
+    public $picture = "images/no-image-uploaded.png";
     public $creator = "";
-    public $public = false;
+    public $public = true;
     public $deleted = false;
     public $ingredients = array();
 
@@ -25,7 +25,7 @@ class Recipe {
         $this->ingredients[0] = new Ingredient(null);
 
         if ($recipe == null) {
-            return null;
+            return $this;
         }
 
         foreach ($recipe as $key => $value) {

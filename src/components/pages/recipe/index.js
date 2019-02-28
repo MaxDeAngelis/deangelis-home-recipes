@@ -20,7 +20,7 @@ const styles = theme => ({
     titleBar: {
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '0 16px'
+        padding: '0 12px'
     },
     recipeImage: {
         width: '100%',
@@ -67,15 +67,15 @@ class Recipe extends React.Component {
                 <Grid item xs={12} sm={4} className={classes.imageColumn}>
                     <img src={this.props.data.picture} className={classes.recipeImage} alt={this.props.data.title}/>
                     <List className={classes.specContent} dense={true}>
-                        {this.props.data.totalTime != "" ? <ListItem alignItems="center" >
+                        {this.props.data.totalTime !== "" ? <ListItem alignItems="center" >
                             <Typography variant="subtitle1" inline={true}>Total time:</Typography>
                             <Typography variant="h6" inline={true} className={classes.specLabel}>{this.props.data.totalTime}</Typography>
                         </ListItem> : ""}
-                        {this.props.data.prepTime!= "" ? <ListItem alignItems="center" >
+                        {this.props.data.prepTime!== "" ? <ListItem alignItems="center" >
                             <Typography variant="subtitle1" inline={true}>Prep time:</Typography>
                             <Typography variant="h6" inline={true} className={classes.specLabel}>{this.props.data.prepTime}</Typography>
                         </ListItem> : ""}
-                        {this.props.data.cookTime != "" ? <ListItem alignItems="center">
+                        {this.props.data.cookTime !== "" ? <ListItem alignItems="center">
                             <Typography variant="subtitle1" inline={true}>Cook time:</Typography>
                             <Typography variant="h6" inline={true} className={classes.specLabel}>{this.props.data.cookTime}</Typography>
                         </ListItem> : ""}
