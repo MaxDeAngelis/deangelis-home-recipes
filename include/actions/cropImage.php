@@ -16,14 +16,14 @@ class CropImage extends Action {
 			unlink($url);
 		}
 
-		$uri = substr($data,strpos($data,",")+1);
+		$uri = substr($data, strpos($data,",") + 1);
 
 		$encodedData = str_replace(' ', '+', $uri);
 		$decodedData = base64_decode($encodedData);
 		
 		$imageUrl = "images/recipes/temp_recipe_".rand().".png";
 
-		file_put_contents($imageUrl, $decodedData);
+		file_put_contents($_SERVER['DOCUMENT_ROOT'] . "/" . $imageUrl, $decodedData);
 
 		return Array(
 			"status" => 'success',

@@ -1,7 +1,7 @@
 import md5 from 'md5';
 
 function _processAction(key, params, callback){
-    let url = '/processAction.php?action=' + key
+    let url = '/api/processAction.php?action=' + key
     for (var paramKey in params) {
         url += "&" + paramKey + "=" + params[paramKey];
     }

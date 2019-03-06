@@ -68,6 +68,15 @@ const theme = createMuiTheme({
     },
     overrides : {
         drawerWidth : 250
+    },
+    mixins: {
+        cancel: {
+            backgroundColor: '#d32f2f',
+            color: '#fff',
+            '&:hover': {
+                backgroundColor: '#b11414',
+            }
+        }
     }
 });
 

@@ -15,6 +15,8 @@ import Close from '@material-ui/icons/Close';
 import Edit from '@material-ui/icons/EditOutlined';
 import Save from '@material-ui/icons/SaveOutlined';
 
+import Cropper from './image-cropper';
+
 const styles = theme => ({
     content: {
         flexGrow: 1,
@@ -30,10 +32,6 @@ const styles = theme => ({
         '& input': {
             fontSize: '2rem'
         }
-    },
-    recipeImage: {
-        width: '100%',
-        marginBottom: 20
     },
     specContent: {
         backgroundColor: 'white'
@@ -54,7 +52,10 @@ const styles = theme => ({
         alignItems: 'flex-start'
     },
     imageColumn: {
-        paddingTop : '0'
+        paddingTop : '0',
+        '& > *:first-child': {
+            marginBottom: 20
+        }
     },
     stepAvatar: {
         width: 25,
@@ -63,7 +64,8 @@ const styles = theme => ({
     headerIcon: {
         marginLeft: 10
     },
-    toolbar: theme.mixins.toolbar
+    toolbar: theme.mixins.toolbar,
+    close: theme.mixins.cancel
 });
 
 class Recipe extends React.Component {
@@ -86,11 +88,18 @@ class Recipe extends React.Component {
                             <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => this.props.updateValue(this.props.data.id, "edit", false)}><Save/></Fab> : 
                             <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => this.props.updateValue(this.props.data.id, "edit", true)}><Edit/></Fab> 
                         }
-                        <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => this.props.close(this.props.data.id)}><Close/></Fab>
+                        <Fab className={[classes.headerIcon, classes.close]} size="medium" color="secondary" onClick={() => this.props.close(this.props.data.id)}><Close/></Fab>
                     </div>
                 </Grid>      
                 <Grid item xs={12} sm={4} className={classes.imageColumn}>
-                    <img src={this.props.data.picture} className={classes.recipeImage} alt={this.props.data.title}/>
+                    <Cropper
+                        image={this.props.data.picture + "?" + this.props.data.dateModified}
+                        editable={this.props.data.edit}
+                        altText={this.props.data.title}
+                        width={400}
+                        height={400}
+                        onCropComplete={(url) => this.props.updateValue(this.props.data.id, "picture", url)}
+                    />
                     <List className={classes.specContent} dense={true}>
                         {this.props.data.totalTime !== "" ? <ListItem alignItems="center" >
                             <Typography variant="subtitle1" inline={true}>Total time:</Typography>
