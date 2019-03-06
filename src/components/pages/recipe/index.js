@@ -16,6 +16,7 @@ import Edit from '@material-ui/icons/EditOutlined';
 import Save from '@material-ui/icons/SaveOutlined';
 
 import Cropper from './image-cropper';
+import Spec from './subcomponents/spec.js';
 
 const styles = theme => ({
     content: {
@@ -35,10 +36,6 @@ const styles = theme => ({
     },
     specContent: {
         backgroundColor: 'white'
-    },
-    specLabel: {
-        paddingLeft: 10,
-        fontWeight: 'bold'
     },
     detailsContent: {
         height: '100%',
@@ -69,8 +66,53 @@ const styles = theme => ({
 });
 
 class Recipe extends React.Component {
+    totalTime(time1, time2) {
+        // Break the times up into hours and minutes
+        let times1 = time1.split(":");
+        let times2 = time2.split(":");
+
+        // Convert time to pure minutes by multiplying the hours by 60
+        let minutes1 = parseInt(times1[1]) + (parseInt(times1[0]) * 60);
+        let minutes2 = parseInt(times2[1]) + (parseInt(times2[0]) * 60);
+
+        // Divide and round time by 60 to get hours
+        let hours = Math.floor((minutes1 + minutes2) / 60);
+
+        // MOD by 60 to get just minutes
+        let minutes = (minutes1 + minutes2) % 60;
+
+        // Mush together and call format
+        return this.formatTime(hours + ":" + minutes);
+    }
+
+    formatTime(time) {
+        let times = time.split(":");
+        let hours = times[0];
+        let minutes = times[1];
+
+        if (parseInt(hours) > 0) {
+            hours = parseInt(hours) + " hrs ";
+        } else {
+            hours = "";
+        }
+
+        if (parseInt(minutes) > 0) {
+            minutes = parseInt(minutes) + " min";
+        } else {
+            minutes = "";
+        }
+
+        return hours + minutes;
+    }
     render() {
         const { classes } = this.props;
+        let prepTime = this.props.data.prepTime;
+        let cookTime = this.props.data.cookTime;
+        let totalTime = this.totalTime(this.props.data.prepTime, this.props.data.cookTime);
+        if (this.props.data.edit === false) {
+            prepTime = this.formatTime(this.props.data.prepTime);
+            cookTime = this.formatTime(this.props.data.cookTime);
+        }
         return (
             <Grid container className={classes.content} spacing={24}>
                 <Grid item xs={12} className={classes.toolbar} ></Grid>
@@ -101,26 +143,42 @@ class Recipe extends React.Component {
                         onCropComplete={(url) => this.props.updateValue(this.props.data.id, "picture", url)}
                     />
                     <List className={classes.specContent} dense={true}>
-                        {this.props.data.totalTime !== "" ? <ListItem alignItems="center" >
-                            <Typography variant="subtitle1" inline={true}>Total time:</Typography>
-                            <Typography variant="h6" inline={true} className={classes.specLabel}>{this.props.data.totalTime}</Typography>
-                        </ListItem> : ""}
-                        {this.props.data.prepTime!== "" ? <ListItem alignItems="center" >
-                            <Typography variant="subtitle1" inline={true}>Prep time:</Typography>
-                            <Typography variant="h6" inline={true} className={classes.specLabel}>{this.props.data.prepTime}</Typography>
-                        </ListItem> : ""}
-                        {this.props.data.cookTime !== "" ? <ListItem alignItems="center">
-                            <Typography variant="subtitle1" inline={true}>Cook time:</Typography>
-                            <Typography variant="h6" inline={true} className={classes.specLabel}>{this.props.data.cookTime}</Typography>
-                        </ListItem> : ""}
-                        <ListItem alignItems="center">
-                            <Typography variant="subtitle1" inline={true}>Yield:</Typography>
-                            <Typography variant="h6" inline={true} className={classes.specLabel}>{this.props.data.servings} servings</Typography>
-                        </ListItem>
-                        <ListItem alignItems="center">
-                            <Typography variant="subtitle1" inline={true}>Ingredients:</Typography>
-                            <Typography variant="h6" inline={true} className={classes.specLabel}>{this.props.data.ingredients.length}</Typography>
-                        </ListItem>
+                        <Spec
+                            value={totalTime}
+                            label="Total time:"
+                        />
+                        <Spec
+                            id={this.props.data.id}
+                            value={prepTime}
+                            label="Prep time:"
+                            valueKey="prepTime"
+                            variant="time"
+                            edit={this.props.data.edit}
+                            updateValue={this.props.updateValue}
+                        />
+                        <Spec
+                            id={this.props.data.id}
+                            value={cookTime}
+                            label="Cook time:"
+                            valueKey="cookTime"
+                            variant="time"
+                            edit={this.props.data.edit}
+                            updateValue={this.props.updateValue}
+                        />
+                        <Spec
+                            id={this.props.data.id}
+                            value={this.props.data.servings}
+                            label="Yield:"
+                            valueKey="servings"
+                            variant="servings"
+                            suffix="servings"
+                            edit={this.props.data.edit}
+                            updateValue={this.props.updateValue}
+                        />
+                        <Spec
+                            value={this.props.data.ingredients.length}
+                            label="Ingredients:"
+                        />
                     </List>
                 </Grid>  
                 <Grid item xs={12} sm={8}>

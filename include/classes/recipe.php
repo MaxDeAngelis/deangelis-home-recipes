@@ -1,16 +1,12 @@
 <?php
 class Recipe {
-    private $rawCookTime = "";
-    private $rawPrepTime = "";
-
     public $id = -1;
     public $title = "New recipe";
     public $firstName = "";
     public $lastName = "";
     public $servings = "";
-    public $cookTime = "00:00";
-    public $prepTime = "00:00";
-    public $totalTime = "";
+    public $cookTime = "";
+    public $prepTime = "";
     public $category = "";
     public $season = "";
     public $steps = array();
@@ -47,12 +43,10 @@ class Recipe {
                     $this->servings = $value;
                     break;
                 case 'cookTime':
-                    $this->rawCookTime = $value;
-                    $this->cookTime = $this->formatTime($value);
+                    $this->cookTime = $value;
                     break;
                 case 'prepTime':
-                    $this->rawPrepTime = $value;
-                    $this->prepTime = $this->formatTime($value);
+                    $this->prepTime = $value;
                     break;
                 case 'category':
                     $this->category = $value;
@@ -90,47 +84,6 @@ class Recipe {
                     break;
             }
         }
-
-        $this->totalTime = $this->totalTime($this->rawPrepTime, $this->rawCookTime);
-    }
-
-    private function totalTime($time1, $time2) {
-        // Break the times up into hours and minutes
-        $times1 = explode(":", $time1);
-        $times2 = explode(":", $time2);
-
-        // Convert time to pure minutes by multiplying the hours by 60
-        $minutes1 = intval($times1[1]) + (intval($times1[0]) * 60);
-        $minutes2 = intval($times2[1]) + (intval($times2[0]) * 60);
-
-        // Divide and round time by 60 to get hours
-        $hours = floor(($minutes1 + $minutes2) / 60);
-
-        // MOD by 60 to get just minutes
-        $minutes = ($minutes1 + $minutes2) % 60;
-
-        // Mush together and call format
-        return $this->formatTime($hours.":".$minutes);
-    }
-
-    private function formatTime($time) {
-        $times = explode(":", $time);
-        $hours = $times[0];
-        $minutes = $times[1];
-
-        if (intval($hours) > 0) {
-            $hours = $hours." hrs ";
-        } else {
-            $hours = "";
-        }
-
-        if (intval($minutes) > 0) {
-            $minutes = $minutes." min";
-        } else {
-            $minutes = "";
-        }
-
-        return $hours.$minutes;
     }
 }
 
