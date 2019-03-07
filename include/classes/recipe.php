@@ -1,4 +1,11 @@
 <?php
+class Step {
+    public $selected = false;
+    public $text = "";
+    function __construct($value) {
+        $this->text = $value;
+    }
+}
 class Recipe {
     public $id = -1;
     public $title = "New recipe";
@@ -19,12 +26,14 @@ class Recipe {
     public $edit = true;
 
     function __construct($recipe) {
-        $this->steps[0] = "";
+        $this->steps[0] = new Step("");;
         $this->ingredients[0] = new Ingredient(null);
 
         if ($recipe == null) {
             return $this;
         }
+
+        $this->edit = false;
 
         foreach ($recipe as $key => $value) {
             switch ($key) {
@@ -56,7 +65,14 @@ class Recipe {
                     $this->season = $value;
                     break;
                 case 'steps':
-                    $this->steps = explode("|", $value);
+                    $stepsList = array();
+                    $stepsTexts = explode("|", $value);
+
+                    foreach ($stepsTexts as $step) {
+                        $stepsList[] = new Step($step);
+                    }
+
+                    $this->steps = $stepsList;
                     break;
                 case 'modDate':
                     $this->dateModified = $value;
@@ -81,7 +97,6 @@ class Recipe {
                     }
 
                     $this->ingredients = $list;
-                    $this->edit = false;
                     break;
             }
         }
