@@ -6,12 +6,6 @@ import Check from '@material-ui/icons/Check'
 
 const styles = theme => ({
     stepAvatar: {
-        width: 25,
-        height: 25,
-    },
-    stepAvatarEnabled: {
-        width: 25,
-        height: 25,
         cursor: 'pointer',
         border: '2px solid transparent',
         transition: 'all .5s',
@@ -21,10 +15,6 @@ const styles = theme => ({
         '&:hover': {
             border: '2px solid black'
         }
-    },
-    stepAvatarCheck: {
-        width: 20,
-        height: 20,
     }
 });
 
@@ -32,21 +22,29 @@ class ItemAvatar extends React.Component {
     render() {
         const {classes} = this.props;
         let avatarContent = this.props.label;
+        let style = {
+            width: this.props.width,
+            height: this.props.height
+        }
         if (this.props.disabled) {
             return (
                 <Avatar 
-                    className={classes.stepAvatar} 
+                    style={style}
                 >
                     {avatarContent}
                 </Avatar>
             );
         } else {
             if (this.props.selected) {
-                avatarContent = <Check className={classes.stepAvatarCheck}/>;
+                avatarContent = <Check style={{
+                    width: this.props.width - 2,
+                    height: this.props.height - 2
+                }}/>;
             }
             return (
                 <Avatar 
-                    className={classes.stepAvatarEnabled} 
+                    className={classes.stepAvatar} 
+                    style={style}
                     data-selected={this.props.selected} 
                     onClick={this.props.update}
                 >
@@ -56,5 +54,10 @@ class ItemAvatar extends React.Component {
         }
     }
 }
+
+ItemAvatar.defaultProps = {
+    width: 25,
+    height: 25
+};
 
 export default withStyles(styles)(ItemAvatar);

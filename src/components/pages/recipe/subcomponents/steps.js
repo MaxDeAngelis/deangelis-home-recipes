@@ -99,7 +99,7 @@ class Steps extends React.Component {
             controls = <Button variant="contained" color="secondary" onClick={this.addStep}>Add step</Button>;
         }
         return (
-            <div>
+            <>
                 <Typography variant="h5">Steps</Typography>
                 <List component="ol">
                     {this.props.steps.map((step, index) => {
@@ -117,7 +117,7 @@ class Steps extends React.Component {
                     })}
                 </List>
                 {controls}
-            </div>
+            </>
         );
     }
 }

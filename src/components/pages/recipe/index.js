@@ -5,10 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
-import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 
 import Fab from '@material-ui/core/Fab';
 import Close from '@material-ui/icons/Close';
@@ -18,6 +15,7 @@ import Save from '@material-ui/icons/SaveOutlined';
 import Cropper from './image-cropper';
 import Spec from './subcomponents/spec.js';
 import Steps from './subcomponents/steps.js';
+import Ingredients from './subcomponents/ingredients.js';
 
 const styles = theme => ({
     content: {
@@ -42,9 +40,6 @@ const styles = theme => ({
         height: '100%',
         padding: 16,
         backgroundColor: 'white'
-    },
-    ingredientListItem: {
-        padding: '5px 16px'
     },
     imageColumn: {
         paddingTop : '0',
@@ -189,16 +184,11 @@ class Recipe extends React.Component {
                 </Grid>  
                 <Grid item xs={12} sm={8}>
                     <div className={classes.detailsContent}>
-                        <Typography variant="h5">Ingredients</Typography>
-                        <List>
-                            {this.props.data.ingredients.map((ing, index) => {
-                                return (
-                                    <ListItem key={index} className={classes.ingredientListItem}>
-                                        <ListItemText primary={ing.quantity + " " + ing.units + " " + ing.ingredientName} />
-                                    </ListItem>
-                                )
-                            })}
-                        </List>
+                        <Ingredients
+                            ingredients={this.props.data.ingredients}
+                            edit={this.props.data.edit} 
+                            updateValue={(value) => this.props.updateValue(this.props.data.id, "ingredients", value)}
+                        />
                         <Steps 
                             steps={this.props.data.steps}
                             edit={this.props.data.edit} 

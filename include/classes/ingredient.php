@@ -4,6 +4,7 @@ class Ingredient {
     public $ingredientName = "";
     public $quantity = "";
     public $units = "";
+    public $selected = false;
 
     function __construct($ingredient) {
         if ($ingredient == null) {
