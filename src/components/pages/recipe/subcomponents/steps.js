@@ -5,14 +5,13 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
 import Button from '@material-ui/core/Button';
-import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import Fab from '@material-ui/core/Fab';
 import Delete from '@material-ui/icons/DeleteOutlined';
-import Check from '@material-ui/icons/Check'
+import ItemAvatar from './avatar.js';
 
 const styles = theme => ({
     stepRow: {
@@ -32,23 +31,6 @@ const styles = theme => ({
             textDecoration: 'line-through'
         },
     },
-    stepAvatar: {
-        width: 25,
-        height: 25,
-        cursor: 'pointer',
-        border: '2px solid transparent',
-        transition: 'all .5s',
-        '&[data-selected=true]': {
-            backgroundColor: theme.palette.secondary.main
-        },
-        '&:hover': {
-            border: '2px solid black'
-        }
-    },
-    stepAvatarCheck: {
-        width: 20,
-        height: 20,
-    },
     delete: theme.mixins.cancel
 });
 
@@ -63,38 +45,25 @@ class Steps extends React.Component {
     }
     getStep(step, index) {
         const {classes} = this.props;
-        let avatarContent = index + 1;
-        if (step.selected) {
-            avatarContent = <Check className={classes.stepAvatarCheck}/>;
-        }
-        let avatar = <Avatar className={classes.stepAvatar} data-selected={step.selected} onClick={() => this.toggleStep(index)}>{avatarContent}</Avatar>;
         if (this.props.edit) {
             return (
-                <>
-                    {avatar}
-                    <div className={classes.stepRow}>
-                        <TextField
-                            value={step.text}
-                            placeholder="Please enter step instructions"
-                            multiline
-                            fullWidth
-                            margin="none"
-                            variant="filled"
-                            onChange={(e) => this.updateStep(e.target.value, index)}
-                        />
-                        <Fab aria-label="Delete" size="small" className={classes.delete} onClick={() => this.removeStep(index)}>
-                            <Delete />
-                        </Fab>
-                    </div>
-                </>
+                <div className={classes.stepRow}>
+                    <TextField
+                        value={step.text}
+                        placeholder="Please enter step instructions"
+                        multiline
+                        fullWidth
+                        margin="none"
+                        variant="filled"
+                        onChange={(e) => this.updateStep(e.target.value, index)}
+                    />
+                    <Fab aria-label="Delete" size="small" className={classes.delete} onClick={() => this.removeStep(index)}>
+                        <Delete />
+                    </Fab>
+                </div>
             );
         } else {
-            return (
-                <>
-                    {avatar}
-                    <ListItemText className={classes.stepListItemText} primary={step.text} data-selected={step.selected}/>
-                </>
-            );
+            return <ListItemText className={classes.stepListItemText} primary={step.text} data-selected={step.selected}/>;
         }
     }
     addStep() {
@@ -120,7 +89,6 @@ class Steps extends React.Component {
     }
     toggleStep(index) {
         let newSteps = this.props.steps;
-        console.log(newSteps);
         newSteps[index]['selected'] = !newSteps[index]['selected'];
         this.props.updateValue(newSteps);
     }
@@ -137,6 +105,12 @@ class Steps extends React.Component {
                     {this.props.steps.map((step, index) => {
                         return (
                             <ListItem key={index} className={classes.stepListItem}>
+                                <ItemAvatar 
+                                    label={index + 1}
+                                    selected={step.selected}
+                                    update={() => this.toggleStep(index)}
+                                    disabled={this.props.edit}
+                                />
                                 {this.getStep(step, index)}
                             </ListItem>
                         )
