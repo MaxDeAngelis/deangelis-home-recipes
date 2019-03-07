@@ -29,11 +29,6 @@ class Time extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            hours: parseInt(this.props.time.split(":")[0]),
-            minutes: parseInt(this.props.time.split(":")[1])
-        }
-
         this.handleChangeHour = this.handleChangeHour.bind(this);
         this.handleChangeMin = this.handleChangeMin.bind(this);
     }
@@ -41,22 +36,17 @@ class Time extends React.Component {
         return (time < 10) ? '0' + time.toString() : time.toString();
     }
     handleChangeHour(e) {
-        this.setState({
-            hours : e.target.value
-        })
-
-        let newTime = this.pad(e.target.value) + ":" + this.pad(this.state.minutes);
-        this.props.updateValue(this.props.id, this.props.valueKey, newTime);
+        let newTime = this.pad(e.target.value) + ":" + this.pad(parseInt(this.props.time.split(":")[1]));
+        this.props.updateValue(newTime);
     }
     handleChangeMin(e) {
-        this.setState({ 
-            minutes : e.target.value
-        })
-
-        let newTime =  this.pad(this.state.hours) + ":" + this.pad(e.target.value);
-        this.props.updateValue(this.props.id, this.props.valueKey, newTime);
+        let newTime =  this.pad(parseInt(this.props.time.split(":")[0])) + ":" + this.pad(e.target.value);
+        this.props.updateValue(newTime);
     }
     render() {
+        let hours = parseInt(this.props.time.split(":")[0]);
+        let minutes = parseInt(this.props.time.split(":")[1]);
+
         const {classes} = this.props;
         let hoursList = [];
         for (var i = 0; i <= 100; i++) {
@@ -69,7 +59,7 @@ class Time extends React.Component {
         return (
             <div>
                 <Select
-                    value={this.state.hours}
+                    value={hours}
                     onChange={this.handleChangeHour}
                     className={classes.select}
                 >
@@ -77,7 +67,7 @@ class Time extends React.Component {
                 </Select>
                 <Typography variant="h6" inline={true} className={classes.specLabel}>hrs</Typography>
                 <Select
-                    value={this.state.minutes}
+                    value={minutes}
                     onChange={this.handleChangeMin}
                     className={classes.select}
                 >
@@ -102,11 +92,9 @@ class Spec extends React.Component {
                 if (this.props.variant === "time") {
                     content = (
                         <Time 
-                            id={this.props.id}
-                            valueKey={this.props.valueKey}
                             time={this.props.value} 
                             classes={classes}
-                            updateValue={this.props.updateValue}
+                            updateValue={(value) => this.props.updateValue(this.props.id, this.props.valueKey, value)}
                         />
                     );
                 } else if (this.props.variant === "servings") {

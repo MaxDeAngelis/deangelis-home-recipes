@@ -17,6 +17,7 @@ import Save from '@material-ui/icons/SaveOutlined';
 
 import Cropper from './image-cropper';
 import Spec from './subcomponents/spec.js';
+import Steps from './subcomponents/steps.js';
 
 const styles = theme => ({
     content: {
@@ -45,18 +46,11 @@ const styles = theme => ({
     ingredientListItem: {
         padding: '5px 16px'
     },
-    stepListItem: {
-        alignItems: 'flex-start'
-    },
     imageColumn: {
         paddingTop : '0',
         '& > *:first-child': {
             marginBottom: 20
         }
-    },
-    stepAvatar: {
-        width: 25,
-        height: 25
     },
     headerIcon: {
         marginLeft: 10
@@ -66,6 +60,18 @@ const styles = theme => ({
 });
 
 class Recipe extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.handleCloseClick = this.handleCloseClick.bind(this);
+    }
+    handleCloseClick() {
+        if (this.props.data.edit && this.props.data.id !== -1) {
+            this.props.updateValue(this.props.data.id, "edit", false);
+        } else {
+            this.props.close(this.props.data.id);
+        }
+    }
     totalTime(time1, time2) {
         // Break the times up into hours and minutes
         let times1 = time1.split(":");
@@ -130,7 +136,7 @@ class Recipe extends React.Component {
                             <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => this.props.updateValue(this.props.data.id, "edit", false)}><Save/></Fab> : 
                             <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => this.props.updateValue(this.props.data.id, "edit", true)}><Edit/></Fab> 
                         }
-                        <Fab className={[classes.headerIcon, classes.close]} size="medium" color="secondary" onClick={() => this.props.close(this.props.data.id)}><Close/></Fab>
+                        <Fab className={[classes.headerIcon, classes.close]} size="medium" color="secondary" onClick={this.handleCloseClick}><Close/></Fab>
                     </div>
                 </Grid>      
                 <Grid item xs={12} sm={4} className={classes.imageColumn}>
@@ -193,17 +199,11 @@ class Recipe extends React.Component {
                                 )
                             })}
                         </List>
-                        <Typography variant="h5">Steps</Typography>
-                        <List component="ol">
-                            {this.props.data.steps.map((step, index) => {
-                                return (
-                                    <ListItem key={index} className={classes.stepListItem}>
-                                        <Avatar className={classes.stepAvatar}>{(++index)}</Avatar>
-                                        <ListItemText primary={step} />
-                                    </ListItem>
-                                )
-                            })}
-                        </List>
+                        <Steps 
+                            steps={this.props.data.steps}
+                            edit={this.props.data.edit} 
+                            updateValue={(value) => this.props.updateValue(this.props.data.id, "steps", value)}
+                        />
                     </div>
                 </Grid>       
             </Grid>

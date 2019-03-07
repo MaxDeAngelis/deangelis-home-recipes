@@ -4,9 +4,9 @@ class Recipe {
     public $title = "New recipe";
     public $firstName = "";
     public $lastName = "";
-    public $servings = "";
-    public $cookTime = "";
-    public $prepTime = "";
+    public $servings = "1";
+    public $cookTime = "00:00";
+    public $prepTime = "00:00";
     public $category = "";
     public $season = "";
     public $steps = array();
@@ -19,6 +19,7 @@ class Recipe {
     public $edit = true;
 
     function __construct($recipe) {
+        $this->steps[0] = "";
         $this->ingredients[0] = new Ingredient(null);
 
         if ($recipe == null) {
