@@ -86,7 +86,9 @@ export const RecipeActionTypes = {
     CLOSE_RECIPE : "CLOSE_RECIPE",
     OPEN_RECIPE : "OPEN_RECIPE",
     UPDATE_RECENTS : "UPDATE_RECENTS",
-    UPDATE_SEARCH : "UPDATE_SEARCH"
+    UPDATE_SEARCH : "UPDATE_SEARCH",
+    GET_INGREDIENTS : "GET_INGREDIENTS",
+    GET_UNITS: "GET_UNITS"
 }
 
 export const RecipeActions = {
@@ -109,6 +111,12 @@ export const RecipeActions = {
             _processAction("GET_RECIPE", {id : id}, function(json) {
                 dispatch(PrivateRecipeActions.openRecipe(json))
                 dispatch(SiteActions.openContent(json.id, "RECIPE"));
+            })
+            _processAction("GET_DATA_INGREDIENTS", {}, function(json) {
+                dispatch(PrivateRecipeActions.getIngredients(json))
+            })
+            _processAction("GET_DATA_UNITS", {}, function(json) {
+                dispatch(PrivateRecipeActions.getUnits(json))
             })
         }
     },
@@ -160,5 +168,17 @@ const PrivateRecipeActions = {
             type: RecipeActionTypes.UPDATE_RECENTS,
             recents : recipes
         }
-    }
+    },
+    getIngredients : function(results) {
+        return { 
+            type: RecipeActionTypes.GET_INGREDIENTS,
+            results : results
+        }
+    },
+    getUnits : function(results) {
+        return { 
+            type: RecipeActionTypes.GET_UNITS,
+            results : results
+        }
+    },
 }

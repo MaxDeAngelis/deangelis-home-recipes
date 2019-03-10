@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import ListItem from '@material-ui/core/ListItem';
 
 import Select from '@material-ui/core/Select';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 import MenuItem from '@material-ui/core/MenuItem';
 
 const styles = theme => ({
@@ -24,6 +25,11 @@ const styles = theme => ({
         textAlign: 'right'
     }
 });
+const CustomInput = withStyles(theme => ({
+    input: {
+        padding: '9px 32px 9px 9px'
+    }
+}))(OutlinedInput);
 
 class Time extends React.Component {
     constructor(props) {
@@ -62,6 +68,7 @@ class Time extends React.Component {
                     value={hours}
                     onChange={this.handleChangeHour}
                     className={classes.select}
+                    input={<CustomInput/>}
                 >
                     {hoursList}
                 </Select>
@@ -70,6 +77,7 @@ class Time extends React.Component {
                     value={minutes}
                     onChange={this.handleChangeMin}
                     className={classes.select}
+                    input={<CustomInput/>}
                 >
                     {minutesList}
                 </Select>
@@ -107,6 +115,7 @@ class Spec extends React.Component {
                             value={this.props.value}
                             onChange={(e) => this.props.updateValue(this.props.id, this.props.valueKey, e.target.value)}
                             className={classes.select}
+                            input={<CustomInput/>}
                         >
                             {list}
                         </Select>

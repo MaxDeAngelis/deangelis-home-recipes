@@ -75,7 +75,13 @@ class Application extends Component {
             if (item.selected) {
                 if (item.category === "RECIPE" /*|| item.id === "new"*/) {
                     let recipes = this.props.recipe.open.filter((recipe) => recipe.id === item.id)
-                    content = <Recipe data={recipes[0]} close={this.closeRecipe} updateValue={this.updateValue}/>;
+                    content = <Recipe 
+                                data={recipes[0]} 
+                                close={this.closeRecipe} 
+                                updateValue={this.updateValue}
+                                availableIngredients={this.props.recipe.ingredients}
+                                availableUnits={this.props.recipe.units}
+                            />;
                 } else if (item.id === "search") {
                     content = <Search results={this.props.recipe.searchResults} openRecipe={this.openRecipe}/>
                 }

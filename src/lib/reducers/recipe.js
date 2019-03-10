@@ -34,6 +34,12 @@ export default function(state = {}, action) {
         case RecipeActionTypes.UPDATE_SEARCH:
             state.searchResults = action.results || [];
             return Immutable.fromJS(state).toJS();
+        case RecipeActionTypes.GET_INGREDIENTS:
+            state.ingredients = action.results || [];
+            return Immutable.fromJS(state).toJS();       
+        case RecipeActionTypes.GET_UNITS:
+            state.units = action.results || [];
+            return Immutable.fromJS(state).toJS();       
         default:
             return state
     }

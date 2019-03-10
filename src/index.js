@@ -38,6 +38,8 @@ const store = createStore(siteReducer, {
             }
         },
         recipe : {
+            ingredients : [],
+            units: [],
             recents : [],
             searchResults : [],
             open : []

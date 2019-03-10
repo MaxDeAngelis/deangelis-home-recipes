@@ -185,6 +185,8 @@ class Recipe extends React.Component {
                 <Grid item xs={12} sm={8}>
                     <div className={classes.detailsContent}>
                         <Ingredients
+                            availableIngredients={this.props.availableIngredients}
+                            availableUnits={this.props.availableUnits}
                             ingredients={this.props.data.ingredients}
                             edit={this.props.data.edit} 
                             updateValue={(value) => this.props.updateValue(this.props.data.id, "ingredients", value)}
