@@ -11,6 +11,9 @@ const styles = theme => ({
     input: {
         display: 'flex',
         padding: 0,
+        '& input' : {
+            opacity: '1 !important'
+        }
     },
     paper: {
         position: 'absolute',
@@ -63,28 +66,28 @@ function inputComponent({ inputRef, ...props }) {
 
 function Control(props) {
     return (
-      <TextField
-        fullWidth
-        margin="none"
-        variant="outlined"
-        InputProps={{
-            inputComponent,
-            inputProps: {
-                className: props.selectProps.classes.input,
-                inputRef: props.innerRef,
-                children: props.children,
-                ...props.innerProps,
-            },
-        }}
-        {...props.selectProps.textFieldProps}
-      />
+        <TextField
+            fullWidth
+            margin="none"
+            variant="outlined"
+            onChange={(e) => props.selectProps.onChange({label:e.target.value})}
+            InputProps={{
+                inputComponent,
+                inputProps: {
+                    className: props.selectProps.classes.input,
+                    inputRef: props.innerRef,
+                    children: props.children,
+                    ...props.innerProps,
+                },
+            }}
+        />
     );
 }
 
 const components = {
+    Control,
     Menu,
     Option,
-    Control
 };
 
 class Autocomplete extends React.Component {
@@ -110,6 +113,7 @@ class Autocomplete extends React.Component {
                 options={this.props.options}
                 components={components}
                 className={this.props.className}
+                onChange={this.props.onChange}
             />
         );
     }

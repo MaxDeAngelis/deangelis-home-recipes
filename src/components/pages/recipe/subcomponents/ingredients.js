@@ -3,12 +3,14 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Typography from '@material-ui/core/Typography';
 
+import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import TextField from '@material-ui/core/TextField';
-
+import Fab from '@material-ui/core/Fab';
+import Delete from '@material-ui/icons/DeleteOutlined';
 import ItemAvatar from './avatar.js';
 import Autocomplete from './autocomplete.js';
 
@@ -27,9 +29,13 @@ const styles = theme => ({
         width: 150,
         marginLeft: theme.spacing.unit * 2,
     },
+    ingredientContainer: {
+        marginBottom: theme.spacing.unit * 2,
+    },
     ingredientSelect: {
         flexGrow: 1,
         marginLeft: theme.spacing.unit * 2,
+        marginRight: theme.spacing.unit * 2,
     },
     ingredientListItem: {
         padding: '5px 16px'
@@ -47,19 +53,55 @@ class Ingredients extends React.Component {
         super(props);
 
         this.toggleIngredient = this.toggleIngredient.bind(this);
+        this.addIngredient = this.addIngredient.bind(this);
+        this.removeIngredient = this.removeIngredient.bind(this);
+        this.updateIngredient = this.updateIngredient.bind(this);
     }
     toggleIngredient(index) {
         let newIngredients = this.props.ingredients;
         newIngredients[index]['selected'] = !newIngredients[index]['selected'];
         this.props.updateValue(newIngredients);
     }
-    getIngredient(ing) {
+    addIngredient() {
+        let newIngredients = this.props.ingredients;
+        newIngredients.push({
+            ingredientId: "",
+            ingredientName: "",
+            quantity: "",
+            units: "",
+        })
+        this.props.updateValue(newIngredients);
+    }
+    removeIngredient(index) {
+        let newIngredients = this.props.ingredients;
+
+        // If trying to delete last item then just clear out the value
+        if (newIngredients.length === 1) {
+            newIngredients[index] = {
+                ingredientId: "",
+                ingredientName: "",
+                quantity: "",
+                units: "",
+            };
+        } else {
+            newIngredients.splice(index, 1);
+        }
+    
+        this.props.updateValue(newIngredients);
+    }
+    updateIngredient(key, value, index) {
+        console.log(value);
+        let newIngredients = this.props.ingredients;
+        newIngredients[index][key] = value;
+        this.props.updateValue(newIngredients);
+    }
+    getIngredient(ing, index) {
         const {classes} = this.props;
 
         if (this.props.edit) {
             let ingredients = this.props.availableIngredients.map((availIng) => {
                 return {
-                    value: availIng.ingredientId,
+                    value: availIng.ingredientName,
                     label: availIng.ingredientName
                 }
             })
@@ -73,9 +115,10 @@ class Ingredients extends React.Component {
                 <>
                     <TextField
                         className={classes.quantity}
-                        value={ing.units}
+                        value={ing.quantity}
                         margin="none"
                         variant="outlined"
+                        onChange={(e) => this.updateIngredient('quantity', e.target.value, index)}
                     />
                     <Autocomplete
                         value={{
@@ -84,15 +127,20 @@ class Ingredients extends React.Component {
                         }}
                         options={units}
                         className={classes.unitsSelect}
+                        onChange={(obj) => this.updateIngredient('units', obj.label, index)}
                     />
                     <Autocomplete
                         value={{
-                            value: ing.ingredientId,
+                            value: ing.ingredientName,
                             label: ing.ingredientName
                         }}
                         options={ingredients}
                         className={classes.ingredientSelect}
+                        onChange={(obj) => this.updateIngredient('ingredientName', obj.label, index)}
                     />
+                    <Fab aria-label="Delete" size="small" className={classes.delete} onClick={() => this.removeIngredient(index)}>
+                        <Delete />
+                    </Fab>
                 </>
             )
         } else {
@@ -107,8 +155,12 @@ class Ingredients extends React.Component {
     }
     render() {
         const {classes} = this.props;
+        let controls;
+        if (this.props.edit) {
+            controls = <Button variant="contained" color="secondary" onClick={this.addIngredient}>Add ingredient</Button>;
+        }
         return (
-            <>
+            <div className={classes.ingredientContainer}>
                 <Typography variant="h5">Ingredients</Typography>
                 <List>
                     {this.props.ingredients.map((ing, index) => {
@@ -121,12 +173,13 @@ class Ingredients extends React.Component {
                                     width={18}
                                     height={18}
                                 />
-                                {this.getIngredient(ing)}
+                                {this.getIngredient(ing, index)}
                             </ListItem>
                         )
                     })}
                 </List>
-            </>
+                {controls}
+            </div>
         );
     }
 }

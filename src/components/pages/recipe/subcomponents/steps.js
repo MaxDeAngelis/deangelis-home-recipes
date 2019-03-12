@@ -23,6 +23,9 @@ const styles = theme => ({
             marginRight: 16,
         }
     },
+    stepInput: {
+        marginTop: 0
+    },
     stepListItem: {
         alignItems: 'flex-start',
     },
@@ -53,8 +56,9 @@ class Steps extends React.Component {
                         placeholder="Please enter step instructions"
                         multiline
                         fullWidth
-                        margin="none"
-                        variant="filled"
+                        margin="dense"
+                        variant="outlined"
+                        className={classes.stepInput}
                         onChange={(e) => this.updateStep(e.target.value, index)}
                     />
                     <Fab aria-label="Delete" size="small" className={classes.delete} onClick={() => this.removeStep(index)}>
