@@ -128,7 +128,7 @@ class Recipe extends React.Component {
                     
                     <div>
                         {this.props.data.edit === true ?
-                            <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => this.props.updateValue(this.props.data.id, "edit", false)}><Save/></Fab> : 
+                            <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => this.props.saveRecipe(this.props.data)}><Save/></Fab> : 
                             <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => this.props.updateValue(this.props.data.id, "edit", true)}><Edit/></Fab> 
                         }
                         <Fab className={[classes.headerIcon, classes.close]} size="medium" color="secondary" onClick={this.handleCloseClick}><Close/></Fab>

@@ -33,6 +33,7 @@ class Application extends Component {
         this.logout = this.logout.bind(this);
         this.toggleLogin = this.toggleLogin.bind(this);
         this.newRecipe = this.newRecipe.bind(this);
+        this.saveRecipe = this.saveRecipe.bind(this);
         this.updateValue = this.updateValue.bind(this);
         this.openRecipe = this.openRecipe.bind(this);
         this.closeRecipe = this.closeRecipe.bind(this);
@@ -59,6 +60,9 @@ class Application extends Component {
     newRecipe() {
         this.props.dispatch(RecipeActions.new());
     }
+    saveRecipe(recipe) {
+        this.props.dispatch(RecipeActions.save(recipe));
+    }
     updateValue(id, key, value) {
         this.props.dispatch(RecipeActions.updateValue(id, key, value));
     }
@@ -78,6 +82,7 @@ class Application extends Component {
                     content = <Recipe 
                                 data={recipes[0]} 
                                 close={this.closeRecipe} 
+                                saveRecipe={this.saveRecipe}
                                 updateValue={this.updateValue}
                                 availableIngredients={this.props.recipe.ingredients}
                                 availableUnits={this.props.recipe.units}

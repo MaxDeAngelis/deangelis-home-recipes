@@ -1,11 +1,22 @@
 import md5 from 'md5';
 
-function _processAction(key, params, callback){
-    let url = '/api/processAction.php?action=' + key
-    for (var paramKey in params) {
-        url += "&" + paramKey + "=" + params[paramKey];
+function _processAction(method, key, params, callback){
+    let url = '/api/processAction.php'
+    let options = {
+        method: method
+    };
+
+    if (method === "GET") {
+        url += '?action=' + key
+        for (var paramKey in params) {
+            url += "&" + paramKey + "=" + params[paramKey];
+        }
+    } else if (method === "POST") {
+        params.action = key;
+        options.body = JSON.stringify(params);
     }
-    fetch(url)
+
+    fetch(url, options)
     .then(
         response => response.json(),
         error => console.log('An error occurred.', error)
@@ -25,7 +36,7 @@ export const SiteActionTypes = {
 export const SiteActions = {
     login : function(username, password) {
         return function(dispatch) {
-            _processAction("LOGIN", {username : username, password : md5(password)}, function(json) {
+            _processAction("GET", "LOGIN", {username : username, password : md5(password)}, function(json) {
                 dispatch(PrivateSiteActions.login(json.status, json.user, json.message));
                 dispatch(RecipeActions.getRecents());
             })
@@ -33,7 +44,7 @@ export const SiteActions = {
     },
     logout : function() {
         return function(dispatch) {
-            _processAction("LOGOUT", {}, function(json) {
+            _processAction("GET", "LOGOUT", {}, function(json) {
                 dispatch(PrivateSiteActions.logout());
                 dispatch(RecipeActions.getRecents());
             })
@@ -87,14 +98,22 @@ export const RecipeActionTypes = {
     OPEN_RECIPE : "OPEN_RECIPE",
     UPDATE_RECENTS : "UPDATE_RECENTS",
     UPDATE_SEARCH : "UPDATE_SEARCH",
+    SAVE_RECIPE : "SAVE_RECIPE",
     GET_INGREDIENTS : "GET_INGREDIENTS",
     GET_UNITS: "GET_UNITS"
 }
 
 export const RecipeActions = {
+    save: function(recipe) {
+        return function(dispatch) {
+            _processAction("POST", "SAVE_RECIPE", {recipe: recipe}, function(json) {
+                console.log(json);
+            })
+        }
+    },
     new: function() {
         return function(dispatch) {
-            _processAction("NEW_RECIPE", {}, function(json) {
+            _processAction("GET", "NEW_RECIPE", {}, function(json) {
                 dispatch(PrivateRecipeActions.openRecipe(json))
                 dispatch(SiteActions.openContent(json.id, "RECIPE"));
             })
@@ -108,14 +127,14 @@ export const RecipeActions = {
     },
     open : function(id) {
         return function(dispatch) {
-            _processAction("GET_RECIPE", {id : id}, function(json) {
+            _processAction("GET", "GET_RECIPE", {id : id}, function(json) {
                 dispatch(PrivateRecipeActions.openRecipe(json))
                 dispatch(SiteActions.openContent(json.id, "RECIPE"));
             })
-            _processAction("GET_DATA_INGREDIENTS", {}, function(json) {
+            _processAction("GET", "GET_DATA_INGREDIENTS", {}, function(json) {
                 dispatch(PrivateRecipeActions.getIngredients(json))
             })
-            _processAction("GET_DATA_UNITS", {}, function(json) {
+            _processAction("GET", "GET_DATA_UNITS", {}, function(json) {
                 dispatch(PrivateRecipeActions.getUnits(json))
             })
         }
@@ -130,14 +149,14 @@ export const RecipeActions = {
     },
     search : function(text) {
         return function(dispatch) {
-            _processAction("SEARCH", { searchText : text}, function(json) {
+            _processAction("GET", "SEARCH", { searchText : text}, function(json) {
                 dispatch(PrivateRecipeActions.updateSearchResults(json));
             })
         }
     },
     getRecents : function() {
         return function(dispatch) {
-            _processAction("GET_DATA_RECENT_FEED", {}, function(json) {
+            _processAction("GET", "GET_DATA_RECENT_FEED", {}, function(json) {
                 dispatch(PrivateRecipeActions.updateRecents(json));
             })
         }
