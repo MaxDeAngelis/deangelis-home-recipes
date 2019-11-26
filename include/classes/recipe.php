@@ -1,28 +1,39 @@
 <?php
+class Step {
+    public $selected = false;
+    public $text = "";
+    function __construct($value) {
+        $this->text = $value;
+    }
+}
 class Recipe {
-    public $id = "";
-    public $title = "";
+    public $id = -1;
+    public $title = "New recipe";
     public $firstName = "";
     public $lastName = "";
-    public $servings = "";
-    public $cookTime = "";
-    public $prepTime = "";
+    public $servings = "1";
+    public $cookTime = "00:00";
+    public $prepTime = "00:00";
     public $category = "";
     public $season = "";
-    public $steps = "";
+    public $steps = array();
     public $dateModified = "";
-    public $picture = "";
+    public $picture = "images/no-image-uploaded.png";
     public $creator = "";
-    public $public = false;
+    public $public = true;
     public $deleted = false;
     public $ingredients = array();
+    public $edit = true;
 
     function __construct($recipe) {
+        $this->steps[0] = new Step("");;
         $this->ingredients[0] = new Ingredient(null);
 
         if ($recipe == null) {
-            return null;
+            return $this;
         }
+
+        $this->edit = false;
 
         foreach ($recipe as $key => $value) {
             switch ($key) {
@@ -54,7 +65,14 @@ class Recipe {
                     $this->season = $value;
                     break;
                 case 'steps':
-                    $this->steps = $value;
+                    $stepsList = array();
+                    $stepsTexts = explode("|", $value);
+
+                    foreach ($stepsTexts as $step) {
+                        $stepsList[] = new Step($step);
+                    }
+
+                    $this->steps = $stepsList;
                     break;
                 case 'modDate':
                     $this->dateModified = $value;
@@ -72,7 +90,13 @@ class Recipe {
                     $this->deleted = boolval($value);
                     break;
                 case 'ing':
-                    $this->ingredients = $value;
+                    $list = array();
+
+                    foreach ($value as $ingredient) {
+                        $list[] = new Ingredient($ingredient);
+                    }
+
+                    $this->ingredients = $list;
                     break;
             }
         }

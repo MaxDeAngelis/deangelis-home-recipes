@@ -10,7 +10,21 @@ class SaveRecipe extends Action {
 	public function process() {
 		$recipeId = $this->recipe["id"];
 		$sqlList = array();
+
+		array_push($sqlList, "INSERT INTO recipes (name) VALUES ('');");
+		array_push($sqlList, "UPDATE recipes SET name = 'HELLOP' WHERE recipeId = LAST_INSERT_ID()");
 		
+		$response = new DatabaseTransaction($sqlList);
+
+		#$response = new DatabaseInsert("INSERT INTO recipes (name) VALUES ('');");
+		#$response = new DatabaseQuery("SELECT LAST_INSERT_ID();");
+
+		#error_log(print_r($response, true));
+		
+
+		return $response;
+
+
 		$newPicture = $this->recipe["picture"];
 
 		if ($this->recipe["public"] == false) {
