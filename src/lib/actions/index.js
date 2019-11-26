@@ -1,7 +1,7 @@
 import md5 from 'md5';
 
 function _processAction(method, key, params, callback){
-    let url = '/api/processAction.php'
+    let url = '/processAction.php'
     let options = {
         method: method
     };
