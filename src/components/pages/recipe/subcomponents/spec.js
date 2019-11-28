@@ -102,6 +102,7 @@ class Spec extends React.Component {
                         <Time 
                             time={this.props.value} 
                             classes={classes}
+                            key={this.props.id}
                             updateValue={(value) => this.props.updateValue(this.props.id, this.props.valueKey, value)}
                         />
                     );
