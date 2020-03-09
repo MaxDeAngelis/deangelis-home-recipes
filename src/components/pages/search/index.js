@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { SiteActions, RecipeActions } from '../../../lib/actions';
+
 import { withStyles } from '@material-ui/core/styles';
 
 import Typography from '@material-ui/core/Typography';
@@ -45,49 +48,31 @@ const styles = theme => ({
     toolbar: theme.mixins.toolbar
 });
 
-class Search extends React.Component {
-    render() {
-        const { classes } = this.props;
-        return (
-            <main className={classes.content}>
-                <div className={classes.toolbar} />
-                <Typography variant="h4" align="center">Search results</Typography>
-                <GridList className={classes.gridList} cellHeight={200} cols={5} spacing={8}>
-                    {this.props.results.map(recipe => {
-                        return (
-                            <GridListTile key={recipe.id} onClick={() => this.props.openRecipe(recipe.id)} className={classes.gridTile}>
-                                <img src={recipe.picture} alt={recipe.title} />
-                                <GridListTileBar
-                                    title={recipe.title}
-                                />
-                            </GridListTile>
-                        )
-                    })}
-                </GridList>
-            </main>
-        );
-    }
+function Search(props) {
+    const { recipe, classes, dispatch } = props;
+
+    return (
+        <main className={classes.content}>
+            <div className={classes.toolbar} />
+            <Typography variant="h4" align="center">Search results</Typography>
+            <GridList className={classes.gridList} cellHeight={200} cols={5} spacing={8}>
+                {recipe.searchResults.map(recipe => {
+                    return (
+                        <GridListTile key={recipe.id} onClick={() => dispatch(RecipeActions.open(recipe.id))} className={classes.gridTile}>
+                            <img src={recipe.picture} alt={recipe.title} />
+                            <GridListTileBar
+                                title={recipe.title}
+                            />
+                        </GridListTile>
+                    )
+                })}
+            </GridList>
+        </main>
+    );
 }
 
-export default withStyles(styles)(Search);
+function mapStateToProps(state) {
+    return {site : state.site, recipe : state.recipe}
+}
 
-/*
-<Paper className={classes.tablePaper}>
-    <Table>
-        <TableHead>
-            <TableRow>
-                <TableCell></TableCell>
-                <TableCell>Recipe title</TableCell>
-            </TableRow>
-        </TableHead>
-        <TableBody>
-            {this.props.results.map(recipe => (
-                <TableRow key={recipe.id}>
-                    <TableCell><img src={recipe.picture} className={classes.recipeIcon} alt={recipe.title}/></TableCell>
-                    <TableCell>{recipe.title}</TableCell>
-                </TableRow>
-            ))}
-        </TableBody>
-    </Table>
-</Paper>
-*/
+export default connect(mapStateToProps)(withStyles(styles)(Search));

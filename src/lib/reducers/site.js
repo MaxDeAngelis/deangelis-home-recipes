@@ -48,6 +48,10 @@ export default function(state = {}, action) {
             return Immutable.fromJS(state).toJS();
         case SiteActionTypes.TOGGLE_LOGIN:
             state.loginOpen = !state.loginOpen;
+
+            if (state.loginOpen) {
+                state.loginEerror = "";
+            }
             return Immutable.fromJS(state).toJS();
         default:
             return state
