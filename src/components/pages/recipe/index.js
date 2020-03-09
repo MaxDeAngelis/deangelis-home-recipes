@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
+import { RecipeActions } from '../../../lib/actions';
 
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -53,21 +55,24 @@ const styles = theme => ({
     toolbar: theme.mixins.toolbar,
     close: theme.mixins.cancel
 });
-
-class Recipe extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.handleCloseClick = this.handleCloseClick.bind(this);
+function Recipe(props) {
+    const { recipe, classes, data, dispatch } = props;
+    let prepTime = data.prepTime;
+    let cookTime = data.cookTime;
+    let totalTime = calculateTotalTime(data.prepTime, data.cookTime);
+    if (data.edit === false) {
+        prepTime = formatTime(data.prepTime);
+        cookTime = formatTime(data.cookTime);
     }
-    handleCloseClick() {
-        if (this.props.data.edit && this.props.data.id !== -1) {
-            this.props.updateValue(this.props.data.id, "edit", false);
+
+    function handleCloseClick() {
+        if (data.edit && data.id !== -1) {
+            dispatch(RecipeActions.updateValue(data.id, "edit", false));
         } else {
-            this.props.close(this.props.data.id);
+            dispatch(RecipeActions.close(data.id));
         }
     }
-    totalTime(time1, time2) {
+    function calculateTotalTime(time1, time2) {
         // Break the times up into hours and minutes
         let times1 = time1.split(":");
         let times2 = time2.split(":");
@@ -83,10 +88,10 @@ class Recipe extends React.Component {
         let minutes = (minutes1 + minutes2) % 60;
 
         // Mush together and call format
-        return this.formatTime(hours + ":" + minutes);
+        return formatTime(hours + ":" + minutes);
     }
 
-    formatTime(time) {
+    function formatTime(time) {
         let times = time.split(":");
         let hours = times[0];
         let minutes = times[1];
@@ -105,102 +110,98 @@ class Recipe extends React.Component {
 
         return hours + minutes;
     }
-    render() {
-        const { classes } = this.props;
-        let prepTime = this.props.data.prepTime;
-        let cookTime = this.props.data.cookTime;
-        let totalTime = this.totalTime(this.props.data.prepTime, this.props.data.cookTime);
-        if (this.props.data.edit === false) {
-            prepTime = this.formatTime(this.props.data.prepTime);
-            cookTime = this.formatTime(this.props.data.cookTime);
-        }
-        return (
-            <Grid container className={classes.content} spacing={24}>
-                <Grid item xs={12} className={classes.toolbar} ></Grid>
-                <Grid container direction="row" className={classes.titleBar}>
-                    {this.props.data.edit === true ? <TextField
-                        value={this.props.data.title}
-                        margin="dense"
-                        variant="outlined"
-                        className={classes.titleInput}
-                        onChange={(e) => this.props.updateValue(this.props.data.id, "title", e.target.value)}
-                    /> : <Typography variant="h4">{this.props.data.title}</Typography> }
-                    
-                    <div>
-                        {this.props.data.edit === true ?
-                            <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => this.props.saveRecipe(this.props.data)}><Save/></Fab> : 
-                            <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => this.props.updateValue(this.props.data.id, "edit", true)}><Edit/></Fab> 
-                        }
-                        <Fab className={[classes.headerIcon, classes.close].join(" ")} size="medium" color="secondary" onClick={this.handleCloseClick}><Close/></Fab>
-                    </div>
-                </Grid>      
-                <Grid item xs={12} sm={4} className={classes.imageColumn}>
-                    <Cropper
-                        image={this.props.data.picture + "?" + this.props.data.dateModified}
-                        editable={this.props.data.edit}
-                        altText={this.props.data.title}
-                        width={400}
-                        height={400}
-                        onCropComplete={(url) => this.props.updateValue(this.props.data.id, "picture", url)}
+
+    return (
+        <Grid container className={classes.content} spacing={24}>
+            <Grid item xs={12} className={classes.toolbar} ></Grid>
+            <Grid container direction="row" className={classes.titleBar}>
+                {data.edit === true ? <TextField
+                    value={data.title}
+                    margin="dense"
+                    variant="outlined"
+                    className={classes.titleInput}
+                    onChange={(e) => dispatch(RecipeActions.updateValue(data.id, "title", e.target.value))}
+                /> : <Typography variant="h4">{data.title}</Typography> }
+                
+                <div>
+                    {data.edit === true ?
+                        <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => dispatch(RecipeActions.save(data))}><Save/></Fab> : 
+                        <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => dispatch(RecipeActions.updateValue(data.id, "edit", true))}><Edit/></Fab> 
+                    }
+                    <Fab className={[classes.headerIcon, classes.close].join(" ")} size="medium" color="secondary" onClick={handleCloseClick}><Close/></Fab>
+                </div>
+            </Grid>      
+            <Grid item xs={12} sm={4} className={classes.imageColumn}>
+                <Cropper
+                    image={data.picture + "?" + data.dateModified}
+                    editable={data.edit}
+                    altText={data.title}
+                    width={400}
+                    height={400}
+                    onCropComplete={(url) => dispatch(RecipeActions.updateValue(data.id, "picture", url))}
+                />
+                <List className={classes.specContent} dense={true}>
+                    <Spec
+                        value={totalTime}
+                        label="Total time:"
                     />
-                    <List className={classes.specContent} dense={true}>
-                        <Spec
-                            value={totalTime}
-                            label="Total time:"
-                        />
-                        <Spec
-                            id={this.props.data.id}
-                            value={prepTime}
-                            label="Prep time:"
-                            valueKey="prepTime"
-                            variant="time"
-                            edit={this.props.data.edit}
-                            updateValue={this.props.updateValue}
-                        />
-                        <Spec
-                            id={this.props.data.id}
-                            value={cookTime}
-                            label="Cook time:"
-                            valueKey="cookTime"
-                            variant="time"
-                            edit={this.props.data.edit}
-                            updateValue={this.props.updateValue}
-                        />
-                        <Spec
-                            id={this.props.data.id}
-                            value={this.props.data.servings}
-                            label="Yield:"
-                            valueKey="servings"
-                            variant="servings"
-                            suffix="servings"
-                            edit={this.props.data.edit}
-                            updateValue={this.props.updateValue}
-                        />
-                        <Spec
-                            value={this.props.data.ingredients.length}
-                            label="Ingredients:"
-                        />
-                    </List>
-                </Grid>  
-                <Grid item xs={12} sm={8}>
-                    <div className={classes.detailsContent}>
-                        <Ingredients
-                            availableIngredients={this.props.availableIngredients}
-                            availableUnits={this.props.availableUnits}
-                            ingredients={this.props.data.ingredients}
-                            edit={this.props.data.edit} 
-                            updateValue={(value) => this.props.updateValue(this.props.data.id, "ingredients", value)}
-                        />
-                        <Steps 
-                            steps={this.props.data.steps}
-                            edit={this.props.data.edit} 
-                            updateValue={(value) => this.props.updateValue(this.props.data.id, "steps", value)}
-                        />
-                    </div>
-                </Grid>       
-            </Grid>
-        );
-    }
+                    <Spec
+                        id={data.id}
+                        value={prepTime}
+                        label="Prep time:"
+                        valueKey="prepTime"
+                        variant="time"
+                        edit={data.edit}
+                        updateValue={(id, key, value) => dispatch(RecipeActions.updateValue(id, key, value))}
+                    />
+                    <Spec
+                        id={data.id}
+                        value={cookTime}
+                        label="Cook time:"
+                        valueKey="cookTime"
+                        variant="time"
+                        edit={data.edit}
+                        updateValue={(id, key, value) => dispatch(RecipeActions.updateValue(id, key, value))}
+                    />
+                    <Spec
+                        id={data.id}
+                        value={data.servings}
+                        label="Yield:"
+                        valueKey="servings"
+                        variant="servings"
+                        suffix="servings"
+                        edit={data.edit}
+                        updateValue={(id, key, value) => dispatch(RecipeActions.updateValue(id, key, value))}
+                    />
+                    <Spec
+                        value={data.ingredients.length}
+                        label="Ingredients:"
+                    />
+                </List>
+            </Grid>  
+            <Grid item xs={12} sm={8}>
+                <div className={classes.detailsContent}>
+                    <Ingredients
+                        availableIngredients={recipe.ingredients}
+                        availableUnits={recipe.units}
+                        ingredients={data.ingredients}
+                        edit={data.edit} 
+                        updateValue={(value) => dispatch(RecipeActions.updateValue(data.id, "ingredients", value))}
+                    />
+                    <Steps 
+                        steps={data.steps}
+                        edit={data.edit} 
+                        updateValue={(value) => dispatch(RecipeActions.updateValue(data.id, "steps", value))}
+                    />
+                </div>
+            </Grid>       
+        </Grid>
+    );
+
 }
 
-export default withStyles(styles)(Recipe);
+function mapStateToProps(state) {
+    return {site : state.site, recipe : state.recipe}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(Recipe));

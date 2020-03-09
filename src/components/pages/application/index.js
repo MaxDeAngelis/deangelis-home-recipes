@@ -25,19 +25,6 @@ class Application extends Component {
         this.props.dispatch(RecipeActions.getRecents());
         this.props.dispatch(SiteActions.login("", ""));
         this.props.dispatch(RecipeActions.search(""));
-        
-        this.saveRecipe = this.saveRecipe.bind(this);
-        this.updateValue = this.updateValue.bind(this);
-        this.closeRecipe = this.closeRecipe.bind(this);
-    }
-    saveRecipe(recipe) {
-        this.props.dispatch(RecipeActions.save(recipe));
-    }
-    updateValue(id, key, value) {
-        this.props.dispatch(RecipeActions.updateValue(id, key, value));
-    }
-    closeRecipe(id) {
-        this.props.dispatch(RecipeActions.close(id));
     }
     render() {
         const { classes } = this.props;
@@ -46,22 +33,15 @@ class Application extends Component {
             if (item.selected) {
                 if (item.category === "RECIPE" /*|| item.id === "new"*/) {
                     let recipes = this.props.recipe.open.filter((recipe) => recipe.id === item.id)
-                    content = <Recipe 
-                                data={recipes[0]} 
-                                close={this.closeRecipe} 
-                                saveRecipe={this.saveRecipe}
-                                updateValue={this.updateValue}
-                                availableIngredients={this.props.recipe.ingredients}
-                                availableUnits={this.props.recipe.units}
-                            />;
+                    content = <Recipe data={recipes[0]}/>;
                 } else if (item.id === "search") {
                     content = <Search/>
                 }
             }
         })
         return (
-            <div  className={classes.root}>
-                <Header />
+            <div className={classes.root}>
+                <Header/>
                 <Sidebar/>
                 {content}
                 <Login/>
