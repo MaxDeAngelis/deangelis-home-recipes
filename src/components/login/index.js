@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
+import { SiteActions } from '../../lib/actions';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -8,6 +10,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { red } from '@material-ui/core/colors';
 
 
 const styles = theme => ({
@@ -20,80 +23,69 @@ const styles = theme => ({
     },
     input : {
         borderRadius : 4
+    },
+    error : {
+        backgroundColor: theme.palette.error.light,
+        padding: theme.spacing.unit,
+        marginBottom: theme.spacing.unit,
+        borderRadius: theme.spacing.unit
     }
 });
 
-class Login extends Component {
-    constructor(props) {
-        super(props);
+function Login(props) {
+    const { classes, loginOpen, loginEerror, dispatch } = props;
+    const [user, setUser] = useState("");
+    const [password, setPassword] = useState("");
 
-        this.state = {
-            username : '',
-            password : ''
-        }
-
-        this.handleUpdate = this.handleUpdate.bind(this);
-        this.handleLogin = this.handleLogin.bind(this);
-    }
-    handleUpdate(key, value) {
-        var state = this.state;
-
-        state[key] = value;
-        this.setState(state);
-    }
-    handleLogin() {
-        this.props.login(this.state.username, this.state.password)
-    }
-    render() {
-        const { classes } = this.props;
-        return (
-            <div  className={classes.root}>
-                <Dialog
-                    open={this.props.open}
-                    onClose={this.handleClose}
-                    PaperProps={{className:classes.dialog}}
-                >
-                    <DialogTitle>Login</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            Please enter username and password to login
-                        </DialogContentText>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            variant="outlined"
-                            id="username"
-                            label="Username"
-                            fullWidth
-                            value={this.state.username}
-                            inputProps={{className: classes.input}}
-                            onChange={(e) => this.handleUpdate('username', e.target.value)}
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            variant="outlined"
-                            id="password"
-                            label="Password"
-                            type="password"
-                            fullWidth
-                            value={this.state.password}
-                            inputProps={{className: classes.input}}
-                            onChange={(e) => this.handleUpdate('password', e.target.value)}
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button variant="outlined" onClick={this.props.toggleLogin}>
-                            Cancel
-                        </Button>
-                        <Button variant="outlined" onClick={this.handleLogin}>
-                            Login
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </div>
-        );
-    }
+    return (
+        <div  className={classes.root}>
+            <Dialog
+                open={loginOpen}
+                onClose={() => dispatch(SiteActions.toggleLogin())}
+                PaperProps={{className:classes.dialog}}
+            >
+                <DialogTitle>Login</DialogTitle>
+                <DialogContent>
+                    {loginEerror !== "" ? <DialogContentText className={classes.error}>{loginEerror}</DialogContentText> : null }
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        variant="outlined"
+                        id="username"
+                        label="Username"
+                        fullWidth
+                        value={user}
+                        inputProps={{className: classes.input}}
+                        onChange={(e) => setUser(e.target.value)}
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        variant="outlined"
+                        id="password"
+                        label="Password"
+                        type="password"
+                        fullWidth
+                        value={password}
+                        inputProps={{className: classes.input}}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button variant="outlined" onClick={() => dispatch(SiteActions.toggleLogin())}>
+                        Cancel
+                    </Button>
+                    <Button variant="outlined" onClick={() => dispatch(SiteActions.login(user, password))}>
+                        Login
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </div>
+    );
 }
 
-export default withStyles(styles, { withTheme: true })(Login);
+function mapStateToProps(state) {
+    return state.site;
+}
+
+export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(Login));
