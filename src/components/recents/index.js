@@ -37,30 +37,28 @@ const styles = theme => ({
     }
 });
 
-class RecentRecipes extends React.Component {
-    render() {
-        const { classes } = this.props;
-        return (
-            <div className={classes.root}>
-                <GridList className={classes.gridList} cols={3} cellHeight={400} spacing={8}>
-                    <GridListTile key="Subheader" cols={3} style={{ height: 'auto' }} >
-                        <ListSubheader component="header"><Typography variant="h6" color="primary" noWrap>Recent recipes</Typography></ListSubheader>
-                    </GridListTile>
-                    {this.props.recipes.map(recipe => {
-                        return ( 
-                            <GridListTile key={recipe.id} onClick={() => this.props.openRecipe(recipe.id)} className={classes.gridTile}>
-                                <img src={recipe.picture} alt={recipe.title} />
-                                <GridListTileBar
-                                    title={recipe.title}
-                                    subtitle={<span>by: {recipe.firstName + " " + recipe.lastName}</span>}
-                                />
-                            </GridListTile>
-                        )
-                    })}
-                </GridList>
-            </div>
-        );
-    }
+function RecentRecipes(props) {
+    const { classes, recipes, openRecipe } = props;
+    return (
+        <div className={classes.root}>
+            <GridList className={classes.gridList} cols={3} cellHeight={400} spacing={8}>
+                <GridListTile key="Subheader" cols={3} style={{ height: 'auto' }} >
+                    <ListSubheader component="header"><Typography variant="h6" color="primary" noWrap>Recent recipes</Typography></ListSubheader>
+                </GridListTile>
+                {recipes.map(recipe => {
+                    return ( 
+                        <GridListTile key={recipe.id} onClick={() => openRecipe(recipe.id)} className={classes.gridTile}>
+                            <img src={recipe.picture} alt={recipe.title} />
+                            <GridListTileBar
+                                title={recipe.title}
+                                subtitle={<span>by: {recipe.firstName + " " + recipe.lastName}</span>}
+                            />
+                        </GridListTile>
+                    )
+                })}
+            </GridList>
+        </div>
+    );
 }
 
 export default withStyles(styles)(RecentRecipes);

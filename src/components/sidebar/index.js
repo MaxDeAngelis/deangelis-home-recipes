@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import { SiteActions, RecipeActions } from '../../lib/actions';
 
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -59,23 +61,22 @@ const styles = theme => ({
     }
 });
 
-class Sidebar extends Component {
-    constructor(props) {
-        super(props);
+function Sidebar(props) {
+    const { site, openRecipes, classes, dispatch } = props;
+    const siteIcons = site.nav.items.filter(item => item.category === "SITE");
+    const recipeIcons = site.nav.items.filter(item => item.category === "RECIPE");
 
-        this.getRecipeItem = this.getRecipeItem.bind(this);
-    }
-    getRecipeItem(item, classes) {
-        var recipe;
-        for (var i = 0; i < this.props.openRecipes.length; i++) {
-            recipe = this.props.openRecipes[i];
+    const recipeItems = recipeIcons.map((item) => {
+        let recipe;
+        for (var i = 0; i < openRecipes.length; i++) {
+            recipe = openRecipes[i];
             if (recipe.id === item.id) {
                 break;
             }
         }
-
+        
         return (
-            <ListItem button key={recipe.title} selected={item.selected} onClick={() => this.props.openContent(item.id, "RECIPE")}>
+            <ListItem button key={recipe.title} selected={item.selected} onClick={() => dispatch(SiteActions.openContent(item.id, "RECIPE"))}>
                 <ListItemIcon><img src={recipe.picture} className={classes.recipeIcon} alt={recipe.title}/></ListItemIcon>
                 <ListItemText 
                     primary={recipe.title} 
@@ -84,60 +85,60 @@ class Sidebar extends Component {
                     title={recipe.title}/>
             </ListItem>
         )
-    }
-    render() {
-        const { classes } = this.props;
-        let _this = this;
-        let siteIcons = this.props.nav.items.filter(item => item.category === "SITE");
-        let recipeIcons = this.props.nav.items.filter(item => item.category === "RECIPE");
-        return (
-            <Drawer variant="permanent" open={this.props.nav.open}
-                className={classNames(classes.drawer, {
-                    [classes.drawerOpen]: this.props.nav.open,
-                    [classes.drawerClose]: !this.props.nav.open,
+    })
+    
+    return (
+        <Drawer variant="permanent" open={site.nav.open}
+            className={classNames(classes.drawer, {
+                [classes.drawerOpen]: site.nav.open,
+                [classes.drawerClose]: !site.nav.open,
+            })}
+            classes={{
+                paper: classNames({
+                [classes.drawerOpen]: site.nav.open,
+                [classes.drawerClose]: !site.nav.open,
+                }),
+            }}
+        >
+            <div className={classes.toolbar}>
+                <IconButton onClick={() => dispatch(SiteActions.toggleSidebar())}>
+                    <ChevronLeftIcon/>
+                </IconButton>
+            </div>
+            <Divider />
+            <List>
+                {siteIcons.map((item) => {
+                    let icon;
+                    let action = () => dispatch(SiteActions.openContent(item.id, "SITE"))
+                    if (item.id === "home") {
+                        icon = <HomeOutlined/>;
+                    } else if (item.id === "search") {
+                        icon = <SearchIcon/>;
+                    } else if (item.id === "new") {
+                        icon = <Add/>;
+                        action = () => dispatch(RecipeActions.new())
+                    }
+                    return (
+                        <ListItem button key={item.title} selected={item.selected} onClick={action}>
+                            <ListItemIcon>{icon}</ListItemIcon>
+                            <ListItemText primary={item.title} className={classes.itemText}/>
+                        </ListItem>
+                    )
                 })}
-                classes={{
-                    paper: classNames({
-                    [classes.drawerOpen]: this.props.nav.open,
-                    [classes.drawerClose]: !this.props.nav.open,
-                    }),
-                }}
-            >
-                <div className={classes.toolbar}>
-                    <IconButton onClick={this.props.toggleNav}>
-                        <ChevronLeftIcon/>
-                    </IconButton>
-                </div>
-                <Divider />
-                <List>
-                    {siteIcons.map((item) => {
-                        let icon;
-                        let action = () => _this.props.openContent(item.id, "SITE")
-                        if (item.id === "home") {
-                            icon = <HomeOutlined/>;
-                        } else if (item.id === "search") {
-                            icon = <SearchIcon/>;
-                        } else if (item.id === "new") {
-                            icon = <Add/>;
-                            action = _this.props.newRecipe
-                        }
-                        return (
-                            <ListItem button key={item.title} selected={item.selected} onClick={action}>
-                                <ListItemIcon>{icon}</ListItemIcon>
-                                <ListItemText primary={item.title} className={classes.itemText}/>
-                            </ListItem>
-                        )
-                    })}
-                </List>
-                <Divider />
-                <List>
-                    {recipeIcons.map((item) => {
-                        return _this.getRecipeItem(item, classes);
-                    })}
-                </List>
-            </Drawer>
-        );
+            </List>
+            <Divider />
+            <List>
+                {recipeItems}
+            </List>
+        </Drawer>
+    );
+}
+
+function mapStateToProps(state) {
+    return {
+        site : state.site, 
+        openRecipes : state.recipe.open
     }
 }
 
-export default withStyles(styles, { withTheme: true })(Sidebar);
+export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(Sidebar));

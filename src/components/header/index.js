@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
+import { SiteActions, RecipeActions } from '../../lib/actions';
 
 // COMPONENTS
 import AppBar from '@material-ui/core/AppBar';
@@ -89,61 +91,60 @@ const styles = theme => ({
     },
 });
 
-class Header extends Component {
-    constructor(props) {
-        super(props);
+function Header(props) {
+    const { user, nav, classes, dispatch } = props;
+    const [search, setSearch] = useState("");
 
-        this.state = {
-            search : ""
-        }
-
-        this.handleUpdate = this.handleUpdate.bind(this);
-        this.handleKeyPress = this.handleKeyPress.bind(this);
+    function handleUpdate(e) {
+        setSearch(e.target.value);
+        
+        dispatch(RecipeActions.search(e.target.value));
+        dispatch(SiteActions.openContent('search', 'SITE'));
     }
-    handleUpdate(e) {
-        this.setState({ search: e.target.value });
-        this.props.search(e.target.value);
-    }
-    handleKeyPress(e) {
+    function handleKeyPress(e) {
         if (e.key === "Enter") {
-            this.props.search(this.state.search);
+            dispatch(RecipeActions.search(search));
+            dispatch(SiteActions.openContent('search', 'SITE'));
         }
     }
-    render() {
-        const { classes } = this.props;
-        let loginOrOut = <Button color="inherit" onClick={this.props.toggleLogin}>Login</Button>;
-        if (this.props.user) {
-            loginOrOut = <Button color="inherit" onClick={this.props.logout}>Logout</Button>;
-        }
-        return (
-            <AppBar position="fixed" className={classNames(classes.appBar, { [classes.appBarShift]: this.props.open, })}>
-                <Toolbar className={classes.toolbar} disableGutters={!this.props.open}>
-                    <IconButton color="inherit" aria-label="Open drawer" onClick={this.props.toggleNav}
-                        className={classNames(classes.menuButton, {
-                            [classes.hide]: this.props.open,
-                        })}
-                    >
-                    <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" color="inherit" noWrap>DeAngelis Home Recipes</Typography>
-                    <div className={classes.grow} />
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon/>
-                        </div>
-                        <InputBase 
-                            placeholder="Search…" 
-                            classes={{root: classes.inputRoot, input: classes.inputInput}} 
-                            value={this.state.search}
-                            onChange={this.handleUpdate}
-                            onKeyPress={this.handleKeyPress}
-                        />
+    
+    let loginOrOut = <Button color="inherit" onClick={() => dispatch(SiteActions.toggleLogin())}>Login</Button>;
+    if (user) {
+        loginOrOut = <Button color="inherit" onClick={() => dispatch(SiteActions.logout())}>Logout</Button>;
+    }
+
+    return (
+        <AppBar position="fixed" className={classNames(classes.appBar, { [classes.appBarShift]: nav.open, })}>
+            <Toolbar className={classes.toolbar} disableGutters={!nav.open}>
+                <IconButton color="inherit" aria-label="Open drawer" onClick={() => dispatch(SiteActions.toggleSidebar())}
+                    className={classNames(classes.menuButton, {
+                        [classes.hide]: nav.open,
+                    })}
+                >
+                <MenuIcon />
+                </IconButton>
+                <Typography variant="h6" color="inherit" noWrap>DeAngelis Home Recipes</Typography>
+                <div className={classes.grow} />
+                <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                        <SearchIcon/>
                     </div>
-                    {loginOrOut}
-                </Toolbar>
-            </AppBar>      
-        );
-    }
+                    <InputBase 
+                        placeholder="Search…" 
+                        classes={{root: classes.inputRoot, input: classes.inputInput}} 
+                        value={search}
+                        onChange={handleUpdate}
+                        onKeyPress={handleKeyPress}
+                    />
+                </div>
+                {loginOrOut}
+            </Toolbar>
+        </AppBar> 
+    )
 }
 
-export default withStyles(styles, { withTheme: true })(Header);
+function mapStateToProps(state) {
+    return state.site;
+}
+
+export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(Header));
