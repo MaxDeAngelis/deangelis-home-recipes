@@ -11,27 +11,84 @@ class SaveRecipe extends Action {
 		$recipeId = $this->recipe["id"];
 		$sqlList = array();
 
-		array_push($sqlList, "INSERT INTO recipes (name) VALUES ('');");
-		array_push($sqlList, "UPDATE recipes SET name = 'HELLOP' WHERE recipeId = LAST_INSERT_ID()");
-		
-		$response = new DatabaseTransaction($sqlList);
+		$recipe = new Recipe($this->recipe);
+		 
+		// 1. Need to check if recipe exists in DB first
+		// 2. If it does NOT exist then insert new empty recipe
+		// TODO: 3. Upload image and generate a new id
+		// 4. Get a handle on the new recipe and update it
+		// 5. Insert new ingredients
 
-		#$response = new DatabaseInsert("INSERT INTO recipes (name) VALUES ('');");
-		#$response = new DatabaseQuery("SELECT LAST_INSERT_ID();");
-
-		#error_log(print_r($response, true));
-		
-
-		return $response;
-
-
-		$newPicture = $this->recipe["picture"];
+		$updatedRecipeId = $recipe->id;
+		// If the recipe is new, meaning the id is -1 then insert new before updating it
+		if ($recipe->id == -1) {
+			array_push($sqlList, "INSERT INTO recipes (name) VALUES ('');");
+			$updatedRecipeId = "LAST_INSERT_ID()";
+		}
 
 		if ($this->recipe["public"] == false) {
 			$public = 0;
 		} else {
 			$public = 1;
 		}
+
+		// TODO: Need to handle who the creator is!
+		array_push($sqlList, "UPDATE recipes 
+		SET name = '{$recipe->title}', 
+			steps = '{$recipe->getStepsString()}',
+			cookTime = '{$recipe->cookTime}', 
+			prepTime = '{$recipe->prepTime}', 
+			category = '{$recipe->category}', 
+			season = '{$recipe->season}', 
+			servings = {$recipe->servings},
+			ownerId = 0,
+			public = {$public},
+			modDate = NULL
+		
+		WHERE recipeId = {$updatedRecipeId};");
+
+		array_push($sqlList, "DELETE FROM recipeingredients WHERE recipeId = {$updatedRecipeId};");
+
+		// Generate calls to add ingredients
+		foreach ($recipe->ingredients as $ingredient) {
+			array_push($sqlList, "SELECT AddIng('{$ingredient["ingredientName"]}', 
+									'{$ingredient["units"]}', 
+									'{$ingredient["quantity"]}', 
+									{$updatedRecipeId})");
+		}		
+
+		$response = new DatabaseTransaction($sqlList);
+		if ($response->sucess) {
+			return "{'status' : 'Updated' }";
+		} else {
+			return null;
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+		$newPicture = $this->recipe["picture"];
 
 		// If the image was changed then delete the old one and rename the new one
 		// because of cropper it will have a temp in the name since it was just cropped
@@ -59,38 +116,6 @@ class SaveRecipe extends Action {
 				// Rename the new temp image to match recipe id
 				rename($oldPath, $newPath);
 			}
-		}
-
-		array_push($sqlList, "UPDATE recipes 
-					SET name = '{$this->recipe["title"]}', 
-						steps = '{$this->recipe["steps"]}', 
-						cookTime = '{$this->recipe["cookTime"]}', 
-						prepTime = '{$this->recipe["prepTime"]}', 
-						category = '{$this->recipe["category"]}', 
-						season = '{$this->recipe["season"]}', 
-						servings = {$this->recipe["servings"]},
-						ownerId = {$this->recipe["creator"]},
-						public = {$public},
-						picture = '{$newPicture}',
-						modDate = NULL
-					
-					WHERE recipeId = {$recipeId};");
-
-		array_push($sqlList, "DELETE FROM recipeingredients WHERE recipeId = {$recipeId};");
-		
-		// Generate calls to add ingredients
-        foreach ($this->recipe["ingredients"] as $ingredient) {
-			array_push($sqlList, "SELECT AddIng('{$ingredient["ingredientName"]}', 
-												'{$ingredient["units"]}', 
-												'{$ingredient["quantity"]}', 
-												{$recipeId})");
-		}
-
-		$response = new DatabaseTransaction($sqlList);
-		if ($response->sucess) {
-			return "{'status' : 'Updated' }";
-		} else {
-			return null;
 		}
 	}
 }
