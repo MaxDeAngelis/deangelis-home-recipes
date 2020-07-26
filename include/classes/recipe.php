@@ -38,9 +38,11 @@ class Recipe {
         foreach ($recipe as $key => $value) {
             switch ($key) {
                 case 'recipeId':
+                case 'id':
                     $this->id = $value;
                     break;
                 case 'name':
+                case 'title':
                     $this->title = $value;
                     break;
                 case 'firstName':
@@ -65,22 +67,29 @@ class Recipe {
                     $this->season = $value;
                     break;
                 case 'steps':
-                    $stepsList = array();
-                    $stepsTexts = explode("|", $value);
-
-                    foreach ($stepsTexts as $step) {
-                        $stepsList[] = new Step($step);
+                    if (is_array($value) === true) {
+                        $this->steps = $value;
+                    } else {
+                        $stepsList = array();
+                        $stepsTexts = explode("|", $value);
+    
+                        foreach ($stepsTexts as $step) {
+                            $stepsList[] = new Step($step);
+                        }
+    
+                        $this->steps = $stepsList;
                     }
-
-                    $this->steps = $stepsList;
+                    
                     break;
                 case 'modDate':
+                case 'dateModified':
                     $this->dateModified = $value;
                     break;
                 case 'picture':
                     $this->picture = $value;
                     break;
                 case 'ownerId':
+                case 'creator':
                     $this->creator = $value;
                     break;
                 case 'public':
@@ -88,6 +97,9 @@ class Recipe {
                     break;
                 case 'deleted':
                     $this->deleted = boolval($value);
+                    break;
+                case 'ingredients':
+                    $this->ingredients = $value;
                     break;
                 case 'ing':
                     $list = array();
@@ -98,8 +110,39 @@ class Recipe {
 
                     $this->ingredients = $list;
                     break;
+                default:
+                    error_log("Key not recogized for recipe -> " . $key);
             }
         }
+    }
+
+    /**
+     * This function handles taking the steps object stored on the recipe 
+     * and converting it to the deliminated string that the DB expects 
+     * 
+     * ex.
+     * Before:
+     *  (
+     *      [text] => Step one
+     *  ),(
+     *      [text] => Step two
+     *  ),(
+     *      [text] => Step three
+     *  )
+     * 
+     * After:
+     *  "Step one|Step two|Step three"
+     */
+    public function getStepsString() {
+        $stepsTexts = array();
+
+        foreach ($this->steps as $step) {
+            if ($step['text'] != "") {
+                $stepsTexts[] = $step['text'];
+            }
+        }
+
+        return implode("|", $stepsTexts);
     }
 }
 
