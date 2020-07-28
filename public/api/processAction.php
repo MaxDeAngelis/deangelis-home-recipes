@@ -1,6 +1,7 @@
 <?php
 	include_once $_SERVER['DOCUMENT_ROOT'] . '/../include/modules/PHPMailer/PHPMailerAutoload.php';
 	
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/classes/logger.php';
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/classes/recipe.php';
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/classes/utilities.php';
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../include/classes/database.php';
@@ -19,6 +20,8 @@
 	}
 
 	$data = Utilities::encodeArray($data);
+
+	Logger::debug("(ProcessAction) Action = " . $data['action']);
 	
 	switch ($data['action']) {
 	case ACTIONS::EXTERNAL_SEARCH:

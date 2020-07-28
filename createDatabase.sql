@@ -18,6 +18,32 @@ DELIMITER $$
 --
 -- Functions
 --
+-- TODO: Need to set the carset of the parameters after creation
+CREATE FUNCTION `AddIng` (name VARCHAR(45), unit VARCHAR(45), quantity VARCHAR(10), recipeId INT(11))
+RETURNS BOOLEAN
+BEGIN
+	DECLARE tempID INT(11);
+    -- Selects the new ingredient ID
+	SET tempID = (SELECT ingredientId
+		FROM ingredients
+		WHERE ingredientName = name);
+    
+	IF ISNULL(tempID) THEN -- Inserts if the ingredient is new
+		-- Inserts the new ingredient
+		INSERT INTO ingredients (ingredientName, defaultUnit) 
+			VALUES (name, unit);
+		-- Selects the new ingredient ID
+		SET tempID = (SELECT ingredientId
+			FROM ingredients
+			WHERE ingredientName = name);
+	END IF;
+    
+	-- Inserts referance table
+	INSERT INTO recipeingredients (recipeId, ingredientId, quantity, units)
+		VALUES (recipeId, tempID, quantity, unit);
+	
+	RETURN true;
+END $$
 
 DROP FUNCTION IF EXISTS `NewRecipe`$$
 CREATE FUNCTION `NewRecipe`() RETURNS int(11)
