@@ -1,9 +1,12 @@
+
+
 ## DeAngelis Home Recipes
 
 Welcome to DeAngelisHome, this is a recipe site dedicated to recipies and simplicity. I was tired of all the sites out there with more adds than recipes :) This project it targeted as a simple recipe box for your family.
 
 A single administrator grants access to users requesting accounts. This was meant to be family oriented and have a family administrator control the content and site.
 
+![DeAngelis Home Recipes](/home-tab.png)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
