@@ -21,7 +21,7 @@
 
 	$data = Utilities::encodeArray($data);
 
-	Logger::debug("(ProcessAction) Action = " . $data['action']);
+	Logger::debug("processAction", "Processing action - " . $data['action'], __LINE__);
 	
 	switch ($data['action']) {
 	case ACTIONS::EXTERNAL_SEARCH:

@@ -56,9 +56,12 @@ class DatabaseQuery {
 		} else {
 			$result = $conn->query($sql);
 			$conn->close();
-
+			
 			if ($result === false) {
 				$this->message = 'Failed to retrieve data from server. Query: ' . $sql;
+			} else if ($result === true) {
+				$this->sucess = true;
+				$this->message = 'Query passed but returned no results';
 			} else if ($result->num_rows == 0) {
 				$this->message = 'No results. Query: ' . $sql;
 			} else {

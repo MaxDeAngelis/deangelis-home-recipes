@@ -248,7 +248,7 @@ class ImageCropper extends React.Component {
 
         e.target.value = "";
 
-        fetch('/api/processAction.php', {
+        fetch('/processAction.php', {
             method: 'POST',
             body: formData,
         }).then(
@@ -279,7 +279,7 @@ class ImageCropper extends React.Component {
         formData.append('action', 'CROP_IMAGE')
         formData.append('url', this.state.currentUrl);
 
-        fetch('/api/processAction.php', {
+        fetch('/processAction.php', {
             method: 'POST',
             body: formData,
         }).then(

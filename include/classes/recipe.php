@@ -111,7 +111,7 @@ class Recipe {
                     $this->ingredients = $list;
                     break;
                 default:
-                    error_log("Key not recogized for recipe -> " . $key);
+                    Logger::info("recipe", "Key missing - " . $key, __LINE__);
             }
         }
     }

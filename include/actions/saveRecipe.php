@@ -7,26 +7,29 @@ class SaveRecipe extends Action {
 		parent::__construct(ACTIONS::SAVE_RECIPE);
 	}
 
-	public function process() {
-		$recipeId = $this->recipe["id"];
+	/**
+	 * This function handles updating or creating the recipe. If successful the recipe id
+	 * will be returned
+	 * 
+	 * 1. Need to check if recipe exists in DB first
+	 * 2. If it does NOT exist then insert new empty recipe
+	 * 3. Get a handle on the new recipe and update it
+	 * 4. Delete all referenced ingredients 
+	 * 5. Insert all the new references
+	 */
+	private function update($recipe) {
+		Logger::debug("saveRecipe", "Id is " . $this->recipe["id"], __LINE__);
 		$sqlList = array();
-
-		$recipe = new Recipe($this->recipe);
-		 
-		// 1. Need to check if recipe exists in DB first
-		// 2. If it does NOT exist then insert new empty recipe
-		// TODO: 3. Upload image and generate a new id
-		// 4. Get a handle on the new recipe and update it
-		// 5. Insert new ingredients
 
 		$updatedRecipeId = $recipe->id;
 		// If the recipe is new, meaning the id is -1 then insert new before updating it
 		if ($recipe->id == -1) {
+			Logger::debug("saveRecipe", "Recipe is new so INSERT", __LINE__);
 			array_push($sqlList, "INSERT INTO recipes (name) VALUES ('');");
 			$updatedRecipeId = "LAST_INSERT_ID()";
 		}
 
-		if ($this->recipe["public"] == false) {
+		if ($recipe->public == false) {
 			$public = 0;
 		} else {
 			$public = 1;
@@ -34,20 +37,21 @@ class SaveRecipe extends Action {
 
 		// TODO: Need to handle who the creator is!
 		array_push($sqlList, "UPDATE recipes 
-		SET name = '{$recipe->title}', 
-			steps = '{$recipe->getStepsString()}',
-			cookTime = '{$recipe->cookTime}', 
-			prepTime = '{$recipe->prepTime}', 
-			category = '{$recipe->category}', 
-			season = '{$recipe->season}', 
-			servings = {$recipe->servings},
-			ownerId = 0,
-			public = {$public},
-			modDate = NULL
-		
-		WHERE recipeId = {$updatedRecipeId};");
+			SET name = '{$recipe->title}', 
+				steps = '{$recipe->getStepsString()}',
+				cookTime = '{$recipe->cookTime}', 
+				prepTime = '{$recipe->prepTime}', 
+				category = '{$recipe->category}', 
+				season = '{$recipe->season}', 
+				servings = {$recipe->servings},
+				ownerId = 0,
+				public = {$public},
+				modDate = NULL
+			
+			WHERE recipeId = {$updatedRecipeId};");
 
-		array_push($sqlList, "DELETE FROM recipeingredients WHERE recipeId = {$updatedRecipeId};");
+		array_push($sqlList, "DELETE FROM recipeingredients 
+			WHERE recipeId = {$updatedRecipeId};");
 
 		// Generate calls to add ingredients
 		foreach ($recipe->ingredients as $ingredient) {
@@ -57,66 +61,91 @@ class SaveRecipe extends Action {
 									{$updatedRecipeId})");
 		}		
 
+		array_push($sqlList, "SELECT picture, recipeId 
+			FROM recipes 
+			WHERE recipeId = {$updatedRecipeId};");
+
 		$response = new DatabaseTransaction($sqlList);
+
 		if ($response->sucess) {
-			return "{'status' : 'Updated' }";
-		} else {
-			return null;
-		}
+			Logger::debug("saveRecipe", "Inital creation/update successful", __LINE__);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		
-		$newPicture = $this->recipe["picture"];
-
-		// If the image was changed then delete the old one and rename the new one
-		// because of cropper it will have a temp in the name since it was just cropped
-		// TODO: Somehow this sometimes runs when name does not contain temp and image is delete :(
-		if (strpos($this->recipe["picture"], "temp_") !== false) {
-			$response = new DatabaseQuery("SELECT picture FROM recipes WHERE recipeId = {$recipeId};");
+			$response = new DatabaseQuery("SELECT picture, recipeId 
+				FROM recipes 
+				WHERE name = '{$recipe->title}';");
 
 			if ($response->sucess) {
-				$temp = explode(".", $this->recipe["picture"]);
-				$extension = end($temp);			
-
-				// Recalculate the new image name with extension
-				$newPicture = "images/recipes/recipe_" . $recipeId . "." . $extension;
-				$oldPicture = $response->results[0]["picture"];
-
-				// Get the full paths
-				$oldPath = $_SERVER['DOCUMENT_ROOT'] . "/" . $this->recipe["picture"];
-				$newPath = $_SERVER['DOCUMENT_ROOT'] . "/" . $newPicture;
-
-				// Delete the original image if not the placeholder
-				if (strpos($oldPicture, "no-image-uploaded") === false) {
-					unlink($oldPicture);
-				}
-
-				// Rename the new temp image to match recipe id
-				rename($oldPath, $newPath);
+				Logger::debug("saveRecipe", "Recipe data retrieved, id is {$response->results[0]["recipeId"]} with picture {$response->results[0]["picture"]}", __LINE__);
+				return array("recipeId"=>$response->results[0]["recipeId"], "picture"=>$response->results[0]["picture"]);
 			}
 		}
+
+		Logger::error("saveRecipe", "Failed to update recipe where title is, {$recipe->title}", __LINE__);
+		return false;
+	}
+
+	/**
+	 * This function handles updating the image for the given recipe
+	 * 
+	 * 1. If we are not uploading a new temp image fall out
+	 * 2. Calculate the new hardcoded path of the image
+	 * 3. Delete the old image that was stored
+	 * 4. Rename the uploaded image to the new name with id in it
+	 * 5. Query DB to update the recipe with new image in case extension changed.
+	 * 
+	 * Returns true if successful, false otherwise
+	 */
+	private function updatePicture($recipeId, $oldPicture, $uploadedPicture) {
+		Logger::debug("saveRecipe", "Updating image for recipe {$recipeId}. New image is {$uploadedPicture}", __LINE__);
+		if (strpos($uploadedPicture, "temp_") == false) return true;
+
+		$temp = explode(".", $uploadedPicture);
+		$extension = end($temp);
+
+		// Take the temporary image that was uploaded and rename to a normalized version
+		$newPictureName = "images/recipes/recipe_{$recipeId}.{$extension}";
+		$tempPath = "{$_SERVER['DOCUMENT_ROOT']}/{$uploadedPicture}";
+		$newPath = "{$_SERVER['DOCUMENT_ROOT']}/{$newPictureName}";
+
+		// Delete the original image if not the placeholder imager
+		if (strpos($oldPicture, "no-image-uploaded") === false) {
+			Logger::debug("saveRecipe", "Deleting {$oldPicture}", __LINE__);
+			unlink($oldPicture);
+		}
+
+		// Rename the new temp image to match recipe id
+		Logger::debug("saveRecipe", "Renaming {$tempPath} to {$newPath}", __LINE__);
+		rename($tempPath, $newPath);
+
+		// Update the recipe with the new image
+		$sql = "UPDATE recipes SET picture = '{$newPictureName}' WHERE recipeId = {$recipeId};";
+		$response = new DatabaseQuery($sql);
+
+		if ($response->sucess) {
+			Logger::debug("saveRecipe", "Image for recipe {$recipeId} updated to {$newPictureName}", __LINE__);
+			return true;
+		} else {
+			Logger::debug("saveRecipe", "Failed to update image using {$sql}", __LINE__);
+		}
+
+		return null;
+	}
+
+	/**
+	 * This function actually processes the action of updating a recipe
+	 */
+	public function process() {
+		$recipe = new Recipe($this->recipe);
+
+		$recipeData = $this->update($recipe);
+
+		if ($recipeData !== false) {
+			$pass = $this->updatePicture($recipeData["recipeId"], $recipeData["picture"], $recipe->picture);
+
+			if ($pass === true) return "{'status' : 'Updated' }";
+		}
+
+		return null;
 	}
 }
 
