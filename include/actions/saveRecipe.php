@@ -35,7 +35,8 @@ class SaveRecipe extends Action {
 			$public = 1;
 		}
 
-		// TODO: Need to handle who the creator is!
+		// Pull the creator from the Session
+		$user = $_SESSION['user'];
 		array_push($sqlList, "UPDATE recipes 
 			SET name = '{$recipe->title}', 
 				steps = '{$recipe->getStepsString()}',
@@ -44,7 +45,7 @@ class SaveRecipe extends Action {
 				category = '{$recipe->category}', 
 				season = '{$recipe->season}', 
 				servings = {$recipe->servings},
-				ownerId = 0,
+				ownerId = {$user['userId']},
 				public = {$public},
 				modDate = NULL
 			
@@ -135,6 +136,12 @@ class SaveRecipe extends Action {
 	 * This function actually processes the action of updating a recipe
 	 */
 	public function process() {
+		// First things first, check authentication!
+		if (isset($_SESSION['user']) === false) {
+			Logger::critical("saveRecipe", "Attempt to update recipe {$this->recipe["id"]} without authentication!", __LINE__);
+			return null;
+		}
+
 		$recipe = new Recipe($this->recipe);
 
 		$recipeData = $this->update($recipe);
@@ -142,6 +149,7 @@ class SaveRecipe extends Action {
 		if ($recipeData !== false) {
 			$pass = $this->updatePicture($recipeData["recipeId"], $recipeData["picture"], $recipe->picture);
 
+			// TODO: Should consider returning the ID and Image to update the client, also update edit to false on client
 			if ($pass === true) return "{'status' : 'Updated' }";
 		}
 
