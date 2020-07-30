@@ -98,7 +98,7 @@ class SaveRecipe extends Action {
 	 */
 	private function updatePicture($recipeId, $oldPicture, $uploadedPicture) {
 		Logger::debug("saveRecipe", "Updating image for recipe {$recipeId}. New image is {$uploadedPicture}", __LINE__);
-		if (strpos($uploadedPicture, "temp_") == false) return true;
+		if (strpos($uploadedPicture, "temp_") == false) return $uploadedPicture;
 
 		$temp = explode(".", $uploadedPicture);
 		$extension = end($temp);
@@ -124,7 +124,7 @@ class SaveRecipe extends Action {
 
 		if ($response->sucess) {
 			Logger::debug("saveRecipe", "Image for recipe {$recipeId} updated to {$newPictureName}", __LINE__);
-			return true;
+			return $newPictureName;
 		} else {
 			Logger::debug("saveRecipe", "Failed to update image using {$sql}", __LINE__);
 		}
@@ -147,10 +147,17 @@ class SaveRecipe extends Action {
 		$recipeData = $this->update($recipe);
 
 		if ($recipeData !== false) {
-			$pass = $this->updatePicture($recipeData["recipeId"], $recipeData["picture"], $recipe->picture);
+			$newPictureName = $this->updatePicture($recipeData["recipeId"], $recipeData["picture"], $recipe->picture);
 
 			// TODO: Should consider returning the ID and Image to update the client, also update edit to false on client
-			if ($pass === true) return "{'status' : 'Updated' }";
+			if ($newPictureName != null) {
+				return Array(
+					"status" => "success",
+					"title" => $recipe->title,
+					"recipeId" => $recipeData["recipeId"],
+					"picture" => $newPictureName
+				);
+			}
 		}
 
 		return null;
