@@ -48,32 +48,28 @@ const styles = theme => ({
     delete: theme.mixins.cancel
 });
 
-class Ingredients extends React.Component {
-    constructor(props) {
-        super(props);
+function Ingredients(props) {
+    const { availableIngredients, availableUnits, ingredients, updateValue, classes, edit } = props;
 
-        this.toggleIngredient = this.toggleIngredient.bind(this);
-        this.addIngredient = this.addIngredient.bind(this);
-        this.removeIngredient = this.removeIngredient.bind(this);
-        this.updateIngredient = this.updateIngredient.bind(this);
-    }
-    toggleIngredient(index) {
-        let newIngredients = this.props.ingredients;
+    function toggleIngredient(index) {
+        let newIngredients = ingredients;
         newIngredients[index]['selected'] = !newIngredients[index]['selected'];
-        this.props.updateValue(newIngredients);
+        updateValue(newIngredients);
     }
-    addIngredient() {
-        let newIngredients = this.props.ingredients;
+    
+    function addIngredient() {
+        let newIngredients = ingredients;
         newIngredients.push({
             ingredientId: "",
             ingredientName: "",
             quantity: "",
             units: "",
         })
-        this.props.updateValue(newIngredients);
+        updateValue(newIngredients);
     }
-    removeIngredient(index) {
-        let newIngredients = this.props.ingredients;
+
+    function removeIngredient(index) {
+        let newIngredients = ingredients;
 
         // If trying to delete last item then just clear out the value
         if (newIngredients.length === 1) {
@@ -87,25 +83,24 @@ class Ingredients extends React.Component {
             newIngredients.splice(index, 1);
         }
     
-        this.props.updateValue(newIngredients);
+        updateValue(newIngredients);
     }
-    updateIngredient(key, value, index) {
-        console.log(value);
-        let newIngredients = this.props.ingredients;
-        newIngredients[index][key] = value;
-        this.props.updateValue(newIngredients);
-    }
-    getIngredient(ing, index) {
-        const {classes} = this.props;
 
-        if (this.props.edit) {
-            let ingredients = this.props.availableIngredients.map((availIng) => {
+    function updateIngredient(key, value, index) {
+        let newIngredients = ingredients;
+        newIngredients[index][key] = value;
+        updateValue(newIngredients);
+    }
+
+    function getIngredient(ing, index) {
+        if (edit) {
+            let ingredients = availableIngredients.map((availIng) => {
                 return {
                     value: availIng.ingredientName,
                     label: availIng.ingredientName
                 }
             })
-            let units = this.props.availableUnits.map((availUnit) => {
+            let units = availableUnits.map((availUnit) => {
                 return {
                     value: availUnit,
                     label: availUnit
@@ -118,7 +113,7 @@ class Ingredients extends React.Component {
                         value={ing.quantity}
                         margin="none"
                         variant="outlined"
-                        onChange={(e) => this.updateIngredient('quantity', e.target.value, index)}
+                        onChange={(e) => updateIngredient('quantity', e.target.value, index)}
                     />
                     <Autocomplete
                         value={{
@@ -127,7 +122,7 @@ class Ingredients extends React.Component {
                         }}
                         options={units}
                         className={classes.unitsSelect}
-                        onChange={(obj) => this.updateIngredient('units', obj.label, index)}
+                        onChange={(obj) => updateIngredient('units', obj.label, index)}
                     />
                     <Autocomplete
                         value={{
@@ -136,9 +131,9 @@ class Ingredients extends React.Component {
                         }}
                         options={ingredients}
                         className={classes.ingredientSelect}
-                        onChange={(obj) => this.updateIngredient('ingredientName', obj.label, index)}
+                        onChange={(obj) => updateIngredient('ingredientName', obj.label, index)}
                     />
-                    <Fab aria-label="Delete" size="small" className={classes.delete} onClick={() => this.removeIngredient(index)}>
+                    <Fab aria-label="Delete" size="small" className={classes.delete} onClick={() => removeIngredient(index)}>
                         <Delete />
                     </Fab>
                 </>
@@ -153,35 +148,29 @@ class Ingredients extends React.Component {
             )
         }
     }
-    render() {
-        const {classes} = this.props;
-        let controls;
-        if (this.props.edit) {
-            controls = <Button variant="contained" color="secondary" onClick={this.addIngredient}>Add ingredient</Button>;
-        }
-        return (
-            <div className={classes.ingredientContainer}>
-                <Typography variant="h5">Ingredients</Typography>
-                <List>
-                    {this.props.ingredients.map((ing, index) => {
-                        return (
-                            <ListItem key={index} className={classes.ingredientListItem}>
-                                <ItemAvatar 
-                                    selected={ing.selected}
-                                    update={() => this.toggleIngredient(index)}
-                                    disabled={this.props.edit}
-                                    width={18}
-                                    height={18}
-                                />
-                                {this.getIngredient(ing, index)}
-                            </ListItem>
-                        )
-                    })}
-                </List>
-                {controls}
-            </div>
-        );
-    }
+
+    return (
+        <div className={classes.ingredientContainer}>
+            <Typography variant="h5">Ingredients</Typography>
+            <List>
+                {ingredients.map((ing, index) => {
+                    return (
+                        <ListItem key={index} className={classes.ingredientListItem}>
+                            <ItemAvatar 
+                                selected={ing.selected}
+                                update={() => toggleIngredient(index)}
+                                disabled={edit}
+                                width={18}
+                                height={18}
+                            />
+                            {getIngredient(ing, index)}
+                        </ListItem>
+                    )
+                })}
+            </List>
+            {edit ? <Button variant="contained" color="secondary" onClick={addIngredient}>Add ingredient</Button> : null}
+        </div>
+    );
 }
 
 export default withStyles(styles, { withTheme: true })(Ingredients);
