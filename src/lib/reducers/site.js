@@ -1,21 +1,21 @@
-import Immutable from 'immutable';
+import produce from "immer"
 import {SiteActionTypes} from '../actions';
 
-export default function(state = {}, action) {
+export default produce((draft = {}, action) => {
     switch (action.type) {
         case SiteActionTypes.CLOSE_CONTENT:
-            state.nav.items = state.nav.items.filter(item => (item.id !== action.id || item.category === "SITE"));
-            state.nav.items.forEach(item => {
+            draft.nav.items = draft.nav.items.filter(item => (item.id !== action.id || item.category === "SITE"));
+            draft.nav.items.forEach(item => {
                 if (item.id === action.id) {
                     item.selected = false;
                 } else if (item.id === "home") {
                     item.selected = true;
                 }
             });
-            return Immutable.fromJS(state).toJS();
+            break;
         case SiteActionTypes.OPEN_CONTENT:
             let alreadyOpen = false;
-            state.nav.items.forEach(item => {
+            draft.nav.items.forEach(item => {
                 if (item.id === action.id) {
                     alreadyOpen = true;
                     item.selected = true;
@@ -24,36 +24,41 @@ export default function(state = {}, action) {
                 }
             });
             if (!alreadyOpen) {
-                state.nav.items.push({
+                draft.nav.items.push({
                     id : action.id,
                     category : action.category,
                     selected : true
                 })
             }
-            return Immutable.fromJS(state).toJS();
+            break;
+        case SiteActionTypes.UPDATE_OPEN_NAV_ID:
+            draft.nav.items.forEach(item => {
+                if (item.selected) {
+                    item.id = action.id;
+                }
+            });
+            break;
         case SiteActionTypes.TOGGLE_SIDEBAR:
-            state.nav.open = !state.nav.open;
-            return Immutable.fromJS(state).toJS();
+            draft.nav.open = !draft.nav.open;
+            break;
         case SiteActionTypes.LOGIN:
             if (action.status === "success") {
-                state.loginOpen = false;
-                state.user = action.user;
+                draft.loginOpen = false;
+                draft.user = action.user;
             } else {
-                state.loginEerror = action.message;
+                draft.loginEerror = action.message;
             }
-            return Immutable.fromJS(state).toJS();
+            break;
         case SiteActionTypes.LOGOUT:
-            state.loginOpen = false;
-            state.user = null;
-            return Immutable.fromJS(state).toJS();
+            draft.loginOpen = false;
+            draft.user = null;
+            break;
         case SiteActionTypes.TOGGLE_LOGIN:
-            state.loginOpen = !state.loginOpen;
+            draft.loginOpen = !draft.loginOpen;
 
-            if (state.loginOpen) {
-                state.loginEerror = "";
+            if (draft.loginOpen) {
+                draft.loginEerror = "";
             }
-            return Immutable.fromJS(state).toJS();
-        default:
-            return state
+            break;
     }
-}
+}, {});

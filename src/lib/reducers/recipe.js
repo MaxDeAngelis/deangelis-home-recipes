@@ -1,21 +1,22 @@
-import Immutable from 'immutable';
+import produce from "immer"
 import {RecipeActionTypes} from '../actions';
 
-export default function(state = {}, action) {
+
+export default produce((draft = {}, action) => {
     switch (action.type) {
         case RecipeActionTypes.UPDATE_VALUE:
-            state.open.forEach((content) => {
+            draft.open.forEach((content) => {
                 if (content.id === action.id) {
                     content[action.key] = action.value;
                 }
             })
-            return Immutable.fromJS(state).toJS();
+            break;
         case RecipeActionTypes.CLOSE_RECIPE:
-            state.open = state.open.filter(recipe => recipe.id !== action.id);
-            return Immutable.fromJS(state).toJS();
+            draft.open = draft.open.filter(recipe => recipe.id !== action.id);
+            break;
         case RecipeActionTypes.OPEN_RECIPE:
             let alreadyOpen = false;
-            state.open.forEach((content) => {
+            draft.open.forEach((content) => {
                 // If it is already open then reset data
                 if (content.id === action.recipe.id) {
                     content = action.recipe;
@@ -25,22 +26,30 @@ export default function(state = {}, action) {
 
             // If not found then push new
             if (!alreadyOpen) {
-                state.open.push(action.recipe);
+                draft.open.push(action.recipe);
             }
-            return Immutable.fromJS(state).toJS();
+            break;
+        case RecipeActionTypes.SAVE_RECIPE:
+            draft.open.forEach((content) => {
+                // If it is already open then reset data
+                if (content.title === action.title) {
+                    content.edit = false;
+                    content.id = action.recipeId;
+                    content.picture = action.picture;
+                }
+            })
+            break;
         case RecipeActionTypes.UPDATE_RECENTS:  
-            state.recents = action.recents;
-            return Immutable.fromJS(state).toJS();
+            draft.recents = action.recents;
+            break;
         case RecipeActionTypes.UPDATE_SEARCH:
-            state.searchResults = action.results || [];
-            return Immutable.fromJS(state).toJS();
+            draft.searchResults = action.results || [];
+            break;
         case RecipeActionTypes.GET_INGREDIENTS:
-            state.ingredients = action.results || [];
-            return Immutable.fromJS(state).toJS();       
+            draft.ingredients = action.results || [];
+            break;       
         case RecipeActionTypes.GET_UNITS:
-            state.units = action.results || [];
-            return Immutable.fromJS(state).toJS();       
-        default:
-            return state
+            draft.units = action.results || [];
+            break;       
     }
-}
+}, {});
