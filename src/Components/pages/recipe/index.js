@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import { RecipeActions } from '../../../lib/actions';
+import { RecipeActions } from '../../../Lib/actions';
 
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';

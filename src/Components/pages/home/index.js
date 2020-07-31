@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { RecipeActions } from '../../../lib/actions';
+import { RecipeActions } from '../../../Lib/actions';
 
 import Recents from '../../recents';
 

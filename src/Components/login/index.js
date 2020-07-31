@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import { SiteActions } from '../../lib/actions';
+import { SiteActions } from '../../Lib/actions';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
