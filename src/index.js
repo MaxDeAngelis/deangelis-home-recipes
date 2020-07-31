@@ -8,7 +8,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import thunkMiddleware from 'redux-thunk'
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Application from './Components/pages/application';
+import Application from './Pages/Application';
 import siteReducer from './Lib/reducers';
 
 const store = createStore(siteReducer, {

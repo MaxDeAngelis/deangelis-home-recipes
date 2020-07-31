@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SiteActions, RecipeActions } from '../../../Lib/actions';
+import { SiteActions, RecipeActions } from '../../Lib/actions';
 import { withStyles } from '@material-ui/core/styles';
 
 // COMPONENTS
-import Header from '../../header';
-import Sidebar from '../../sidebar';
-import Login from '../../login';
+import Header from '../../Components/Header';
+import Sidebar from '../../Components/Sidebar';
+import Login from '../../Components/Login';
 
-import Home from '../home';
-import Recipe from '../recipe';
-import Search from '../search';
+import Home from '../Home';
+import Recipe from '../Recipe';
+import Search from '../Search';
 
 const styles = theme => ({
     root: {
