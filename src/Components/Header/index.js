@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import { SiteActions, RecipeActions } from '../../lib/actions';
+import { SiteActions, RecipeActions } from '../../Lib/actions';
 
 // COMPONENTS
 import AppBar from '@material-ui/core/AppBar';

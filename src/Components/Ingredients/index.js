@@ -11,8 +11,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
 import Fab from '@material-ui/core/Fab';
 import Delete from '@material-ui/icons/DeleteOutlined';
-import ItemAvatar from './avatar.js';
-import Autocomplete from './autocomplete.js';
+import ItemAvatar from '../Avatar/index.js';
+import Autocomplete from '../Autocomplete/index.js';
 
 const styles = theme => ({
     select: {

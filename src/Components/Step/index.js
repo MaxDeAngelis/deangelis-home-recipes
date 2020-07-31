@@ -11,7 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import Fab from '@material-ui/core/Fab';
 import Delete from '@material-ui/icons/DeleteOutlined';
-import ItemAvatar from './avatar.js';
+import ItemAvatar from '../Avatar/index.js';
 
 const styles = theme => ({
     stepRow: {

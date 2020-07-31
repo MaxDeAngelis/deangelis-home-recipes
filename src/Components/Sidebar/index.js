@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { SiteActions, RecipeActions } from '../../lib/actions';
+import { SiteActions, RecipeActions } from '../../Lib/actions';
 
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';

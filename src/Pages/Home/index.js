@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { RecipeActions } from '../../../lib/actions';
+import { RecipeActions } from '../../Lib/actions';
 
-import Recents from '../../recents';
+import Recents from '../../Components/Recents';
 
 import { withStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';

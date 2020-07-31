@@ -87,7 +87,7 @@ class Time extends React.Component {
     }
 }
 
-class Spec extends React.Component {
+class Field extends React.Component {
     render() {
         const {classes} = this.props;
         if (this.props.value !== "" || this.props.edit) {
@@ -141,4 +141,4 @@ class Spec extends React.Component {
     }
 }
 
-export default withStyles(styles)(Spec);
+export default withStyles(styles)(Field);
