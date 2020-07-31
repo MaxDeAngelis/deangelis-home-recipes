@@ -32,8 +32,10 @@ class Application extends Component {
         this.props.site.nav.items.forEach((item) => {
             if (item.selected) {
                 if (item.category === "RECIPE" /*|| item.id === "new"*/) {
-                    let recipes = this.props.recipe.open.filter((recipe) => recipe.id === item.id)
-                    content = <Recipe data={recipes[0]}/>;
+                    let recipes = this.props.recipe.open.filter((recipe) => recipe.id === item.id);
+                    if (recipes[0]) {
+                        content = <Recipe data={recipes[0]}/>;
+                    }
                 } else if (item.id === "search") {
                     content = <Search/>
                 }
