@@ -184,12 +184,12 @@ function Recipe(props) {
                     <Ingredients
                         availableIngredients={recipe.ingredients}
                         availableUnits={recipe.units}
-                        ingredients={data.ingredients}
+                        ingredients={JSON.parse(JSON.stringify(data.ingredients))}
                         edit={data.edit} 
                         updateValue={(value) => dispatch(RecipeActions.updateValue(data.id, "ingredients", value))}
                     />
                     <Steps 
-                        steps={data.steps}
+                        steps={JSON.parse(JSON.stringify(data.steps))}
                         edit={data.edit} 
                         updateValue={(value) => dispatch(RecipeActions.updateValue(data.id, "steps", value))}
                     />
