@@ -14,10 +14,10 @@ import Close from '@material-ui/icons/Close';
 import Edit from '@material-ui/icons/EditOutlined';
 import Save from '@material-ui/icons/SaveOutlined';
 
-import Cropper from './image-cropper';
-import Spec from './subcomponents/spec.js';
-import Steps from './subcomponents/steps.js';
-import Ingredients from './subcomponents/ingredients.js';
+import Cropper from '../../Components/ImageCropper';
+import Field from '../../Components/Field/index.js';
+import Steps from '../../Components/Step/index.js';
+import Ingredients from '../../Components/Ingredients/index.js';
 
 const styles = theme => ({
     content: {
@@ -141,11 +141,11 @@ function Recipe(props) {
                     onCropComplete={(url) => dispatch(RecipeActions.updateValue(data.id, "picture", url))}
                 />
                 <List className={classes.specContent} dense={true}>
-                    <Spec
+                    <Field
                         value={totalTime}
                         label="Total time:"
                     />
-                    <Spec
+                    <Field
                         id={data.id}
                         value={prepTime}
                         label="Prep time:"
@@ -154,7 +154,7 @@ function Recipe(props) {
                         edit={data.edit}
                         updateValue={(id, key, value) => dispatch(RecipeActions.updateValue(id, key, value))}
                     />
-                    <Spec
+                    <Field
                         id={data.id}
                         value={cookTime}
                         label="Cook time:"
@@ -163,7 +163,7 @@ function Recipe(props) {
                         edit={data.edit}
                         updateValue={(id, key, value) => dispatch(RecipeActions.updateValue(id, key, value))}
                     />
-                    <Spec
+                    <Field
                         id={data.id}
                         value={data.servings}
                         label="Yield:"
@@ -173,7 +173,7 @@ function Recipe(props) {
                         edit={data.edit}
                         updateValue={(id, key, value) => dispatch(RecipeActions.updateValue(id, key, value))}
                     />
-                    <Spec
+                    <Field
                         value={data.ingredients.length}
                         label="Ingredients:"
                     />
