@@ -30,7 +30,8 @@ export const SiteActionTypes = {
         TOGGLE_SIDEBAR : "TOGGLE_SIDEBAR",
         TOGGLE_LOGIN : "TOGGLE_LOGIN",
         LOGIN : "LOGIN",
-        LOGOUT : "LOGOUT"
+        LOGOUT : "LOGOUT",
+        UPDATE_OPEN_NAV_ID : "UPDATE_OPEN_NAV_ID"
 }
 
 export const SiteActions = {
@@ -89,7 +90,13 @@ const PrivateSiteActions = {
         return {
             type : SiteActionTypes.LOGOUT
         }
-    }
+    },
+    updateOpenNav : function(id) {
+        return {
+            type : SiteActionTypes.UPDATE_OPEN_NAV_ID,
+            id : id
+        }
+    },
 }
 
 export const RecipeActionTypes = {
@@ -107,7 +114,12 @@ export const RecipeActions = {
     save: function(recipe) {
         return function(dispatch) {
             _processAction("POST", "SAVE_RECIPE", {recipe: recipe}, function(json) {
-                console.log(json);
+                if (json.status == "success") {
+                    dispatch(PrivateRecipeActions.saveRecipe(json.title, json.recipeId, json.picture));
+                    dispatch(PrivateSiteActions.updateOpenNav(json.recipeId));
+                } else {
+                    console.log("Failed to Save Recipe", json);
+                }
             })
         }
     },
@@ -174,6 +186,14 @@ const PrivateRecipeActions = {
         return {
             type : RecipeActionTypes.OPEN_RECIPE,
             recipe : recipe
+        }
+    },
+    saveRecipe : function(title, recipeId, picture) {
+        return {
+            type : RecipeActionTypes.SAVE_RECIPE,
+            title : title,
+            recipeId : recipeId,
+            picture : picture
         }
     },
     updateSearchResults : function(recipes) {
