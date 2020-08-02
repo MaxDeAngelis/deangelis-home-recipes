@@ -9,6 +9,8 @@ import ZoomOut from '@material-ui/icons/ZoomOutOutlined'
 import Close from '@material-ui/icons/Close';
 import Check from '@material-ui/icons/Check'
 
+import { addImageToCanvas, getDataURL } from './utils';
+
 const styles = theme => ({
     root: {
         position: 'relative',
@@ -64,51 +66,11 @@ function CropperModal(props) {
         var context = canvasRef.current.getContext("2d");
         context.clearRect(0, 0, state.width, state.height);
         addImageToCanvas(context, state.imageData, state.width, state.height, state.zoom);
-     }, [state.width, state.height, state.imageData, state.zoom]);
-
-
-    function addImageToCanvas(context, imageData, width, height, zoom) {
-        if (!imageData.resource) return;
-
-        context.save();
-        context.globalCompositeOperation = "destination-over";
-        var scaledWidth = imageData.width * zoom;
-        var scaledHeight = imageData.height * zoom;
-    
-        var x = imageData.x - (scaledWidth - imageData.width) / 2;
-        var y = imageData.y - (scaledHeight - imageData.height) / 2;
-    
-        // Keep within the bounds
-        x = Math.min(x, 0);
-        y = Math.min(y, 0);
-        y = scaledHeight + y >= height ? y : (y + (height - (scaledHeight + y)));
-        x = scaledWidth + x >= width ? x : (x + (width - (scaledWidth + x)));
-    
-        context.drawImage(imageData.resource, x, y, imageData.width * zoom, imageData.height * zoom);
-        context.restore();
-    }
-
-    function getDataURL() {
-        var canvas = document.createElement("canvas");
-        var context = canvas.getContext("2d");
-    
-        canvas.width = state.width;
-        canvas.height = state.height;
-    
-        addImageToCanvas(context, {
-            resource: state.imageData.resource,
-            x: state.imageData.x,
-            y: state.imageData.y,
-            height: state.imageData.height,
-            width: state.imageData.width
-        }, state.width, state.height, state.zoom);
-    
-        return canvas.toDataURL();
-    }
+    }, [state.width, state.height, state.imageData, state.zoom]);
 
     function handleCrop() {
         var formData = new FormData();
-        formData.append('image', getDataURL());
+        formData.append('image', getDataURL(state.imageData, state.width, state.height, state.zoom));
         formData.append('action', 'CROP_IMAGE')
         formData.append('url', image);
 
