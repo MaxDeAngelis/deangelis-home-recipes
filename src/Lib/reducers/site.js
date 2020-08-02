@@ -65,5 +65,7 @@ export default produce((draft = {}, action) => {
                 draft.loginEerror = "";
             }
             break;
+        default:
+            return draft;
     }
 }, {});
