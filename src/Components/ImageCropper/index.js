@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useReducer } from 'react';
+import React, { useEffect, useRef, useReducer } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import reducer from './reducer';
 

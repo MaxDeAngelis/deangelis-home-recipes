@@ -50,6 +50,8 @@ export default produce((draft = {}, action) => {
             break;       
         case RecipeActionTypes.GET_UNITS:
             draft.units = action.results || [];
-            break;       
+            break;     
+        default:
+            return draft;  
     }
 }, {});

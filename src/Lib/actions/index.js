@@ -114,7 +114,7 @@ export const RecipeActions = {
     save: function(recipe) {
         return function(dispatch) {
             _processAction("POST", "SAVE_RECIPE", {recipe: recipe}, function(json) {
-                if (json.status == "success") {
+                if (json.status === "success") {
                     dispatch(PrivateRecipeActions.saveRecipe(json.title, json.recipeId, json.picture));
                     dispatch(PrivateSiteActions.updateOpenNav(json.recipeId));
                 } else {
