@@ -4,14 +4,19 @@ import {SiteActionTypes} from '../actions';
 export default produce((draft = {}, action) => {
     switch (action.type) {
         case SiteActionTypes.CLOSE_CONTENT:
-            draft.nav.items = draft.nav.items.filter(item => (item.id !== action.id || item.category === "SITE"));
-            draft.nav.items.forEach(item => {
-                if (item.id === action.id) {
-                    item.selected = false;
-                } else if (item.id === "home") {
-                    item.selected = true;
+            // Find the index of the tab being closed
+            let indexToSelect = 0;
+            draft.nav.items.forEach((item, i) => {
+                if (item.id === action.id && item.category === "RECIPE") {
+                    indexToSelect = i - 1;
                 }
             });
+
+            draft.nav.items = draft.nav.items.filter(item => (item.id !== action.id || item.category === "SITE"));
+            // If there are no more recipes to select then go home
+            if (draft.nav.items[indexToSelect].category !== "RECIPE") indexToSelect = 0;
+            draft.nav.items[indexToSelect].selected = true;
+
             break;
         case SiteActionTypes.OPEN_CONTENT:
             let alreadyOpen = false;

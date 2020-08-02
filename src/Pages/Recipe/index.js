@@ -16,7 +16,7 @@ import Save from '@material-ui/icons/SaveOutlined';
 
 import Cropper from '../../Components/ImageCropper';
 import Field from '../../Components/Field/index.js';
-import Steps from '../../Components/Step/index.js';
+import Steps from '../../Components/Steps/index.js';
 import Ingredients from '../../Components/Ingredients/index.js';
 
 const styles = theme => ({
