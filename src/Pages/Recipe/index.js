@@ -61,11 +61,11 @@ function Recipe(props) {
     const [ focusOnEdit, setFocusOnEdit ] = useState(true);
 
     useEffect(() => {
-        if ((focusOnEdit || data.id == -1) && titleRef && titleRef.current) {
+        if ((focusOnEdit || data.id === -1) && titleRef && titleRef.current) {
             titleRef.current.focus();
         }
         setFocusOnEdit(false); 
-    }, [data.edit, focusOnEdit, titleRef]);
+    }, [data.id, data.edit, focusOnEdit, titleRef]);
 
     let prepTime = data.prepTime;
     let cookTime = data.cookTime;
