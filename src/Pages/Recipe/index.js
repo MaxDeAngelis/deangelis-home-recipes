@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { RecipeActions } from '../../Lib/actions';
@@ -57,6 +57,16 @@ const styles = theme => ({
 });
 function Recipe(props) {
     const { recipe, classes, data, dispatch } = props;
+    const titleRef = useRef(null);
+    const [ focusOnEdit, setFocusOnEdit ] = useState(true);
+
+    useEffect(() => {
+        if ((focusOnEdit || data.id == -1) && titleRef && titleRef.current) {
+            titleRef.current.focus();
+        }
+        setFocusOnEdit(false); 
+    }, [data.edit, focusOnEdit, titleRef]);
+
     let prepTime = data.prepTime;
     let cookTime = data.cookTime;
     let totalTime = calculateTotalTime(data.prepTime, data.cookTime);
@@ -116,6 +126,7 @@ function Recipe(props) {
             <Grid item xs={12} className={classes.toolbar} ></Grid>
             <Grid container direction="row" className={classes.titleBar}>
                 {data.edit === true ? <TextField
+                    inputRef={titleRef}
                     value={data.title}
                     margin="dense"
                     variant="outlined"
@@ -126,7 +137,10 @@ function Recipe(props) {
                 <div>
                     {data.edit === true ?
                         <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => dispatch(RecipeActions.save(data))}><Save/></Fab> : 
-                        <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => dispatch(RecipeActions.updateValue(data.id, "edit", true))}><Edit/></Fab> 
+                        <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => { 
+                            setFocusOnEdit(true);
+                            dispatch(RecipeActions.updateValue(data.id, "edit", true));
+                        }}><Edit/></Fab> 
                     }
                     <Fab className={[classes.headerIcon, classes.close].join(" ")} size="medium" color="secondary" onClick={handleCloseClick}><Close/></Fab>
                 </div>
