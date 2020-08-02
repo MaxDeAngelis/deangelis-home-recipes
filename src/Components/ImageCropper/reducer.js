@@ -1,33 +1,6 @@
 import produce from "immer"
 
-function boundedCoords(x, y, dx, dy, imageData, zoom, rightEdge, bottomEdge) {
-    var newX = x - dx;
-    var newY = y - dy;
-
-    var scaledWidth = imageData.width * zoom;
-    var dw = (scaledWidth - imageData.width) / 2;
-
-    if (newX - dw > 0) { 
-        x = dw; 
-    } else if (newX < (-scaledWidth + rightEdge)) { 
-        x = rightEdge - scaledWidth; 
-    } else {
-        x = newX;
-    }
-
-    var scaledHeight = imageData.height * zoom;
-    var dh = (scaledHeight - imageData.height) / 2;
-
-    if (newY - dh > 0) { 
-        y = dh; 
-    } else if (newY < (-scaledHeight + bottomEdge)) { 
-        y = bottomEdge - scaledHeight; 
-    } else {
-        y = newY;
-    }
-
-    return { x: x, y: y };
-}
+import { boundedCoords } from './utils';
 
 export default produce((draft = {}, action) => {
     switch (action.type) {
