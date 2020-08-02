@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
 import Typography from '@material-ui/core/Typography';
@@ -50,6 +50,16 @@ const styles = theme => ({
 
 function Ingredients(props) {
     const { availableIngredients, availableUnits, ingredients, updateValue, classes, edit } = props;
+    const [ focusNew, setFocusNew ] = useState(false);
+    const ingRef = useRef(null);
+
+    useEffect(() => {
+        if (focusNew && ingRef) {
+            ingRef.current.focus();
+            setFocusNew(false); 
+        }
+    }, [focusNew, ingRef]);
+
 
     function toggleIngredient(index) {
         let newIngredients = ingredients;
@@ -66,6 +76,7 @@ function Ingredients(props) {
             units: "",
         })
         updateValue(newIngredients);
+        setFocusNew(true);
     }
 
     function removeIngredient(index) {
@@ -110,6 +121,7 @@ function Ingredients(props) {
                 <>
                     <TextField
                         className={classes.quantity}
+                        inputRef={ingRef}
                         value={ing.quantity}
                         margin="none"
                         variant="outlined"
