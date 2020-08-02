@@ -40,6 +40,11 @@ function Login(props) {
             <Dialog
                 open={loginOpen}
                 onClose={() => dispatch(SiteActions.toggleLogin())}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        dispatch(SiteActions.login(user, password));
+                    }
+                }}
                 PaperProps={{className:classes.dialog}}
             >
                 <DialogTitle>Login</DialogTitle>
