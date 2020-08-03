@@ -112,6 +112,10 @@ function Sidebar(props) {
                     let action = () => dispatch(SiteActions.openContent(item.id, "SITE"))
                     if (item.id === "home") {
                         icon = <HomeOutlined/>;
+                        action = () => {
+                            dispatch(RecipeActions.getRecents());
+                            dispatch(SiteActions.openContent(item.id, "SITE"));
+                        }
                     } else if (item.id === "search") {
                         icon = <SearchIcon/>;
                     } else if (item.id === "new") {

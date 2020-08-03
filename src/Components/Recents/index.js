@@ -39,10 +39,16 @@ const styles = theme => ({
 
 function RecentRecipes(props) {
     const { classes, recipes, openRecipe } = props;
+    let cols = 3;
+    let height = 400;
+    if  (window.outerWidth <= 400) {
+        cols = 1;
+        height = 200;
+    }
     return (
         <div className={classes.root}>
-            <GridList className={classes.gridList} cols={3} cellHeight={400} spacing={8}>
-                <GridListTile key="Subheader" cols={3} style={{ height: 'auto' }} >
+            <GridList className={classes.gridList} cols={cols} cellHeight={height} spacing={8}>
+                <GridListTile key="Subheader" cols={cols} style={{ height: 'auto' }} >
                     <ListSubheader component="header"><Typography variant="h6" color="primary" noWrap>Recent recipes</Typography></ListSubheader>
                 </GridListTile>
                 {recipes.map(recipe => {
