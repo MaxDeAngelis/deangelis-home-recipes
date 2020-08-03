@@ -50,12 +50,15 @@ const styles = theme => ({
 
 function Search(props) {
     const { recipe, classes, dispatch } = props;
-
+    let cols = 5;
+    if  (window.outerWidth <= 400) {
+        cols = 1;
+    }
     return (
         <main className={classes.content}>
             <div className={classes.toolbar} />
             <Typography variant="h4" align="center">Search results</Typography>
-            <GridList className={classes.gridList} cellHeight={200} cols={5} spacing={8}>
+            <GridList className={classes.gridList} cellHeight={200} cols={cols} spacing={8}>
                 {recipe.searchResults.map(recipe => {
                     return (
                         <GridListTile key={recipe.id} onClick={() => dispatch(RecipeActions.open(recipe.id))} className={classes.gridTile}>
