@@ -56,11 +56,11 @@ class Time extends React.Component {
         const {classes} = this.props;
         let hoursList = [];
         for (var i = 0; i <= 100; i++) {
-            hoursList.push(<MenuItem value={i} className={classes.menuItem}>{i.toString()}</MenuItem>)
+            hoursList.push(<MenuItem key={i} value={i} className={classes.menuItem}>{i.toString()}</MenuItem>)
         }
         let minutesList = [];
         for (var y = 0; y < 60; y++) {
-            minutesList.push(<MenuItem value={y} className={classes.menuItem}>{y.toString()}</MenuItem>)
+            minutesList.push(<MenuItem key={y} value={y} className={classes.menuItem}>{y.toString()}</MenuItem>)
         }
         return (
             <div>
@@ -68,7 +68,7 @@ class Time extends React.Component {
                     value={hours}
                     onChange={this.handleChangeHour}
                     className={classes.select}
-                    input={<CustomInput/>}
+                    input={<CustomInput labelWidth={0} />}
                 >
                     {hoursList}
                 </Select>
@@ -77,7 +77,7 @@ class Time extends React.Component {
                     value={minutes}
                     onChange={this.handleChangeMin}
                     className={classes.select}
-                    input={<CustomInput/>}
+                    input={<CustomInput labelWidth={0} />}
                 >
                     {minutesList}
                 </Select>
@@ -109,14 +109,14 @@ class Field extends React.Component {
                 } else if (this.props.variant === "servings") {
                     let list = [];
                     for (var i = 1; i <= 100; i++) {
-                        list.push(<MenuItem value={i} className={classes.menuItem}>{i.toString()}</MenuItem>)
+                        list.push(<MenuItem key={i} value={i} className={classes.menuItem}>{i.toString()}</MenuItem>)
                     }
                     content = (
                         <Select
                             value={this.props.value}
                             onChange={(e) => this.props.updateValue(this.props.id, this.props.valueKey, e.target.value)}
                             className={classes.select}
-                            input={<CustomInput/>}
+                            input={<CustomInput labelWidth={0} />}
                         >
                             {list}
                         </Select>
