@@ -55,8 +55,10 @@ const styles = theme => ({
     toolbar: theme.mixins.toolbar,
     close: theme.mixins.cancel
 });
+
+
 function Recipe(props) {
-    const { recipe, classes, data, dispatch } = props;
+    const { recipe, site, classes, data, dispatch } = props;
     const titleRef = useRef(null);
     const [ focusOnEdit, setFocusOnEdit ] = useState(true);
 
@@ -120,6 +122,17 @@ function Recipe(props) {
 
         return hours + minutes;
     }
+    let editOptions;
+    if (site.user) {
+        if (data.edit) {
+            editOptions = <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => dispatch(RecipeActions.save(data))}><Save/></Fab>;
+        } else {
+            editOptions = <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => { 
+                setFocusOnEdit(true);
+                dispatch(RecipeActions.updateValue(data.id, "edit", true));
+            }}><Edit/></Fab>; 
+        }   
+    }
 
     return (
         <Grid container className={classes.content} spacing={24}>
@@ -135,13 +148,7 @@ function Recipe(props) {
                 /> : <Typography variant="h4">{data.title}</Typography> }
                 
                 <div>
-                    {data.edit === true ?
-                        <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => dispatch(RecipeActions.save(data))}><Save/></Fab> : 
-                        <Fab className={classes.headerIcon} size="medium" color="secondary" onClick={() => { 
-                            setFocusOnEdit(true);
-                            dispatch(RecipeActions.updateValue(data.id, "edit", true));
-                        }}><Edit/></Fab> 
-                    }
+                    {editOptions}
                     <Fab className={[classes.headerIcon, classes.close].join(" ")} size="medium" color="secondary" onClick={handleCloseClick}><Close/></Fab>
                 </div>
             </Grid>      

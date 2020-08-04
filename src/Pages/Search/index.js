@@ -51,7 +51,7 @@ const styles = theme => ({
 function Search(props) {
     const { recipe, classes, dispatch } = props;
     let cols = 5;
-    if  (window.outerWidth <= 400) {
+    if  (window.outerWidth <= 700) {
         cols = 1;
     }
     return (
