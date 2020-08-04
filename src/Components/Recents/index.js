@@ -40,8 +40,8 @@ const styles = theme => ({
 function RecentRecipes(props) {
     const { classes, recipes, openRecipe } = props;
     let cols = 3;
-    let height = 400;
-    if  (window.outerWidth <= 400) {
+    let height = 500;
+    if  (window.outerWidth <= 800) {
         cols = 1;
         height = 200;
     }
