@@ -22,7 +22,7 @@ import Ingredients from '../../Components/Ingredients/index.js';
 const styles = theme => ({
     content: {
         flexGrow: 1,
-        padding: theme.spacing.unit * 3
+        padding: theme.spacing(3)
     },
     titleBar: {
         justifyContent: 'space-between',
@@ -135,7 +135,7 @@ function Recipe(props) {
     }
 
     return (
-        <Grid container className={classes.content} spacing={24}>
+        <Grid container className={classes.content} spacing={3}>
             <Grid item xs={12} className={classes.toolbar} ></Grid>
             <Grid container direction="row" className={classes.titleBar}>
                 {data.edit === true ? <TextField
