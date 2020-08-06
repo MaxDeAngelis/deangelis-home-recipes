@@ -30,6 +30,7 @@ const styles = theme => ({
         alignItems: 'flex-start',
     },
     stepListItemText: {
+        margin: 0,
         '&[data-selected=true]': {
             textDecoration: 'line-through'
         },

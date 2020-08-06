@@ -9,6 +9,7 @@ const styles = theme => ({
         cursor: 'pointer',
         border: '2px solid transparent',
         transition: 'all .5s',
+        marginRight: theme.spacing(2),
         '&[data-selected=true]': {
             backgroundColor: theme.palette.primary.main
         },

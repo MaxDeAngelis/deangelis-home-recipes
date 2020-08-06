@@ -72,7 +72,7 @@ class Time extends React.Component {
                 >
                     {hoursList}
                 </Select>
-                <Typography variant="h6" inline={true} className={classes.specLabel}>hrs</Typography>
+                <Typography variant="h6" display={'inline'} className={classes.specLabel}>hrs</Typography>
                 <Select
                     value={minutes}
                     onChange={this.handleChangeMin}
@@ -81,7 +81,7 @@ class Time extends React.Component {
                 >
                     {minutesList}
                 </Select>
-                <Typography variant="h6" inline={true} className={classes.specLabel}>min</Typography>
+                <Typography variant="h6" display={'inline'} className={classes.specLabel}>min</Typography>
             </div>
         )
     }
@@ -91,10 +91,10 @@ class Field extends React.Component {
     render() {
         const {classes} = this.props;
         if (this.props.value !== "" || this.props.edit) {
-            let content = <Typography variant="h6" inline={true} className={classes.specLabel}>{this.props.value}</Typography>
+            let content = <Typography variant="h6" display={'inline'} className={classes.specLabel}>{this.props.value}</Typography>
             let suffix;
             if (this.props.suffix !== "") {
-                suffix = <Typography variant="h6" inline={true} className={classes.specLabel}>{this.props.suffix}</Typography>
+                suffix = <Typography variant="h6" display={'inline'} className={classes.specLabel}>{this.props.suffix}</Typography>
             }
             if (this.props.edit) {
                 if (this.props.variant === "time") {
@@ -131,7 +131,7 @@ class Field extends React.Component {
                 }
             }
             return (<ListItem alignItems="center" >
-                <Typography variant="subtitle1" inline={true}>{this.props.label}</Typography>
+                <Typography variant="subtitle1" display={'inline'}>{this.props.label}</Typography>
                 {content}
                 {suffix}
             </ListItem>)

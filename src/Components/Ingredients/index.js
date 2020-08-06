@@ -16,31 +16,32 @@ import Autocomplete from '../Autocomplete/index.js';
 
 const styles = theme => ({
     select: {
-        marginLeft: theme.spacing.unit * 2,
+        marginLeft: theme.spacing(2),
     },
     quantity: {
         width: 75,
-        marginLeft: theme.spacing.unit * 2,
+        marginLeft: theme.spacing(2),
         '& input' : {
             padding: 9
         }
     },
     unitsSelect: {
         width: 150,
-        marginLeft: theme.spacing.unit * 2,
+        marginLeft: theme.spacing(2),
     },
     ingredientContainer: {
-        marginBottom: theme.spacing.unit * 2,
+        marginBottom: theme.spacing(2),
     },
     ingredientSelect: {
         flexGrow: 1,
-        marginLeft: theme.spacing.unit * 2,
-        marginRight: theme.spacing.unit * 2,
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2),
     },
     ingredientListItem: {
         padding: '5px 16px'
     },
     ingListItemText: {
+        margin: 0,
         '&[data-selected=true]': {
             textDecoration: 'line-through'
         },
@@ -174,6 +175,7 @@ function Ingredients(props) {
                                 disabled={edit}
                                 width={18}
                                 height={18}
+                                label=""
                             />
                             {getIngredient(ing, index)}
                         </ListItem>
