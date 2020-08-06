@@ -24,9 +24,9 @@ const styles = theme => ({
     },
     error : {
         backgroundColor: theme.palette.error.light,
-        padding: theme.spacing.unit,
-        marginBottom: theme.spacing.unit,
-        borderRadius: theme.spacing.unit
+        padding: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+        borderRadius: theme.spacing(1)
     }
 });
 
