@@ -108,6 +108,7 @@ function Sidebar(props) {
             <Divider />
             <List>
                 {siteIcons.map((item) => {
+                    if (item.id === "new" && !site.user) return;
                     let icon;
                     let action = () => dispatch(SiteActions.openContent(item.id, "SITE"))
                     if (item.id === "home") {
