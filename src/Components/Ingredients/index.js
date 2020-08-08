@@ -11,8 +11,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
 import Fab from '@material-ui/core/Fab';
 import Delete from '@material-ui/icons/DeleteOutlined';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import ItemAvatar from '../Avatar/index.js';
-import Autocomplete from '../Autocomplete/index.js';
 
 const styles = theme => ({
     select: {
@@ -106,18 +106,13 @@ function Ingredients(props) {
 
     function getIngredient(ing, index) {
         if (edit) {
-            let ingredients = availableIngredients.map((availIng) => {
-                return {
-                    value: availIng.ingredientName,
-                    label: availIng.ingredientName
-                }
+            const ingredients = availableIngredients.map((availIng) => {
+                return availIng.ingredientName;
             })
-            let units = availableUnits.map((availUnit) => {
-                return {
-                    value: availUnit,
-                    label: availUnit
-                }
+            const units = availableUnits.map((availUnit) => {
+                return availUnit;
             })
+            debugger;
             return (
                 <>
                     <TextField
@@ -129,22 +124,20 @@ function Ingredients(props) {
                         onChange={(e) => updateIngredient('quantity', e.target.value, index)}
                     />
                     <Autocomplete
-                        value={{
-                            value: ing.units,
-                            label: ing.units
-                        }}
+                        value={ing.units|| ""}
                         options={units}
+                        renderInput={(params) => <TextField {...params} variant="outlined" margin="none"/>}
+                        size="small"
                         className={classes.unitsSelect}
-                        onChange={(obj) => updateIngredient('units', obj.label, index)}
+                        onChange={(e, val) => updateIngredient('units', val, index)}
                     />
                     <Autocomplete
-                        value={{
-                            value: ing.ingredientName,
-                            label: ing.ingredientName
-                        }}
+                        value={ing.ingredientName || ""}
                         options={ingredients}
+                        renderInput={(params) => <TextField {...params} variant="outlined" margin="none"/>}
+                        size="small"
                         className={classes.ingredientSelect}
-                        onChange={(obj) => updateIngredient('ingredientName', obj.label, index)}
+                        onChange={(e, val) => updateIngredient('ingredientName', val, index)}
                     />
                     <Fab aria-label="Delete" size="small" className={classes.delete} onClick={() => removeIngredient(index)}>
                         <Delete />
