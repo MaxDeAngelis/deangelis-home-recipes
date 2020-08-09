@@ -129,6 +129,12 @@ export const RecipeActions = {
                 dispatch(PrivateRecipeActions.openRecipe(json))
                 dispatch(SiteActions.openContent(json.id, "RECIPE"));
             })
+            _processAction("GET", "GET_DATA_INGREDIENTS", {}, function(json) {
+                dispatch(PrivateRecipeActions.getIngredients(json))
+            })
+            _processAction("GET", "GET_DATA_UNITS", {}, function(json) {
+                dispatch(PrivateRecipeActions.getUnits(json))
+            })
         }
     },
     close : function(id) {
