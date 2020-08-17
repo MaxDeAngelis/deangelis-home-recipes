@@ -112,7 +112,6 @@ function Ingredients(props) {
             const units = availableUnits.map((availUnit) => {
                 return availUnit;
             })
-            debugger;
             return (
                 <>
                     <TextField
@@ -124,6 +123,7 @@ function Ingredients(props) {
                         onChange={(e) => updateIngredient('quantity', e.target.value, index)}
                     />
                     <Autocomplete
+                        clearOnBlur={false}
                         value={ing.units|| ""}
                         options={units}
                         renderInput={(params) => <TextField {...params} variant="outlined" margin="none"/>}
@@ -132,6 +132,7 @@ function Ingredients(props) {
                         onChange={(e, val) => updateIngredient('units', val, index)}
                     />
                     <Autocomplete
+                        clearOnBlur={false}
                         value={ing.ingredientName || ""}
                         options={ingredients}
                         renderInput={(params) => <TextField {...params} variant="outlined" margin="none"/>}
