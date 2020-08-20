@@ -126,7 +126,7 @@ function Ingredients(props) {
                         clearOnBlur={false}
                         value={ing.units|| ""}
                         options={units}
-                        renderInput={(params) => <TextField {...params} variant="outlined" margin="none"/>}
+                        renderInput={(params) => <TextField {...params} variant="outlined" margin="none" onBlur={(e) => updateIngredient('units', e.target.value, index)}/>}
                         size="small"
                         className={classes.unitsSelect}
                         onChange={(e, val) => updateIngredient('units', val, index)}
@@ -135,7 +135,7 @@ function Ingredients(props) {
                         clearOnBlur={false}
                         value={ing.ingredientName || ""}
                         options={ingredients}
-                        renderInput={(params) => <TextField {...params} variant="outlined" margin="none"/>}
+                        renderInput={(params) => <TextField {...params} variant="outlined" margin="none" onBlur={(e) => updateIngredient('ingredientName', e.target.value, index)}/>}
                         size="small"
                         className={classes.ingredientSelect}
                         onChange={(e, val) => updateIngredient('ingredientName', val, index)}
