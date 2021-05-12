@@ -9,7 +9,7 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "classnames": "^2.2.6",
     "cross-fetch": "^3.0.4",
-    "immer": "^7.0.7",
+    "immer": "^8.0.1",
     "md5": "^2.2.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
