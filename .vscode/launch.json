@@ -1,45 +1,31 @@
 {
-    "version": "0.2.0",
+    "version": "0.0.1",
     "configurations": [
         {
-            "name": "Debug Android",
-            "program": "${workspaceRoot}/.vscode/launchReactNative.js",
-            "type": "reactnative",
+            "name": "Start DeAngelisHome Dev Server",
+            "type": "node",
             "request": "launch",
-            "platform": "android",
-            "internalDebuggerPort": 9090,
-            "sourceMaps": true,
-            "outDir": "${workspaceRoot}/.vscode/.react"
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run-script", "start"],
+            "port": 9229,
+            "skipFiles": ["<node_internals>/**"],
+            "env": {
+                "NODE_PATH": "${workspaceFolder}"
+            }
         },
         {
-            "name": "Debug iOS",
-            "program": "${workspaceRoot}/.vscode/launchReactNative.js",
-            "type": "reactnative",
+            "type": "node",
             "request": "launch",
-            "platform": "ios",
-            "target": "iPhone 5s",
-            "internalDebuggerPort": 9090,
-            "sourceMaps": true,
-            "outDir": "${workspaceRoot}/.vscode/.react"
-        },
-        {
-            "name": "Attach to packager",
-            "program": "${workspaceRoot}/.vscode/launchReactNative.js",
-            "type": "reactnative",
-            "request": "attach",
-            "internalDebuggerPort": 9090,
-            "sourceMaps": true,
-            "outDir": "${workspaceRoot}/.vscode/.react"
-        },
-        {
-            "name": "Debug in Exponent",
-            "program": "${workspaceRoot}/.vscode/launchReactNative.js",
-            "type": "reactnative",
-            "request": "launch",
-            "platform": "exponent",
-            "internalDebuggerPort": 9090,
-            "sourceMaps": true,
-            "outDir": "${workspaceRoot}/.vscode/.react"
+            "name": "Jest All",
+            "program": "${workspaceFolder}/node_modules/.bin/jest",
+            "args": ["--runInBand"],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "disableOptimisticBPs": true,
+            "windows": {
+                "program": "${workspaceFolder}/node_modules/jest/bin/jest"
+            }
         }
     ]
 }
