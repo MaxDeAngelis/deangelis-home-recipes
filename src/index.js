@@ -1,56 +1,56 @@
-import React from 'react';
-import {render} from 'react-dom';
+import React from 'react'
+import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from 'redux-devtools-extension'
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import thunkMiddleware from 'redux-thunk'
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Application from './Pages/Application';
-import siteReducer from './Lib/reducers';
+import CssBaseline from '@material-ui/core/CssBaseline'
+import Application from './Pages/Application'
+import siteReducer from './Lib/reducers'
 
-const store = createStore(siteReducer, {
-        site : {
+const store = createStore(
+    siteReducer,
+    {
+        site: {
             loginOpen: false,
             user: null,
-            nav : {
-                open : false,
-                items : [
+            nav: {
+                open: false,
+                items: [
                     {
-                        id : "home",
-                        title : "Home",
-                        category : "SITE",
-                        selected : true
-                    },{
-                        id : "search",
-                        title : "Search results",
-                        category : "SITE",
-                        selected : false
-                    },{
-                        id : "new",
-                        title : "New recipe",
-                        category : "SITE",
-                        selected : false
-                    }
-                ]
-            }
+                        id: 'home',
+                        title: 'Home',
+                        category: 'SITE',
+                        selected: true,
+                    },
+                    {
+                        id: 'search',
+                        title: 'Search results',
+                        category: 'SITE',
+                        selected: false,
+                    },
+                    {
+                        id: 'new',
+                        title: 'New recipe',
+                        category: 'SITE',
+                        selected: false,
+                    },
+                ],
+            },
         },
-        recipe : {
-            ingredients : [],
+        recipe: {
+            ingredients: [],
             units: [],
-            recents : [],
-            searchResults : [],
-            open : []
-        }
+            recents: [],
+            searchResults: [],
+            open: [],
+        },
     },
-    composeWithDevTools(
-        applyMiddleware(
-            thunkMiddleware
-        )
-    )
-);
+    composeWithDevTools(applyMiddleware(thunkMiddleware))
+)
 
 const theme = createMuiTheme({
     typography: {
@@ -58,18 +58,18 @@ const theme = createMuiTheme({
     },
     palette: {
         primary: {
-            main : "#162856"
+            main: '#162856',
         },
         secondary: {
-            main : "#0E563B"
+            main: '#0E563B',
         },
         background: {
-            default : "#e2e2e2",
-            paper: "#afb5c3"
-        }
+            default: '#e2e2e2',
+            paper: '#afb5c3',
+        },
     },
-    overrides : {
-        drawerWidth : 250
+    overrides: {
+        drawerWidth: 250,
     },
     mixins: {
         cancel: {
@@ -77,10 +77,10 @@ const theme = createMuiTheme({
             color: '#fff',
             '&:hover': {
                 backgroundColor: '#b11414',
-            }
-        }
-    }
-});
+            },
+        },
+    },
+})
 
 let persistor = persistStore(store)
 
@@ -89,9 +89,9 @@ render(
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
                 <CssBaseline />
-                <Application/>
+                <Application />
             </PersistGate>
         </Provider>
-    </MuiThemeProvider>, 
+    </MuiThemeProvider>,
     document.getElementById('root')
-);
+)
