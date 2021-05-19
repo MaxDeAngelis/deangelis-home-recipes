@@ -1,31 +1,35 @@
 {
-    "version": "0.0.1",
-    "configurations": [
-        {
-            "name": "Start DeAngelisHome Dev Server",
-            "type": "node",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "runtimeExecutable": "npm",
-            "runtimeArgs": ["run-script", "start"],
-            "port": 9229,
-            "skipFiles": ["<node_internals>/**"],
-            "env": {
-                "NODE_PATH": "${workspaceFolder}"
-            }
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Jest All",
-            "program": "${workspaceFolder}/node_modules/.bin/jest",
-            "args": ["--runInBand"],
-            "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen",
-            "disableOptimisticBPs": true,
-            "windows": {
-                "program": "${workspaceFolder}/node_modules/jest/bin/jest"
-            }
-        }
-    ]
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Start DeAngelisHome Dev Server",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run-script", "start"],
+      "port": 9229,
+      "skipFiles": ["<node_internals>/**"],
+      "env": {
+        "NODE_PATH": "${workspaceFolder}"
+      }
+    },
+    {
+      "name": "Run Tests",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/react-scripts",
+      "args": [
+        "test",
+        "--runInBand",
+        "--no-cache",
+        "--env=jsdom",
+        "-- --coverage"
+      ],
+      "cwd": "${workspaceRoot}",
+      "protocol": "inspector",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
 }
