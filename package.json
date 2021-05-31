@@ -14,7 +14,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-redux": "^6.0.1",
-    "react-scripts": "^3.2.0",
+    "react-scripts": "^4.0.3",
     "react-select": "^2.4.4",
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
@@ -25,7 +25,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build && node scripts/postBuild.js",
     "test": "react-scripts test --watchAll --testMatch **/src/**/*.test.js",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src"
   },
   "browserslist": [
     ">0.2%",
@@ -36,12 +37,17 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.7",
+    "@types/react": "^17.0.6",
     "eslint-config-airbnb": "^18.2.1",
-    "eslint-plugin-import": "^2.22.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-react": "^1.1.7",
+    "eslint-plugin-import": "^2.23.3",
+    "eslint-plugin-jsx": "^0.1.0",
     "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "prettier": "2.3.0",
+    "prettier": "^2.3.0",
     "puppeteer": "^9.1.1",
     "redux-mock-store": "^1.5.4"
   }
