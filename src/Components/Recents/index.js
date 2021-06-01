@@ -6,7 +6,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 
-const styles = (theme) => ({
+const styles = () => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -66,32 +66,30 @@ function RecentRecipes(props) {
             </Typography>
           </ListSubheader>
         </GridListTile>
-        {recipes.map((recipe) => {
-          return (
-            <GridListTile
-              key={recipe.id}
-              onClick={() => openRecipe(recipe.id)}
-              className={classes.gridTile}
-              data-testid={`recents-recipe-${recipe.id}`}
-            >
-              <img
-                src={recipe.picture}
-                alt={recipe.title}
-                data-testid="recents-recipe-image"
-              />
-              <GridListTileBar
-                title={
-                  <span data-testid="recents-recipe-title">{recipe.title}</span>
-                }
-                subtitle={
-                  <span data-testid="recents-recipe-creator">
-                    by: {recipe.firstName + ' ' + recipe.lastName}
-                  </span>
-                }
-              />
-            </GridListTile>
-          );
-        })}
+        {recipes.map((recipe) => (
+          <GridListTile
+            key={recipe.id}
+            onClick={() => openRecipe(recipe.id)}
+            className={classes.gridTile}
+            data-testid={`recents-recipe-${recipe.id}`}
+          >
+            <img
+              src={recipe.picture}
+              alt={recipe.title}
+              data-testid="recents-recipe-image"
+            />
+            <GridListTileBar
+              title={
+                <span data-testid="recents-recipe-title">{recipe.title}</span>
+              }
+              subtitle={
+                <span data-testid="recents-recipe-creator">
+                  by: {`${recipe.firstName} ${recipe.lastName}`}
+                </span>
+              }
+            />
+          </GridListTile>
+        ))}
       </GridList>
     </div>
   );

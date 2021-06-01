@@ -88,6 +88,7 @@ function CropperModal(props) {
     })
       .then(
         (response) => response.json(),
+        // eslint-disable-next-line no-console
         (error) => console.log('An error occurred.', error)
       )
       .then((response) => {
@@ -105,6 +106,7 @@ function CropperModal(props) {
   return (
     <div
       role="button"
+      tabIndex={0}
       onMouseDown={() => dispatch({ type: 'DRAG_START' })}
       onMouseMove={(e) =>
         dispatch({ type: 'DRAGGING', clientX: e.clientX, clientY: e.clientY })
@@ -176,6 +178,7 @@ function Cropper(props) {
     })
       .then(
         (response) => response.json(),
+        // eslint-disable-next-line no-console
         (error) => console.log('An error occurred.', error)
       )
       .then((response) => {

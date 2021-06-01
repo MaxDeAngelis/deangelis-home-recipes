@@ -1,20 +1,18 @@
-import { combineReducers } from 'redux'
-import recipes from './recipe.js'
-import site from './site.js';
-
-
-import { persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
+import { combineReducers } from 'redux';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import recipes from './recipe';
+import site from './site';
 
 const rootPersistConfig = {
-    key: 'root',
-    storage: storage,
-    blacklist: ['auth']
-}
+  key: 'root',
+  storage,
+  blacklist: ['auth'],
+};
 
 const rootReducer = combineReducers({
-    recipe : recipes,
-    site : site
-})
+  recipe: recipes,
+  site,
+});
 
-export default persistReducer(rootPersistConfig, rootReducer)
+export default persistReducer(rootPersistConfig, rootReducer);
