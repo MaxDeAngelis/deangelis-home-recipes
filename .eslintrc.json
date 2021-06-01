@@ -4,6 +4,7 @@
   "rules": {
     "semi": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "no-param-reassign": 0,
     "prettier/prettier": [
       "error",
       {
@@ -11,11 +12,12 @@
       }
     ],
     "react/prop-types": 0,
+    "react/jsx-props-no-spreading": 0,
     "object-curly-newline": "off",
     "comma-dangle": [
       "error",
       {
-        "arrays": "never",
+        "arrays": "always-multiline",
         "objects": "always-multiline",
         "imports": "never",
         "exports": "never",
