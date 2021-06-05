@@ -2,8 +2,10 @@
 class Step {
     public $selected = false;
     public $text = "";
+    public $id = "";
     function __construct($value) {
         $this->text = $value;
+        $this->id = uniqid();
     }
 }
 class Recipe {

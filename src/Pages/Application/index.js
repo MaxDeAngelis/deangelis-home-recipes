@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SiteActions, RecipeActions } from '../../Lib/actions';
 import { withStyles } from '@material-ui/core/styles';
+import { SiteActions, RecipeActions } from '../../Lib/actions';
 
 // COMPONENTS
 import Header from '../../Components/Header';
@@ -12,47 +12,53 @@ import Home from '../Home';
 import Recipe from '../Recipe';
 import Search from '../Search';
 
-const styles = theme => ({
-    root: {
-        display: 'flex',
-    }    
+const styles = () => ({
+  root: {
+    display: 'flex',
+  },
 });
 
 class Application extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
+    const { dispatch } = props;
 
-        this.props.dispatch(RecipeActions.getRecents());
-        this.props.dispatch(SiteActions.login("", ""));
-        this.props.dispatch(RecipeActions.search(""));
-    }
-    render() {
-        const { classes } = this.props;
-        let content = <Home/>;
-        this.props.site.nav.items.forEach((item) => {
-            if (item.selected) {
-                if (item.category === "RECIPE" /*|| item.id === "new"*/) {
-                    let recipes = this.props.recipe.open.filter((recipe) => recipe.id === item.id);
-                    if (recipes[0]) {
-                        content = <Recipe data={recipes[0]}/>;
-                    }
-                } else if (item.id === "search") {
-                    content = <Search/>
-                }
-            }
-        })
-        return (
-            <div className={classes.root}>
-                <Header/>
-                <Sidebar/>
-                {content}
-                <Login/>
-            </div>
-        );
-    }
+    dispatch(RecipeActions.getRecents());
+    dispatch(SiteActions.login('', ''));
+    dispatch(RecipeActions.search(''));
+  }
+
+  render() {
+    const { site, recipe, classes } = this.props;
+    let content = <Home />;
+    site.nav.items.forEach((item) => {
+      if (item.selected) {
+        if (item.category === 'RECIPE' /* || item.id === "new" */) {
+          const recipes = recipe.open.filter(
+            (openRecipe) => openRecipe.id === item.id
+          );
+          if (recipes[0]) {
+            content = <Recipe data={recipes[0]} />;
+          }
+        } else if (item.id === 'search') {
+          content = <Search />;
+        }
+      }
+    });
+    return (
+      <div className={classes.root}>
+        <Header />
+        <Sidebar />
+        {content}
+        <Login />
+      </div>
+    );
+  }
 }
 
 function mapStateToProps(state) {
-    return state;
+  return state;
 }
-export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(Application));
+export default connect(mapStateToProps)(
+  withStyles(styles, { withTheme: true })(Application)
+);
