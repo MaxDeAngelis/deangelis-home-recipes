@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import classNames from 'classnames';
@@ -93,18 +93,15 @@ const styles = (theme) => ({
 });
 
 function Header(props) {
-  const { user, nav, classes, dispatch } = props;
-  const [search, setSearch] = useState('');
+  const { user, nav, searchText, classes, dispatch } = props;
 
   function handleUpdate(e) {
-    setSearch(e.target.value);
-
     dispatch(RecipeActions.search(e.target.value));
     dispatch(SiteActions.openContent('search', 'SITE'));
   }
   function handleKeyPress(e) {
     if (e.key === 'Enter') {
-      dispatch(RecipeActions.search(search));
+      dispatch(RecipeActions.search(searchText));
       dispatch(SiteActions.openContent('search', 'SITE'));
     }
   }
@@ -151,7 +148,7 @@ function Header(props) {
           <InputBase
             placeholder="Search…"
             classes={{ root: classes.inputRoot, input: classes.inputInput }}
-            value={search}
+            value={searchText}
             onChange={handleUpdate}
             onKeyPress={handleKeyPress}
           />
@@ -163,7 +160,10 @@ function Header(props) {
 }
 
 function mapStateToProps(state) {
-  return state.site;
+  return {
+    ...state.site,
+    searchText: state.recipe.searchText,
+  };
 }
 
 export default connect(mapStateToProps)(

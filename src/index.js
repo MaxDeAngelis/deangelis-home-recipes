@@ -46,6 +46,7 @@ const store = createStore(
       units: [],
       recents: [],
       searchResults: [],
+      searchText: '',
       open: [],
     },
   },
