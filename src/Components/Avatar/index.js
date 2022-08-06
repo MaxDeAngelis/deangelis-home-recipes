@@ -1,25 +1,24 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
 
 import Avatar from '@material-ui/core/Avatar';
 import Check from '@material-ui/icons/Check';
+import { styled } from '@material-ui/styles';
 
-const styles = (theme) => ({
-  stepAvatar: {
-    cursor: 'pointer',
-    border: '2px solid transparent',
-    transition: 'all .5s',
-    marginRight: theme.spacing(2),
-    '&[data-selected=true]': {
-      backgroundColor: theme.palette.primary.main,
-    },
-    '&:hover': {
-      border: '2px solid black',
-    },
+const StyledAvatar = styled(Avatar)(({ theme }) => ({
+  cursor: 'pointer',
+  border: '2px solid transparent',
+  transition: 'all .5s',
+  marginRight: theme.spacing(2),
+  '&[data-selected=true]': {
+    backgroundColor: theme.palette.primary.main,
   },
-});
+  '&:hover': {
+    border: '2px solid black',
+  },
+}));
+
 function ItemAvatar(props) {
-  const { classes, selected, disabled, update, label, width, height } = props;
+  const { selected, disabled, update, label, width, height } = props;
   let avatarContent = label;
   const style = {
     width,
@@ -42,14 +41,9 @@ function ItemAvatar(props) {
   }
 
   return (
-    <Avatar
-      className={classes.stepAvatar}
-      style={style}
-      data-selected={selected}
-      onClick={update}
-    >
+    <StyledAvatar style={style} data-selected={selected} onClick={update}>
       {avatarContent}
-    </Avatar>
+    </StyledAvatar>
   );
 }
 
@@ -58,4 +52,4 @@ ItemAvatar.defaultProps = {
   height: 25,
 };
 
-export default withStyles(styles)(ItemAvatar);
+export default ItemAvatar;
