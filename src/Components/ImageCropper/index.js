@@ -215,7 +215,7 @@ function Cropper(props) {
         className={classes.hidden}
         onChange={handleUpload}
       />
-      <img src={image} alt={altText} />
+      <img src={`${window.location.origin}/${image}`} alt={altText} />
       {state.open ? (
         <CropperModal
           {...{ image, state, dispatch, classes, onCropComplete }}
@@ -260,7 +260,7 @@ function ImageCropper(props) {
 
   return (
     <div className={classes.root}>
-      <img src={image} alt={altText} />
+      <img src={`${window.location.origin}/${image}`} alt={altText} />
     </div>
   );
 }

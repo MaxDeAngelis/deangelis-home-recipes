@@ -80,7 +80,7 @@ function Sidebar(props) {
       >
         <ListItemIcon>
           <img
-            src={recipe.picture}
+            src={`${window.location.origin}/${recipe.picture}`}
             className={classes.recipeIcon}
             alt={recipe.title}
           />
