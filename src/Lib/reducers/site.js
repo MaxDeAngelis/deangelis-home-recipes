@@ -1,6 +1,15 @@
 import produce from 'immer';
 import { SiteActionTypes } from '../actions';
 
+const navigate = (slug) => {
+  if (window.location.href !== window.location.origin + slug) {
+    setTimeout(() => {
+      // window.history.pushState({}, '', window.location.origin + slug);
+      window.location.href = window.location.origin + slug;
+    }, 25);
+  }
+};
+
 export default produce((draft = {}, action) => {
   switch (action.type) {
     case SiteActionTypes.CLOSE_CONTENT: {
@@ -23,6 +32,14 @@ export default produce((draft = {}, action) => {
       break;
     }
     case SiteActionTypes.OPEN_CONTENT: {
+      if (action.id === 'search') {
+        navigate('/search');
+        break;
+      } else if (action.id === 'home') {
+        navigate('');
+        break;
+      }
+
       let alreadyOpen = false;
       draft.nav.items.forEach((item) => {
         if (item.id === action.id) {
@@ -38,6 +55,10 @@ export default produce((draft = {}, action) => {
           category: action.category,
           selected: true,
         });
+      }
+
+      if (action.category === 'RECIPE') {
+        navigate(`/recipe/${action.id}`);
       }
       break;
     }

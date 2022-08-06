@@ -58,10 +58,11 @@ const PrivateRecipeActions = {
       picture,
     };
   },
-  updateSearchResults(recipes) {
+  updateSearchResults(recipes, searchText) {
     return {
       type: RecipeActionTypes.UPDATE_SEARCH,
       results: recipes,
+      searchText,
     };
   },
   updateRecents(recipes) {
@@ -149,7 +150,7 @@ export const RecipeActions = {
   search(text) {
     return (dispatch) => {
       processAction('GET', 'SEARCH', { searchText: text }, (json) => {
-        dispatch(PrivateRecipeActions.updateSearchResults(json));
+        dispatch(PrivateRecipeActions.updateSearchResults(json, text));
       });
     };
   },

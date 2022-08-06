@@ -47,6 +47,7 @@ export default produce((draft = {}, action) => {
       break;
     }
     case RecipeActionTypes.UPDATE_SEARCH: {
+      draft.searchText = action.searchText;
       draft.searchResults = action.results || [];
       break;
     }
