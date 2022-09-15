@@ -33,8 +33,8 @@ const store = createStore(
             selected: false,
           },
           {
-            id: 'new',
-            title: 'New recipe',
+            id: 'create',
+            title: 'Create recipe',
             category: 'SITE',
             selected: false,
           },

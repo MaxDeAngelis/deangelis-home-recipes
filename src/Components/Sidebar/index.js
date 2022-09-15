@@ -1,17 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import { styled } from '@material-ui/styles';
 
 // COMPONENTS
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import {
+  Drawer,
+  List,
+  Grid,
+  Divider,
+  IconButton,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from '@material-ui/core';
 
 // ICONS
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -20,49 +22,46 @@ import SearchIcon from '@material-ui/icons/Search';
 import Add from '@material-ui/icons/Add';
 import { SiteActions, RecipeActions } from '../../Lib/actions';
 
-const styles = (theme) => ({
-  drawer: {
+const StyledDrawer = styled(Drawer)(({ theme, open }) => {
+  const returnedStyle = {
     width: theme.overrides.drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
-  },
-  drawerOpen: {
-    width: theme.overrides.drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
-  },
-  drawerClose: {
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: 'hidden',
-    width: theme.spacing(7) + 1,
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
-  },
-  itemText: {
-    padding: 0,
-  },
-  itemTextOverflow: {
+  };
+  if (!open) {
+    returnedStyle.overflowX = 'hidden';
+    returnedStyle.width = theme.spacing(7) + 1;
+  }
+
+  // Apply same style to child paper
+  return {
+    ...returnedStyle,
+    '& .MuiDrawer-paper': returnedStyle,
+  };
+});
+
+const StyledToolbar = styled(Grid)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  padding: '0 8px',
+  ...theme.mixins.toolbar,
+}));
+
+const StyledItemText = styled(ListItemText)(() => ({
+  padding: 0,
+  '& .MuiListItemText-primary': {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   },
-  recipeIcon: {
-    width: 24,
-    height: 24,
-  },
-});
+}));
 
 function Sidebar(props) {
-  const { site, openRecipes, classes, dispatch } = props;
+  const { site, openRecipes, dispatch } = props;
   const siteIcons = site.nav.items.filter((item) => item.category === 'SITE');
   const recipeIcons = site.nav.items.filter(
     (item) => item.category === 'RECIPE'
@@ -80,45 +79,27 @@ function Sidebar(props) {
       >
         <ListItemIcon>
           <img
+            style={{ width: '24px', height: '24ps' }}
             src={`${window.location.origin}/${recipe.picture}`}
-            className={classes.recipeIcon}
             alt={recipe.title}
           />
         </ListItemIcon>
-        <ListItemText
-          primary={recipe.title}
-          className={classes.itemText}
-          primaryTypographyProps={{ className: classes.itemTextOverflow }}
-          title={recipe.title}
-        />
+        <StyledItemText primary={recipe.title} title={recipe.title} />
       </ListItem>
     );
   });
 
   return (
-    <Drawer
-      variant="permanent"
-      open={site.nav.open}
-      className={classNames(classes.drawer, {
-        [classes.drawerOpen]: site.nav.open,
-        [classes.drawerClose]: !site.nav.open,
-      })}
-      classes={{
-        paper: classNames({
-          [classes.drawerOpen]: site.nav.open,
-          [classes.drawerClose]: !site.nav.open,
-        }),
-      }}
-    >
-      <div className={classes.toolbar}>
+    <StyledDrawer variant="permanent" open={site.nav.open}>
+      <StyledToolbar>
         <IconButton onClick={() => dispatch(SiteActions.toggleSidebar())}>
           <ChevronLeftIcon />
         </IconButton>
-      </div>
+      </StyledToolbar>
       <Divider />
       <List>
         {siteIcons.map((item) => {
-          if (item.id === 'new' && !site.user) return null;
+          if (item.id === 'create' && !site.user) return null;
           let icon;
           let action = () => dispatch(SiteActions.openContent(item.id, 'SITE'));
           if (item.id === 'home') {
@@ -129,7 +110,7 @@ function Sidebar(props) {
             };
           } else if (item.id === 'search') {
             icon = <SearchIcon />;
-          } else if (item.id === 'new') {
+          } else if (item.id === 'create') {
             icon = <Add />;
             action = () => dispatch(RecipeActions.new());
           }
@@ -141,14 +122,14 @@ function Sidebar(props) {
               onClick={action}
             >
               <ListItemIcon>{icon}</ListItemIcon>
-              <ListItemText primary={item.title} className={classes.itemText} />
+              <ListItemText primary={item.title} />
             </ListItem>
           );
         })}
       </List>
       <Divider />
       <List>{recipeItems}</List>
-    </Drawer>
+    </StyledDrawer>
   );
 }
 
@@ -159,6 +140,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(
-  withStyles(styles, { withTheme: true })(Sidebar)
-);
+export default connect(mapStateToProps)(Sidebar);

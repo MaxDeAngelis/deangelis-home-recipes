@@ -9,7 +9,7 @@ class Step {
     }
 }
 class Recipe {
-    public $id = -1;
+    public $id = "new";
     public $title = "New recipe";
     public $firstName = "";
     public $lastName = "";
