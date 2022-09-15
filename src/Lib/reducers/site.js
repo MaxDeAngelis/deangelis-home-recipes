@@ -25,41 +25,37 @@ export default produce((draft = {}, action) => {
         (item) => item.id !== action.id || item.category === 'SITE'
       );
       // If there are no more recipes to select then go home
-      if (draft.nav.items[indexToSelect].category !== 'RECIPE')
+      if (draft.nav.items[indexToSelect].category !== 'RECIPE') {
         indexToSelect = 0;
+      }
+
       draft.nav.items[indexToSelect].selected = true;
+
+      navigate(draft.nav.items[indexToSelect].href);
 
       break;
     }
     case SiteActionTypes.OPEN_CONTENT: {
-      if (action.id === 'search') {
-        navigate('/search');
-        break;
-      } else if (action.id === 'home') {
-        navigate('');
-        break;
-      }
-
-      let alreadyOpen = false;
       draft.nav.items.forEach((item) => {
         if (item.id === action.id) {
-          alreadyOpen = true;
           item.selected = true;
         } else {
           item.selected = false;
         }
       });
-      if (!alreadyOpen) {
-        draft.nav.items.push({
+
+      let currentItem = draft.nav.items.find((item) => item.id === action.id);
+      if (!currentItem) {
+        currentItem = {
           id: action.id,
           category: action.category,
           selected: true,
-        });
+          href: `/recipe/${action.id}`,
+        };
+        draft.nav.items.push(currentItem);
       }
 
-      if (action.category === 'RECIPE') {
-        navigate(`/recipe/${action.id}`);
-      }
+      navigate(currentItem.href);
       break;
     }
     case SiteActionTypes.UPDATE_OPEN_NAV_ID: {
